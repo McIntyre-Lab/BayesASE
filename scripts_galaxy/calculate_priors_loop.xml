@@ -1,0 +1,24 @@
+<tool id="calculate_priors_loop" name="Calculate priors loop" version="0.1.0">
+    <description>calculate_priors_loop</description>
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code" interpreter="python">calculate_priors_loop.py
+--output=$output
+--g1=$g1
+--g2=$g2
+--samcompdir=$samcompdir
+    </command>
+    <inputs>
+        <param name="samcompdir" type="data" format="collection" label="Count Tables" help="Select the collection containing summed ase count tables"/>
+        <param name="g1" type="text" label="Tester" help="Enter the column which contains G1/Tester values"/>
+        <param name="g2" type="text" label="Line" help="Enter the column which contains G2/Line values"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="${tool.name} on ${on_string}:Check info"/>
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
+
+

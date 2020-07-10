@@ -1,0 +1,28 @@
+<tool id="merge_sim_filtered_1cond" name="merge simulated filtered for 1 condition" version="0.1.0">
+    <description>merge_sim_filtered_1cond</description>
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code" interpreter="python">merge_sim_filtered_1cond_02brm.py
+--output=$output
+--countsf=$countsf
+--comp=$comp
+--sf=$sf
+--g1=$g1
+--g1=$g2
+    </command>
+    <inputs>
+        <param name="countsf" type="data" format="tabular" label="Filtered Counts" help="Select ASE filtered counts file"/>
+        <param name="comp" type="text" label="Comparate" help="Column name in counts file containing Comparate 1"/>
+        <param name="sf" type="data" format="tabular" label="simulated counts file" help=""/>
+        <param name="G1" type="text" label="Genome 1" help="Column name in counts file containing Genome1 values"/>
+        <param name="G2" type="text" label="Genome 2" help="Column name in counts file containing Genome2 values"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="${tool.name} on ${on_string}:Check info"/>
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
+
+

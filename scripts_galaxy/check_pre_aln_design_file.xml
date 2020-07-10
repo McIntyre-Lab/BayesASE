@@ -1,0 +1,62 @@
+<tool id="check_alignment_design_file" name="Check alignment design file headers and duplicate fq names" version="0.1.0">
+    <description>check_pre_aln_design</description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    python '$__tool_directory__/check_pre_aln_design_file.py'
+    --design=$design
+    --g1=$g1
+    --g2=$g2
+    --sampleID=$id
+    --fqName=$fq
+    --ext=$ext
+    --rep=$rep
+    --readLen=$readlen
+    --logfile=$logfile
+    --dups=$dups
+]]></command>
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the instructions at the bottom of this page for the format. [Required]"/>
+        <param name="g1" type="text" label="G1 name column" help="Name of the column in the design file containing the G1 names [Required]"/>
+        <param name="g2" type="text" label="G2 name column" help="Name of the column in the design file containing the G2 names [Required]"/>
+        <param name="id" type="text" label="SampleID column" help="Name of the column in the design file containing the sampleID names [Required]"/>
+        <param name="fq" type="text" label="Fastq file name column" help="Name of the column in the design file containing the FASTQ file names without extensions [Required]"/>
+        <param name="ext" type="text" label="FASTQ extension column" help="Name of the column in the design file containing the extension of FASTQ files, ex: .fq, .fastq. [Required]"/>
+        <param name="rep" type="text" label="Tech rep indentifier column" help="Name of the column in the design file containing the tech rep identifiers, ex: lanes, etc. [Required]"/>
+        <param name="readlen" type="text" label="Read length values" help="Name of column in the design file containing the read lengths for the FASTQ files [Required]"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="dups" label="${tool.name} on ${on_string}: Duplicates"/>        
+        <data format="tabular" name="logfile" label="${tool.name} on ${on_string}: Design criteria"/>
+    </outputs>
+    <help><![CDATA[
+**Tool Description**
+
+This tool checks to make sure the design file is formatted correctly and has all needed headers.
+
+**The design file should contain the following columns, in order:**
+
+	(1) G1 - updated genome 1 for alignment
+	(2) G2 - updated genome 2 for alignment
+	(3) sampleID - sample identifier (no spaces)
+	(4) fqName - name of the column containing the FASTQ file names, WITHOUT the extension
+	(5) fqExtension - FASTQ file extension, for example, .fq or .fastq (NOT gzipped)
+	(6) techRep - name of the column containing the technical replicates for each sampleID, for example, the same library run on different lanes.
+	(7) readLength - the read length in base pairs, for example 60.
+
+
+An example design file::
+
+	G1	G2	samplID			fqName			fqExtension	techRep	readLength 
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150        
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150        
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150        
+
+**This tool will output:**
+
+	(1) a logfile with information about whether the column names are correct and if there are any duplicated FASTQ file names.
+	(2) a text file containing a list of any duplicated FASTQ file names, if present.
+    ]]></help>
+</tool>

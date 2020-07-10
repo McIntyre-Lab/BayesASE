@@ -1,0 +1,27 @@
+<tool id="summarize_sam_compare_cnts_table_1cond" name="summarize_sam_compare_cnts_table_1cond" version="0.1.0">
+    <description></description>
+    <requirements>
+    </requirements>
+    <command detect_errors="exit_code" interpreter="python">summarize_sam_compare_cnts_table_1cond_03.py
+--output=$output
+--design=$design
+--compCol=$compCol
+--lineCol=$lineCol
+--samCompdir=$samCompdir
+--apn=$apn
+    </command>
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Design file" help="select the design file containing fastq fqNames and sampleIDs"/>
+        <param name="compCol" type="text" label="Tester" help="Name of the comparison (eg G1 or Tester) column in your design file"/>
+        <param name="lineCol" type="text" label="Line" help="Name of the column in your design file containing lines (eg G2 or Line)"/>
+        <param name="samCompdir" type="data" format="collection" label="Summed Count Tables" help="Select collection of summed counts tables"/>
+        <param name="apn" type="text" label="APN" help="Enter average per nucleotide value for flagging a feature as found and analyzable"/>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="output" label="${tool.name} on ${on_string}:Check info"/>
+    </outputs>
+    <help><![CDATA[
+        TODO: Fill in help.
+    ]]></help>
+</tool>
+

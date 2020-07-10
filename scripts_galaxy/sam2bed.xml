@@ -1,0 +1,29 @@
+<tool id="base_sam2bed" name="Create BED file from SAM file for BASE"  version="0.1.0">
+    <description>with awk</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command>
+<![CDATA[ 
+        awk 
+            -v readLen=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'` 
+            -v OFS='	' 
+            '{print $3,$4,$4+readLen}' 
+            '$SAMFILE' 
+        > '$AWKTMP'
+]]>
+    </command>
+    <inputs>
+        <param name="fastq" format="fastq" type="data" label="Input fq file, used to calculate average read length." />
+        <param name="SAMFILE" format="sam" type="data" label="Input sam file to convert to BED file" />
+    </inputs>
+    <outputs>
+        <data name="AWKTMP" format="bed" type="data" label="${tool.name} on ${on_string}: SAM2BED" />
+    </outputs>
+    <help><![CDATA[
+    **What it does**
+    Creates BED file containing all reads in SAM file. Fields are chrom pos and end where end = pos + readlength.  
+    ]]></help>
+</tool>

@@ -1,0 +1,100 @@
+<tool id="combine_cnt_tables" name="Combine Count Tables" version="0.1.0">
+    <description>Create an ASE Count Table from read classifications</description>
+    <requirements>
+      <requirement type="package" version="1.0.1">secimtools</requirement>
+    </requirements>
+    <command><![CDATA[
+    python '$__tool_directory__/combine_cnt_tables_13amm.py'
+    --design=$design
+    --sim=$sim
+    --bed=$bed
+    --path=$path
+    --begin=$begin
+    --end=$end
+    --out=$out
+    --designdir=$designdir
+]]></command>  
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Design File" help="Select the design file containing fastq fqNames and sampleIDs"/>
+        <param name="bed" type="data" format="tabular" label="Bed File" help="[OPTIONAL]"/>
+        <param name="path" type="data" multiple="true" label="Count Tables" help="Select files containing simulated ASE count tables"/>
+        <param name="begin" type="text" label="Start" help="Enter start point in design file [OPTIONAL]"/>
+        <param name="end" type="text" label="End" help="Enter end point in design file [OPTIONAL]"/>
+        <param name="sim" size="30" type="select" value="" display="radio" label="Dataset Type" help="Select whether a simulation or real data is being run">
+            <option value="True" selected="true">Simulation dataset</option>
+            <option value="False" selected="false">Other</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data format="tabular" name="out" label="Combine Count tables summed count table"/>
+        <data format="tabular" name="designdir" label="combine count tables simulated summed count table"/>
+   </outputs>
+    <help><![CDATA[
+**Tool Description** 
+
+This tool creates an ASE count table from uniquely mapping reads that have been reformatted to report on the genic feature level (as opposed to chromosomal), in order to remove data for features that do not intersect. These samples are filtered, and those that have insufficient replication for inclusion in the Bayesian model are removed. Identified genic features are also removed if there is not enough data for sufficient data analysis.  
+
+Reads that have been individually classified in a sub-process (the SAM compare program) are consolidated into the Read Count Table. The read classifications are as follows: Mapped, Unmapped, Ambiguous, Gray, Chimeric, and 
+
+ASE Count tables are linked to their derived FastQ file through a common fqName that is designated within the input design file. Input dataframes are read and their technical read replicates are assigned to a dictionary where they are summed with subsets of the ASE count tables, and those associated with the same sample ID are assigned to a dictionary. This creates an output of individual biological replicate files, generated from the summation of technical replicates of the alignments. 
+
+One summary is output (per input FASTQ) alongside the ASE Count Table, highlighting the main points of the Count Table.   
+
+-------------------------------------------------------------------------------------------
+
+**Inputs**
+
+There are four required inputs for this tool. 
+
+**Design File [REQUIRED]**
+
+The design file that was created before the pre-alignments is required. Group the design file by sample ID. Design file should be in following format.
+
+
+    +---------------+---------+---------+---------+---------+------------+------+
+    |   sampleID    |   G1    |    G2   | fqName  | techRep | readlength |...   |
+    +===============+=========+=========+=========+=========+============+======+
+    | A445_F_rep1   |   B1    |  A445   | ...     |    1    |    100     |...   |
+    +---------------+---------+---------+---------+---------+------------+------+
+    | RA445_F_rep2  |   B1    |  A445   | ...     |    3    |     50     |...   |
+    +---------------+---------+---------+---------+---------+------------+------+
+    | ...           |   B1    |  A445   | ...     | ...     |...         |...   |
+    +---------------+---------+---------+---------+---------+------------+------+
+    
+
+**Simulated Design File [REQUIRED]**
+
+A design file that contains simulated fqNames and genotype information is required. This file can be the same design file as the pre-alignment file. 
+
+**BED File [OPTIONAL]**
+
+A user-supplied BED file can be used to identify overlapping genic features. This is used to help filter out features from the ASE count table that do not have enough intersecting regions for data analysis. 
+
+**Count Tables [REQUIRED]**
+
+The path leading to the directory containing previously made ASE Count Tables is required. 
+
+**Simulated Count Tables [OPTIONAL]**
+
+Specify path leading to directory containing simulated ASE Count Tables
+
+**Start [OPTIONAL]**
+
+Enter point for script to start at in design file. Use if a certain section of reads is not wanted in data analysis
+
+**End [OPTIONAL]**
+
+Enter point script should end at in design file. 
+
+**Dataset Type**
+
+Select whether input dataset is either real or simulated. Default setting is simulation dataset (True). Set to false if dataset is real. 
+
+-------------------------------------------------------------------------------
+
+**Output**
+
+The tool generates two output files. A summed ASE Count Table per FASTQ file, and a summary file that summarizes the ASE Count table. 
+
+    ]]></help>
+</tool>

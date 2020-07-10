@@ -1,0 +1,23 @@
+
+<tool id="create_unique_sam_by_cat" name="Create unique SAM file through concatenation" version="0.1.0">
+    <description>with mapped and opposite SAM files</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
+    <command><![CDATA[ 
+        cat '$MAPPED' '$OPPOSITE' > '$UNIQUE' 
+    ]]></command>
+    <inputs>
+        <param name="MAPPED" format="sam" type="data" label="Input mapped SAM file (use output from BWA Split SAM script)" />
+        <param name="OPPOSITE" format="sam" type="data" label="Input opposite SAM file (use output from BWA Split SAM script)" />
+    </inputs>
+    <outputs>
+        <data name="UNIQUE" format="sam" type="data" label="${tool.name} on ${on_string} UNIQUE_SAM_BY_CAT" />
+    </outputs>
+    <help><![CDATA[
+**Tool Description**
+
+Concatenates the input: mapped and opposite SAM files, creating a unique SAM file.
+    ]]></help>
+</tool>

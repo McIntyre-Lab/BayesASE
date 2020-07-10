@@ -1,0 +1,96 @@
+<tool id="check_samcomp_for_lost_reads" name="Check Sam Compare Output" version="0.1.0">
+    <description>for lost reads</description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    python '$__tool_directory__/check_samcomp_for_lost_reads.py'
+    --bwa1=$bwa1
+    --bwa2=$bwa2
+    --fq=$fq
+    --ase=$ase
+    --out=$out
+]]></command>
+    <inputs>
+        <param name="bwa1" type="data" format="tabular" label="BWA 1 file" help="Select the BWA split SAM summary file containing the unique read counts from SAM 1 [Required]"/>
+        <param name="bwa2" type="data" format="tabular" label="BWA 2 file" help="Select the BWA split sam summary file containing the unique read counts from SAM 2 [Required]"/>
+        <param name="fq" type="data" format="fastq" label="FASTQ file" help="Select the FASTQ file [Required]"/>
+        <param name="ase" type="data" format="tabular" label="ASE totals file" help="Select the ASE totals file containing the read counts used in the SAM compare [Required]"/>
+    </inputs>
+    <outputs>
+        <data name="out" format="tabular" label="${tool.name} on ${on_string}: Lost reads"/>
+    </outputs>
+    <help><![CDATA[
+**Tool Description**
+
+This tool checks to make sure the SAM compare operated correctly and the ASE totals file contains the right number of entries.
+
+This is achieved by counting up how many unique reads are in each BWA split SAM summary file (calculated by summing the opposite and mapped read numbers in the third and fifth columns). The final total count in the ASE totals file should be more than the smaller of these two unique read counts, but less than two times their sum.
+
+**This tool takes the following input:**
+
+        (1) BWA1 - the BWA split SAM summary file containing the unique read counts from SAM 1 (must be a tsv file)
+        (2) BWA1 - the BWA split SAM summary file containing the unique read counts from SAM 2 (must be a tsv file) 
+        (3) FASTQ file
+        (4) ASE totals file- contains the read counts used in the SAM compare
+
+An example BWA 1 file::
+
+        name                                                    count_total_reads       count_mapped_read_oposite_strand        count_unmapped_read     count_mapped_read       count_ambiguous_read    count_chimeric_read
+	R105_mel_R105_M_rep2_techRep3_R1_unmerge_distinct_upd	58360			28260					1827			26011			2262			0
+        
+An example BWA 2 file::
+
+        name                                                    count_total_reads       count_mapped_read_oposite_stran         count_unmapped_read     count_mapped_read       count_ambiguous_read    count_chimeric_read
+        W1118_mel_R105_M_rep2_techRep3_R1_unmerge_distinct_upd  58360                   28255                                   1830                    26013                   2262                    0
+
+An example ASE totals file::
+
+        Count totals:
+	1:      a_single_exact	0
+	2:	a_single_inexact	13
+	3:	a_multi_exact	0
+	4:	a_multi_inexact	0
+	5:	b_single_exact	0
+	6:	b_single_inexact	10
+	7:	b_multi_exact	0
+	8:	b_multi_inexact	0
+	9:	both_single_exact_same	0
+	10:	both_single_exact_diff	31589
+	11:	both_single_inexact_same	0
+	12:	both_single_inexact_diff	14833
+	13:	both_inexact_diff_equal	14631
+	14:	both_inexact_diff_a_better	121
+	15:	both_inexact_diff_b_better	81
+	16:	both_multi_exact	0
+	17:	both_multi_inexact	0
+	18:	a_single_exact_b_single_inexact	371
+	19:	a_single_inexact_b_single_exact	249
+	20:	a_single_exact_b_multi_exact	0
+	21:	a_multi_exact_b_single_exact	0
+	22:	a_single_exact_b_multi_inexact	0
+	23:	a_multi_inexact_b_single_exact	0
+	24:	a_single_inexact_b_multi_exact	0
+	25:	a_multi_exact_b_single_inexact	0
+	26:	a_single_inexact_b_multi_inexact	0
+	27:	a_multi_inexact_b_single_inexact	0
+	28:	a_multi_exact_b_multi_inexact	0
+	29:	a_multi_inexact_b_multi_exact	0
+	30:	total_count	47065
+
+**This tool will output a tabular file with:**
+
+        (1) The FASTQ file name
+        (2) The minimum number of unique reads of the two BWA files
+        (3) The sum of the unique reads in the two BWA files
+        (4) The final total count in the ASE totals file (should be between (2) and (3) doubled for the check to be successful)
+	(5) A flag that is equal to 1 if the check was successful or 0 if the check was unsuccessful
+
+An example unsuccessful output file where reads were lost::
+
+	fqName		min_uniq_g1_uniq_g2	sum_uniq_g1_uniq_g2	total_counts_ase_table	flag_readnum_in_range
+
+	dataset_197	54268			108539			47065			0  
+    ]]></help>
+</tool>

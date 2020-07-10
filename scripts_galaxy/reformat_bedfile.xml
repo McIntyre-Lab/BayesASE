@@ -1,0 +1,28 @@
+<tool id="base_reformat_bedfile" name="Reformat BED file for BASE"  version="0.1.0">
+    <description>with awk</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command>
+<![CDATA[ 
+        awk 
+            -v FS='	' 
+            -v OFS='	' 
+            '{print $4,$2,$3,$1}' 
+            '$infile' 
+        > '$outfile' 
+]]>
+    </command>
+    <inputs>
+        <param name="infile" format="txt" type="data" label="Input BED file to reformat" />
+    </inputs>
+    <outputs>
+        <data name="outfile" format_source="infile" metadata_source="infile"/>
+    </outputs>
+    <help><![CDATA[
+    **What it does**
+    This tool uses awk to reorder the columns in a 4-column bed file, putting the chrom column last.
+    ]]></help>
+</tool>
