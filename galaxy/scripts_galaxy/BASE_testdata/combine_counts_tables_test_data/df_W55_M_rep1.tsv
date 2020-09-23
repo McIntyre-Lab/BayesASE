@@ -1,0 +1,4 @@
+G1	G2	sampleID	fqName	fqExtension	techRep	readLength
+W1118	W55	W55_M_1	SRR1989586_1	.fastq	1	96
+W1118	W55	W55_M_1	SRR1989586_2	.fastq	2	96
+W1118	W55	W55_M_1	SRR1989588_1	.fastq	3	96

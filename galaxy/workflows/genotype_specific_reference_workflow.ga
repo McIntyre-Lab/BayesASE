@@ -1,0 +1,114 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "This module creates an updated genotype specific reference file\n\n to reduce mapping biases that may occur when a common reference is used to infer polymorphisms simultaneously\n with mapping. The may be skipped if the user already has a\n genome specific reference FASTA file. \n\n\n This module utilizes VCFTools Consensus (Sanger Institute), which is already \navailable in the Galaxy Toolshed. **NOTE: The module only considers SNPs when incorporating variants into the starting reference**",
+    "format-version": "0.1",
+    "name": "Genotype Specific References Module for BASE",
+    "steps": {
+        "0": {
+            "annotation": "Species reference FASTA file containing nucleotide sequences and their accompanying sequence names ",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Species reference FASTA file containing nucleotide sequences and their accompanying sequence names ",
+                    "name": "FASTA file "
+                }
+            ],
+            "label": "FASTA file ",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 200,
+                "top": 200
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "a4f2341f-3b2f-4fd8-8055-b67fa91b5bd4",
+            "workflow_outputs": []
+        },
+        "1": {
+            "annotation": "VCF file containing location data for SNPs and structural variation calls",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "VCF file containing location data for SNPs and structural variation calls",
+                    "name": "VCF File "
+                }
+            ],
+            "label": "VCF File ",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 200,
+                "top": 320
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "71acf716-47c5-4417-ba6f-957b1ce7f1b2",
+            "workflow_outputs": []
+        },
+        "2": {
+            "annotation": "Identifies differences in polymorphisms within parental VCF file and replaces them with reference bases, thus creating one updated reference genome in FASTA format per each VCF input file. ",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/vcftools_consensus/vcftools_consensus/0.1.11",
+            "errors": null,
+            "id": 2,
+            "input_connections": {
+                "ref_genome_source|ref_file": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "variants": {
+                    "id": 1,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Consensus",
+                    "name": "ref_genome_source"
+                },
+                {
+                    "description": "runtime parameter for tool Consensus",
+                    "name": "variants"
+                }
+            ],
+            "label": "VCFTools Consensus",
+            "name": "Consensus",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "fasta"
+                }
+            ],
+            "position": {
+                "left": 420,
+                "top": 200
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/vcftools_consensus/vcftools_consensus/0.1.11",
+            "tool_shed_repository": {
+                "changeset_revision": "79f5d34da277",
+                "name": "vcftools_consensus",
+                "owner": "devteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"ref_genome_source\": {\"index_source\": \"history\", \"__current_case__\": 1, \"ref_file\": {\"__class__\": \"RuntimeValue\"}}, \"variants\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.11",
+            "type": "tool",
+            "uuid": "9c64cb1a-4b06-4d2c-98b6-0651a44f70a9",
+            "workflow_outputs": []
+        }
+    },
+    "tags": [],
+    "uuid": "206f3d30-94fa-43a1-af15-737cca51d5ae",
+    "version": 0
+}

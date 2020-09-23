@@ -1,0 +1,540 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "The Summarize Counts workflow\n prepares the input datasets for entry into the Bayesian model by flagging features that have low read count as well as those that do not meet a user-\ndefined APN (Average Reads per Nucleotide) threshold. These features are not removed from the dataset, however they are excluded from further analysis in order to prevent the likelihood of low confidence in data.",
+    "format-version": "0.1",
+    "name": "Summarize Counts for BASE",
+    "steps": {
+        "0": {
+            "annotation": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Pre-Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Pre-Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
+                    "name": "Input Pre-Alignment Design File"
+                }
+            ],
+            "label": "Input Pre-Alignment Design File",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 393,
+                "top": 200
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "62aa4b85-8816-4517-b017-19b8b917b665",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "d526572b-1585-4900-9712-6ecb1cfa2930"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The ASE Counts Tables collection should contain all the technical replicates from a given biological replicate",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The ASE Counts Tables collection should contain all the technical replicates from a given biological replicate",
+                    "name": "Input Collection of ASE Counts tables "
+                }
+            ],
+            "label": "Input Collection of ASE Counts tables ",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 286,
+                "top": 400
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "c3cf1acb-03ec-4d1b-9eaa-60404488ae37",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "54fa701f-494c-4f6b-893b-5ee93de5e9bd"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "4- column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and SAM Compare workflow",
+            "content_id": null,
+            "errors": null,
+            "id": 2,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "4- column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and SAM Compare workflow",
+                    "name": "Input BED file"
+                }
+            ],
+            "label": "Input BED file",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 380,
+                "top": 323
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "120dcdb4-aa29-4b5f-a3bd-095b5a63c53c",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "6753caf4-4519-4513-9113-2a7dc81078b1"
+                }
+            ]
+        },
+        "3": {
+            "annotation": "Indicate whether data contains real data or simulated reads. \n\n**Select \"False\" for real data**\n**Select \"True\" for simulated data**",
+            "content_id": null,
+            "errors": null,
+            "id": 3,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Indicate whether data contains real data or simulated reads. \n\n**Select \"False\" for real data**\n**Select \"True\" for simulated data**",
+                    "name": "Indicate Dataset Type"
+                }
+            ],
+            "label": "Indicate Dataset Type",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 418.5,
+                "top": 497
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"False\", \"restrictions\": [\"False\", \"True\"], \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "c581508a-8805-4442-b58d-28a675d7ac35",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "62bc9906-9e7d-404d-966c-0c347c31c307"
+                }
+            ]
+        },
+        "4": {
+            "annotation": "[OPTIONAL] Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
+            "content_id": null,
+            "errors": null,
+            "id": 4,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "[OPTIONAL] Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
+                    "name": "Start point in Design File"
+                }
+            ],
+            "label": "Start point in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 357.5,
+                "top": 595.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "fb6ce2d1-a81a-4db1-87e5-36cce2a0eca1",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "68222c33-d4da-40e4-9e8b-1ca7335c0203"
+                }
+            ]
+        },
+        "5": {
+            "annotation": "[OPTIONAL] Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
+            "content_id": null,
+            "errors": null,
+            "id": 5,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "[OPTIONAL] Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
+                    "name": "End point in Design File"
+                }
+            ],
+            "label": "End point in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 541.5,
+                "top": 662.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"parameter_type\": \"text\", \"optional\": false}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "fe9b28fc-b604-4d93-96ac-1d1e97d42242",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "5d5de259-c90c-4e64-a46f-1b8f82b8d4df"
+                }
+            ]
+        },
+        "6": {
+            "annotation": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and thus are eligible for continued analysis in the Bayesian Model (assuming that they have enough read counts) **Default setting is 5**",
+            "content_id": null,
+            "errors": null,
+            "id": 6,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and thus are eligible for continued analysis in the Bayesian Model (assuming that they have enough read counts) **Default setting is 5**",
+                    "name": "APN threshold"
+                }
+            ],
+            "label": "APN threshold",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 932.5,
+                "top": 621
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"5\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "cf91592b-c1e4-4f95-95b7-a2c7f38bca29",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "84706a46-8202-4c2c-ad64-f90bfc35ad14"
+                }
+            ]
+        },
+        "7": {
+            "annotation": "Enter the header name of the column that specified the name of the first parental genome. **Default value is G1**",
+            "content_id": null,
+            "errors": null,
+            "id": 7,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the header name of the column that specified the name of the first parental genome. **Default value is G1**",
+                    "name": "Name of G1 column in Design File"
+                }
+            ],
+            "label": "Name of G1 column in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 892.5,
+                "top": 707.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"G1\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "aee7e8ad-c871-47d4-9e19-47f59f565e31",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "b878f664-dc7e-4d1c-944a-620f61b7099f"
+                }
+            ]
+        },
+        "8": {
+            "annotation": "Enter the header name for the column that specifies the name of the second parental genome **Default value is G2**",
+            "content_id": null,
+            "errors": null,
+            "id": 8,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the header name for the column that specifies the name of the second parental genome **Default value is G2**",
+                    "name": "Name of G2 column in Design File"
+                }
+            ],
+            "label": "Name of G2 column in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 997,
+                "top": 847.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"G2\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "ee3b186b-d883-4493-a033-33d0e8612a04",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "b10b7de2-aecd-43a5-aee4-8a218a69f871"
+                }
+            ]
+        },
+        "9": {
+            "annotation": "Enter the header name of the column that contains the comparate condition + biological replicate number **Default value is sampleID**",
+            "content_id": null,
+            "errors": null,
+            "id": 9,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the header name of the column that contains the comparate condition + biological replicate number **Default value is sampleID**",
+                    "name": "Name of sample ID column in Design File"
+                }
+            ],
+            "label": "Name of sample ID column in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 1000,
+                "top": 964.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"sampleID\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "aa89d9fa-afc8-4261-934b-ac3076fa41b4",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "0d8f079f-f981-457b-b733-3473b0771d09"
+                }
+            ]
+        },
+        "10": {
+            "annotation": "Enter the header name of the column that contains only the comparate condition (NO biological replicate number) **Default value is comparate** ",
+            "content_id": null,
+            "errors": null,
+            "id": 10,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the header name of the column that contains only the comparate condition (NO biological replicate number) **Default value is comparate** ",
+                    "name": "Name of comparate column in Design File"
+                }
+            ],
+            "label": "Name of comparate column in Design File",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 1021.5,
+                "top": 1093.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"comparate\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "502a2c0a-e3c3-408c-aa1e-5a118ebead2d",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "e184b08b-92f8-48f7-a993-a9428f995587"
+                }
+            ]
+        },
+        "11": {
+            "annotation": "Sums a collection of ASE Counts Tables derived from FASTQ files (technical replicates) that are progeny of the same biological replicate(s). This tool also calculates APN (Average reads per Nucleotide) values for each feature ",
+            "content_id": "combine_cnt_tables",
+            "errors": null,
+            "id": 11,
+            "input_connections": {
+                "bed": {
+                    "id": 2,
+                    "output_name": "output"
+                },
+                "begin": {
+                    "id": 4,
+                    "output_name": "output"
+                },
+                "collection": {
+                    "id": 1,
+                    "output_name": "output"
+                },
+                "design": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "end": {
+                    "id": 5,
+                    "output_name": "output"
+                },
+                "sim": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Combine Counts Tables ",
+            "name": "Combine ASE Count Tables:",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                },
+                {
+                    "name": "output_designFile",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 876,
+                "top": 247
+            },
+            "post_job_actions": {},
+            "tool_id": "combine_cnt_tables",
+            "tool_state": "{\"bed\": {\"__class__\": \"ConnectedValue\"}, \"begin\": {\"__class__\": \"ConnectedValue\"}, \"collection\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"end\": {\"__class__\": \"ConnectedValue\"}, \"sim\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "2b425b9f-f4d6-446d-8474-0c9e03ccd776",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "3094413c-717a-4817-9842-49f0555a4b6c"
+                },
+                {
+                    "label": null,
+                    "output_name": "output_designFile",
+                    "uuid": "39095c0c-c674-4989-8838-09a9b8ad8d19"
+                }
+            ]
+        },
+        "12": {
+            "annotation": "Filters features in the summed ASE Counts tables and flags those that are below the user-defined APN threshold as well as those with low read count, preventing them from being analyzed in the Bayesian Model. Flagged features (indicated by a 0 in the flag_analyze column) are not removed from the dataset, however. ",
+            "content_id": "summarize_sam_compare_cnts_table_1cond",
+            "errors": null,
+            "id": 12,
+            "input_connections": {
+                "apn": {
+                    "id": 6,
+                    "output_name": "output"
+                },
+                "collection": {
+                    "id": 11,
+                    "output_name": "split_output"
+                },
+                "design": {
+                    "id": 11,
+                    "output_name": "output_designFile"
+                },
+                "parent1": {
+                    "id": 7,
+                    "output_name": "output"
+                },
+                "parent2": {
+                    "id": 8,
+                    "output_name": "output"
+                },
+                "sampleCol": {
+                    "id": 10,
+                    "output_name": "output"
+                },
+                "sampleIDCol": {
+                    "id": 9,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Summarize and Filter ASE Counts Tables",
+            "name": "Summarize and Filter ASE Count Tables",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 1392.5,
+                "top": 354
+            },
+            "post_job_actions": {},
+            "tool_id": "summarize_sam_compare_cnts_table_1cond",
+            "tool_state": "{\"apn\": {\"__class__\": \"ConnectedValue\"}, \"collection\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"parent1\": {\"__class__\": \"ConnectedValue\"}, \"parent2\": {\"__class__\": \"ConnectedValue\"}, \"sampleCol\": {\"__class__\": \"ConnectedValue\"}, \"sampleIDCol\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "70bae872-18fe-4c5b-a743-f332316905fb",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "c788ab68-7de3-434c-aec1-6759635bce78"
+                },
+                {
+                    "label": null,
+                    "output_name": "outputDesignFile",
+                    "uuid": "9bef2599-dd96-417d-b742-086c423e0892"
+                }
+            ]
+        },
+        "13": {
+            "annotation": "This tool reformats the summarization design file created by the Combine Counts Tables tool by removing the sampleID column. This design file is used as input into the Calculate Priors module.",
+            "content_id": "base_reformat_design_file",
+            "errors": null,
+            "id": 13,
+            "input_connections": {
+                "DESIGN": {
+                    "id": 11,
+                    "output_name": "output_designFile"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Reformat Sample Design File",
+                    "name": "DESIGN"
+                }
+            ],
+            "label": "Reformat Sample Design File",
+            "name": "Reformat Sample Design File",
+            "outputs": [
+                {
+                    "name": "OUTFILE",
+                    "type": "tsv"
+                }
+            ],
+            "position": {
+                "left": 1610,
+                "top": 816
+            },
+            "post_job_actions": {},
+            "tool_id": "base_reformat_design_file",
+            "tool_state": "{\"DESIGN\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "804887ca-df1f-4c8c-87fa-fab3bdcef5e3",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "OUTFILE",
+                    "uuid": "2548d392-ad0a-441d-bd7b-96f040bff88e"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "f99fd9ca-ed0c-4434-80d8-ce43c6a8c013",
+    "version": 11
+}

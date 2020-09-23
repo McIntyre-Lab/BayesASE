@@ -1,0 +1,67 @@
+<tool id="base_sam2bed" name="SAM to BED"  version="0.1.0">
+    <description>converts a SAM file to a BED file for use in BASE</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command><![CDATA[ 
+        awk 
+            -v readLen=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'` 
+            -v OFS='	' 
+            '{print $3,$4,$4+readLen}' 
+            '$SAMFILE' 
+        > '$AWKTMP'
+]]>
+    </command>
+    <inputs>
+        <param name="fastq" format="fastq" type="data" label="Select FASTQ files" help= "These will be used to calculate average read length" />
+        <param name="SAMFILE" format="sam" type="data" label="SAM files to convert" help="Input SAM files to be converted to BED files"  />
+    </inputs>
+    <outputs>
+        <data name="AWKTMP" format="bed" label="${tool.name} on ${on_string}: SAM2BED" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="fastq" value="W55_M_1_1.fastq" ftype="fastq"/>
+            <param name="SAMFILE" value="W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
+            <output name="AWKTMP" file="W1118_SAM2BED_for_BASE.bed" ftype="bed"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    **Tool Description**
+    The SAM2BED tools converts a SAM file to a 3-column BED file.  
+
+	The tool calculates the average read length from the input FQ file and creates a resulting BED file where  “Start” pertains to the read starting position in the input SAM file, and “End” pertains to the starting position + the calculated average read length. The resulting BED file is used as input into BedTools Intersect Interval to identify reads overlapping with regions pertaining to features of interest.
+
+    -----------------------------------------------------------------------------------------------
+
+    **Inputs**
+
+        -Two input datasets are required:
+
+    **FASTQ File**
+        -The original input FQ file containing F1 reads. The tool will use this file to calculate read length.
+
+    **Unique SAM File**
+        -The SAM file containing uniquely mapping reads.  This file can be created by the **BWASplitSAM** tool.
+
+    ------------------------------------------------------------------------------------------------
+
+    **Outputs**
+
+    The tool outputs a 3-column BED file containing the following fields for each uniquely mapping read in the SAM file:
+        Chrom    chromosome 
+        Start    the 5 prime start position of a read
+        End      the 5 prime start position + the read length
+ 
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

@@ -1,0 +1,117 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "Calculate the Prior Probability Estimate for features of interest within a specified comparate. The significance is to calculate the chance of a particular outcome occurring before new data is gathered. It is used to determine whether the features in the input dataset are experiencing allelic imbalance, and rule out if the occurrence of reads mapping preferrentially to one parental genome\n is actually due to mapping biases and computational errors.\n",
+    "format-version": "0.1",
+    "name": "Prior Calculations workflow for BASE",
+    "steps": {
+        "0": {
+            "annotation": "Input design file output from Reformat Summarization Design file Script",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input design file output from Reformat Summarization Design file Script",
+                    "name": "Input Priors Design File"
+                }
+            ],
+            "label": "Input Priors Design File",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 115,
+                "top": 181
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "5c80da12-96a7-489e-bfd3-e6b705a82b85",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "f653328b-f8be-40e7-8ee9-d365f7fff76d"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Input collection containing summed and filtered ASE Counts tables for a specific comparate (ie W55_M and W55_F are two different comparates and signify the name of the parental genome and male versus female)",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input collection containing summed and filtered ASE Counts tables for a specific comparate (ie W55_M and W55_F are two different comparates and signify the name of the parental genome and male versus female)",
+                    "name": "Input Collection of Summed and Filtered ASE Counts Tables  "
+                }
+            ],
+            "label": "Input Collection of Summed and Filtered ASE Counts Tables  ",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 102,
+                "top": 320
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "b09c3417-2376-45c9-92ee-8081bd386434",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "7b2df332-8ddb-4711-bc2e-58976c6e989e"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "Calculates the Prior Probability estimate for the input collection, or the chances that an outcome will occur without collecting new data",
+            "content_id": "calculate_priors_from_ase_count_tables",
+            "errors": null,
+            "id": 2,
+            "input_connections": {
+                "collection": {
+                    "id": 1,
+                    "output_name": "output"
+                },
+                "design": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Calculate Priors from ASE Counts Tables ",
+            "name": "Calculate Priors Probability Estimates",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 362.5,
+                "top": 200
+            },
+            "post_job_actions": {},
+            "tool_id": "calculate_priors_from_ase_count_tables",
+            "tool_state": "{\"collection\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "dcf8b90f-9313-41cc-9191-bf84f9a1213a",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "5ddecc22-3ab5-4fb8-b63e-e3364bcd41d9"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "46f074e1-c5ca-406c-a423-52aff679c134",
+    "version": 4
+}

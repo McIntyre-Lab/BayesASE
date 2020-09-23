@@ -1,0 +1,71 @@
+<tool id="base_create_new_sam_file" name="Create new SAM file"  version="0.1.0">
+    <description> with features of interest in RNAME field</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command>
+<![CDATA[ 
+        awk -v OFS='	' 'FNR==NR{a[$1,$2]=$7; next} {$3=a[$3,$4]}1' '$BED3' '$SAMFILE' | awk -F'\t'  '$3!=""' > '$NEWSAM'
+]]>
+    </command>
+    <inputs>
+        <param name="BED3" type="data" format="tabular" label="BED file generated from the Remove reads that do not overlap tool" />
+        <param name="SAMFILE" type="data" format="sam" label="Input SAM file containing Uniquely Mapped Reads"
+ help=" SAM file to convert chromosome names to feature IDs in RNAME field" />
+    </inputs>
+    <outputs>
+        <data name="NEWSAM" format="sam" label="${tool.name} on ${on_string}: New SAM file with features instead of chrom" />
+    </outputs>
+    <tests>
+        <test>
+            <param name="BED3" value="drop_nonintersecting_reads_for_BASE.tabular" ftype="tabular"/>
+            <param name="SAMFILE" value="W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
+            <output name="NEWSAM" file="W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam" ftype="sam"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+    **Tool Description**
+    
+This tool converts the BED file containing reads overlapping with genic features into a SAM file format.
+The input into this tool is generated from the *Remove reads that do not overlap with a feature for BASE* tool.
+The resulting SAM file contains uniquely mapping reads that overlap with genic features of interest.  
+
+
+----------------------------------------------------------------------------------------------
+
+**Inputs**
+
+    -The tool has two required inputs:
+
+**BED File**
+     The tool requires a BED file of reads overlapping genic features of interest.
+     The *Remove reads that do not overlap with a feature for BASE* tool creates this BED file. 
+
+Example input BED file 
+
+    +---------------+---------+---------+---------+---------+------------+------------+
+    |   Chrom       |  Start  |   End   |   Name  |  Score  | Strand     |ThickStart  |
+    +===============+=========+=========+=========+=========+============+============+
+    |      X        |  2190   |  2245   |   X     |    1    |    2300    |l(1)G0196   |
+    +---------------+---------+---------+---------+---------+------------+------------+
+    |      2R       |  1502   |  1834   |   2R    |     50  |19000       |Mapmodulin  |
+    +---------------+---------+---------+---------+---------+------------+------------+
+
+**Unique SAM File**
+     Input the SAM file containing alignments for all uniquely mapping reads. This file can be created by the **BWASplitSAM** tool. 
+
+**Outputs**
+     The tool outputs a new SAM file with the genic feature (ThickStart column in BED file) in the RNAME field instead of the chromosome name.
+
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

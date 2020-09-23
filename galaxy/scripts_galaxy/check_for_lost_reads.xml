@@ -1,0 +1,89 @@
+<tool id="check_for_lost_reads" name="Check for lost reads" version="0.1.0">
+    <description>verify starting FASTQ read number equals ending read number after alignments and parsing</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements"/>
+    <command><![CDATA[
+    python '$__tool_directory__/check_for_lost_reads_06amm.py'
+    --alnSum1=$alnSum1
+    --alnSum2=$alnSum2
+    --fq=$fq
+    --out=$out
+]]></command>
+    <inputs>
+        <param name="alnSum1" type="data" format="tabular" label="Alignment Summary 1" help="The G1 alignment summary file [from BWASplitSAM] containing all read types [Required]"/>
+        <param name="alnSum2" type="data" format="tabular" label="Alignment Summary 2" help="The G2 alignment summary file [from BWASplitSAM] containing all read types [Required]"/>
+        <param name="fq" type="data" format="fastq" label="Name of the FASTQ file" help="Name of FQ used to generate the alignments selected above"/>
+    </inputs>
+    <outputs>
+       <data format="tabular" name="out" label="${tool.name} on ${on_string}: Check start readNum = alignment readNum"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="alnSum1" ftype="data"      value="W1118_G1_BWASplitSAM_summary.tabular"/>
+            <param name="alnSum2" ftype="data"      value="W55_G2_BWASplitSAM_summary.tabular"/>
+            <param name="fq"      ftype="data"      value="W55_M_1_1.fastq"/>
+            <output name="out"          file="check_for_lost_reads_BASE_test_data.tabular" />
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**    
+
+This tool verifies that no reads have been lost in the SAM file generated after the alignment step. 
+
+The reads counts in the input FASTQ file are compared to make sure they are consistent with the number present in the SAM files, by checking the number of reads present in the BWASplitSAM output summary file, which is created after the align and parsing steps. The starting reads counts from the two files are sequestered, and if the value for the ending read count is the same, the column designated flag_start_readNum_eq_readNum_G1/G2 will be flagged with a 1.
+If not, an error is raised, and the flag variable will be 0.  
+
+**Input**
+-The tool requires three input files
+
+	(1) The output summary TSV file generated from the BWA Split SAM script on the G1 SAM file
+	(2) The output summary TSV file generated from the BWA Split SAM script on the G2 SAM file 
+	(3) The FASTQ file using to generate the above G1 and G2 SAM files - used to calculate the number of starting reads
+
+Example summary TSV file from BWASplitSAM script
+
+    +---------------+---------------------+---------------------------------------+---------------------+---------------------+----------------------+---------------------+-----------------+
+    |   Name        |  count_total_reads  | count_mapped_read_opposite_strand     | count_unmapped_read |  count_mapped_read  | count_ambiguous_read |count_chimeric_read  | count_notprimary|
+    +===============+=====================+=======================================+=====================+=====================+======================+=====================+=================+
+    | dataset_2216  |  14                 |   5                                   |    0                |    9                |0                     |                 0   |    0            |
+    +---------------+---------------------+---------------------------------------+---------------------+---------------------+----------------------+---------------------+-----------------+
+   
+
+**Output**
+
+	 A TSV file containing:  
+		(1) starting read counts in the FASTQ file [start_read_num]
+		(2) read counts in the G1 alignment [readNum_G1]
+		(3) read counts in the G2 alignment [readNum_G2]
+		(4) indicator flag for whether the starting count = G1 count [flag_start_readNum_eq_readNum_G1]
+		(5) indicator flag for whether the starting count = G2 count [flag_start_readNum_eq_readNum_G2]
+
+Sample Output TSV file
+
+    +---------------+---------------------+---------------+------------+------------------------------------+------------------------------------+
+    |   fqName      |  start_read_num     |    readNum_G1 | readNum_G2 |  flag_start_readNum_eq_readNum_G1  | flag_start_readNum_eq_readNum_G2   |
+    +===============+=====================+===============+============+====================================+====================================+
+    | dataset_2216  |  14                 |   14          |    14      |    1                               |1                                   |                
+    +---------------+---------------------+---------------+------------+------------------------------------+------------------------------------+
+
+Columns are::
+
+        ◦ FqName
+        ◦ start_read_num: The total number of reads in the FASTQ file, that are started with before the alignment and parsing steps 
+        ◦ readNum_G1: The number of reads found in the summary TSV file output for from BWASplitSAM for parental genome 1, which is after the parsing step 
+        ◦ readNum_G2: The number of reads found in the summary TSV file output for from BWASplitSAM for parental genome 2, which is after the parsing step
+        ◦ flag_start_readNum_eq_readNum_{G1/G2}: 0/1 indicator flag where “1” means that the starting reads and the ending reads for parental genome 1 or 2 are equal, and that the check was successful
+
+In this example, both flags for missing reads are 1, so no reads have been lost.
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

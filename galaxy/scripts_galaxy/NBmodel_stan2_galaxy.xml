@@ -1,0 +1,151 @@
+<tool id="NBmodel_stan2_galaxy" name="Run the Bayesian model: " version="0.1.0">
+    <description>NBModel_stan2_flex_prior.R</description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    mkdir outputs;
+    cd outputs;
+    echo "test" > $test;
+    python '$__tool_directory__/NBmodel_stan2_galaxy_02amm.py'
+    --collection_identifiers="$collection.keys()"
+    --collection_filenames="${",".join(map(str, $collection))}"
+    --datafile2=`pwd`
+    --design=$design
+    --workdir='$__tool_directory__/'
+    --subpath='$__tool_directory__/NBModel_stan2_flex_prior.R'
+    -o=`pwd`
+    -routput=`pwd`
+    -cond=$cond
+    -iterations=$iterations
+    -warmup=$warmup
+
+]]></command>  
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Design File" help="Select your Comparate Design File."/>
+        <param name="collection" type="data_collection" collection_type="list" label="Select the dataset or collection of datasets containing the comparates merged with the priors" help="Select the dataset or collection of datasets that contain the merged comparates."/>
+        <param name="cond" type="text" label="conditions" value="2" help="Enter the number of conditions your're comparing (e.g. M v F would be 2)"/>
+	<param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
+	<param name="warmup" type="text" label="warmup" value="10000" help="Enter the warmup number [default = 10000]"/>
+    </inputs>
+    <outputs>
+      <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Bayesian Model Output">
+	<discover_datasets pattern="(?P&lt;name&gt;bayesian.*)" ext="tabular" directory="outputs" />	
+      </collection>
+      <data name="test" format="tsv" label="test"/>
+    </outputs>
+    <stdio>
+      <exit_code range="1:" level="fatal" />
+      <regex match="recommend"
+             source="stderr"
+             level="warning"
+             description="recomendation message was written in stderr" />
+      <regex match="Loading library"
+             source="stderr"
+             level="log" />
+      <regex match="Execution halted"
+	     source="both"
+	     level="fatal"
+	     description="Execution halted." />
+      <regex match="error"
+	     source="both"
+	     level="fatal"
+	     description="An undefined error occured, please check your intput carefully and contact your administrator." />
+    </stdio>
+    <help><![CDATA[
+**Tool Description** 
+The Bayesian model itself is the STAN (Carpenter et al. 2017) implementation of a previously published model for the detection of AI in one or between multiple conditions (Leon-Novelo et al. 2018) with an extension allowing more flexibility in the prior.
+
+The Run Bayesian tool uses the Bayesian Model outlined in the following paper 
+
+
+
+**Inputs**
+
+
+**Comparate Design File [REQUIRED]**
+
+**NOTE**:The Comparate Design File is created and supplied by the user. It explicitly lists the comparates that the user wants to compare.
+
+The Comparate Design File must contain the following columns, in order::
+
+    (1) C1_G1: The name of the maternal genome (G1) for comparate 1
+    (2) C1_G2: The name of the paternal genome (G2) for comparate 1
+    (3) C2_G1: The name of the maternal genome (G1) for comparate 2
+    (4) C2_G2: The name of the paternal genome (G2) for comparate 2
+    (5) Comparate_1: The genome and first condition to be compared (ex. W55_M)
+    (6) Comparate_2: The genome and second condition to be compared (ex. W55_V)
+    (7) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
+ 
+
+**Dataset or Collection of Datasets where Comparates and Priors have been merged together[REQUIRED]**
+
+
+
+The Bayesian tool requires the dataset containing the new headers for each comparate. This is the output from Merge Comparates and Generate Headers (or the Generate Headers tool if testing one comparate)
+
+Example Input File 
+
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+--------------------+-------------------+--------------------+------------------+--------------+------------------+------------------+--------------------+-------------------+-------------------+------------------+-----------------+----------------------+---------------------+-------------------+-------------------------+-------------------+
+    | Feature_ID  | prior_c1_both   | prior_c1_g1       | prior_c1_g2        | c1_flag_analyze | c1_num_reps | c1_g1_total_rep1 | c1_g2_total_rep1  | c1_both_total_rep1 | c1_flag_apn_rep1 | c1_APN_total_reads_rep1 | c1_APN_both_rep1    | c1_g1_total_rep2 | c1_g2_total_rep2  | c1_both_total_rep2 | c1_flag_apn_rep2  | c1_APN_total_reads_rep2  | c1_APN_both_rep2 |prior_c2_both       | prior_c2_g1       |  prior_c2_g2       | c2_flag_analyze  | c2_num_reps  | c2_g1_total_rep1 | c2_g2_total_rep1 | c2_both_total_rep1 | c2_flag_apn_rep1  | c2_flag_apn_rep1  | c2_APN_both_rep1 | c2_g1_total_rep2|  c2_g2_total_rep2    | c2_both_total_rep2  | c2_flag_apn_rep2  | c2_APN_total_reads_rep2 | c2_APN_both_rep2  |
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+--------------------+-------------------+--------------------+------------------+--------------+------------------+------------------+--------------------+-------------------+-------------------+------------------+-----------------+----------------------+---------------------+-------------------+-------------------------+-------------------+ 
+    |l(1)G1096    |0.799907266902715| 0.118361153262519 | 0.0817315798347665 |        1        |       2     |        295       |         234       |        2197        |         1        |     12.7234208727912    | 10.2551010446158    |        1885      |        1165       |        12201       |         1         | 71.2019427901982         | 56.9617787757493 | 0.802196053469128  | 0.114417568427753 | 0.0833863781031191 |         1        |       2      |        691       |        519       |         5020       |         1         | 29.0734648052328  | 23.4243873865079 |      1075       |           812        |         7481        |          1        | 43.7266913990042        | 34.9168212437762  |
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+--------------------+-------------------+--------------------+------------------+--------------+------------------+------------------+--------------------+-------------------+-------------------+------------------+-----------------+----------------------+---------------------+-------------------+-------------------------+-------------------+
+    | CG10932     |0.853881278538813| 0.0597412480974125| 0.0863774733637747 |        1        |       2     |         13       |          39       |         308        |         1        |     5.06815839835124    | 4.33534520830266    |         100      |         134       |         1394       |         1         | 22.9213896658325         | 19.6266745178861 | 0.866028708133971  | 0.0344497607655502| 0.0995215311004785 |         1        |       2      |         29       |         62       |          674       |         1         | 10.3878993081113  | 9.10716914470779 |        38       |           125        |          920        |          1        |  15.2470189901369       | 12.9534815250994  | 
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+--------------------+-------------------+--------------------+------------------+--------------+------------------+------------------+--------------------+-------------------+-------------------+------------------+-----------------+----------------------+---------------------+-------------------+-------------------------+-------------------+
+    | CG8920      |0.808955223880597| 0.123383084577114 | 0.0676616915422886 |        1        |       2     |         93       |          20       |         500        |         1        |     39.4720538720539    | 32.1912457912458    |         347      |         257       |         2633       |         1         | 208.422222222222         | 169.53063973064  | 0.821591948764867  | 0.108417200365965 | 0.0699908508691674 |         1        |       2      |        163       |        122       |         1112       |         1         | 89.9299663299663  | 71.5858585858586 |       237       |           134        |         1881        |          1        |  144.974410774411       | 121.086195286195  |   
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+--------------------+-------------------+--------------------+------------------+--------------+------------------+------------------+--------------------+-------------------+-------------------+------------------+-----------------+----------------------+---------------------+-------------------+-------------------------+-------------------+ 
+
+------------------------------------------------------------------------------------------------------
+
+**Output**
+
+. 
+The tool generates a single TSV for every comparison (row) in the Comparate Design File: 
+
+The TSV details whether or not a set of alleles are indicative of allelic imbalance for a given comparison, based on a series of Bayesian analyses.
+
+Example Bayesian Output file::
+
+    comparison	FEATURE_ID	W55_M_num_reps	W55_V_num_reps	counts_W55_M_g1	counts_W55_M_g2	counts_W55_M_both	counts_W55_V_g1	counts_W55_V_g2	counts_W55_V_both	prior_W55_M_g1	prior_W55_M_g2	prior_W55_V_g1	        prior_W55_V_g2	chisqpvalue	independence_Bayesian_pvalue	g1_W55_M_sampleprop	g1_W55_M_mean	g1_W55_M_q025	g1_W55_M_q975	g1_W55_M_Bayes_pval	g1_W55_M_AI_decision	        g1_W55_V_sampleprop	g1_W55_V_mean	g1_W55_V_q025	g1_W55_V_q975	g1_W55_V_Bayes_pval	g1_W55_V_AI_decision	alpha1_postmean	alpha2_postmean	flaganalyze
+    W55_M_V	l(1)G0196   	3	        3	        2808	            1939	    18977	        2157	        1572	        15123	                0.6045548654	0.6045548654	    0.6045548654	0.6045548654	0.2331	    0.9939	0.5915	0.5166	0.2781	0.7485	0.8958	0	0.5784	        0.5155	0.2782	0.7478	0.9002	0	0.9988	1.001	1
+    W55_M_V	CG10932	        3	        3	        157	            227	            2244	        72	        208	        1810	                0.1795977012	 0.1795977012	    0.1795977012	0.1795977012	0.0001	    0.1085	0.4089	0.4033	0.3074	0.5105	0.0735	0	0.2571	0.2879	0.2029	        0.4019	0.0023	1	1.2263	1.5942	1
+    W55_M_V	CG8920	        3	        3	        620	            340	            4065	        474	        306	        3592	                0.182225846	 0.182225846	    0.182225846	                      0.182225846	    0.1123	    0.1023	0.6458	0.675	0.6038	0.7388	0.0004	1	0.6077	0.5927	0.5147	0.6636	0.0237	1	    0.6946	0.8306	1
+
+
+
+    +----------------
+    | comparison
+
+Headers are: 
+
+    • Comparison- Same as compID ( just a tag for the comparison performed in the file)
+    • FEATURE_ID- Genic feature ID
+    • c1_num_reps- Number of biological replicates data is present for in comparate 1
+    • c2_num_reps- Number of biological replicates data is present for in comparate 2
+    • counts_c1_g1- Number of aligned reads to G1 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to F)
+    • counts_c1_g2- Number of aligned reads to G2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to G)
+    • counts_c1_both- Number of aligned reads mapped equally well to G1 and G2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M equally to F and G)
+    • counts_c2_g1- Number of aligned reads to G1 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to G)
+    • counts_c2_g2-  Number of aligned reads to G2 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to F)
+    • counts_c2_both- Number of aligned reads mapped equally well to G1 and G2 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M equally to G and F)	
+    • prior_c1_g1- “prior estimate” proportion of reads aligning to G1 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to F)
+    • prior_c1_g: “prior estimate” proportion of reads aligning to gG2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to G)
+    • prior_c1_both: “prior estimate” proportion of reads aligning equally well to G1 and G2 in comparate 1 (so for FG_GF_M, the proportion of mapped reads in FG_M equally to F and G)
+    • prior_c2_g1: “prior estimate” proportion of reads aligning to G1 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to G)
+
+
+
+
+
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

@@ -1,0 +1,105 @@
+<tool id="base_check_alignment_design_file" name="Check Alignment Design File" version="0.1.0">
+    <description>for correct formatting and duplicate FASTQ names </description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    python '$__tool_directory__/check_aln_design_file.py'
+    --design=$design
+    --g1=$g1
+    --g2=$g2
+    --sampleID=$id
+    --fqName=$fq
+    --ext=$ext
+    --rep=$rep
+    --readLen=$readlen
+    --logfile=$logfile
+    --dups=$dups
+]]></command>
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Alignment Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the instructions at the bottom of this page for the format. [Required]"/>
+        <param name="g1" type="text" label="G1 header name" help="Name of the column in the design file containing the names for the first parental genome [Required]"/>
+        <param name="g2" type="text" label="G2 header name" help="Name of the column in the design file containing the names for the second parental genome [Required]"/>
+        <param name="id" type="text" label="SampleID header name" help="Name of the column in the design file containing the sampleID names [Required]"/>
+        <param name="fq" type="text" label="Fastq file name header" help="Name of the column in the design file containing the FASTQ file names without extensions [Required]"/>
+        <param name="ext" type="text" label="FASTQ extension header" help="Name of the column in the design file containing the extension of FASTQ files, ex: .fq, .fastq. [Required]"/>
+        <param name="readlen" type="text" label="Read length header" help="Name of column in the design file containing the read lengths for the FASTQ files [Required]"/>
+        <param name="rep" type="text" label="Tech rep indentifier header" help="Name of the column in the design file containing the tech rep identifiers, ex: lanes, etc. [Required]"/>
+
+    </inputs>
+    <outputs>
+        <data format="tabular" name="dups" label="${tool.name} on ${on_string}: Duplicates"/>        
+        <data format="tabular" name="logfile" label="${tool.name} on ${on_string}: Alignment Design Criteria"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="design" ftype="data"     value="BASE_testdata/check_pre_align_design_testdata/df_BASE_galaxy_test_data_W55_noEmptyFq.tsv"/>
+            <param name="g1" ftype="text" value="G1" />
+            <param name="g2" ftype="text" value="G2" />
+            <param name="id" ftype="text" value="sampleID"/>
+            <param name="fq" ftype="text" value="fqName"/>
+            <param name="ext" ftype="text" value="fqExtension"/>
+            <param name="readlen" ftype="text" value="readLength"/>
+            <param name="rep" ftype="text"  value="techRep"/>         
+            <output name="dups"  ftype="data" file="check_df_formatting_BASE_test_data.tabular" />
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. 
+
+**NOTE:** There are two design files in BASE that must be created and supplied by the user. They are the *Alignment Design file* and the *Comparate Design file*. 
+
+**The design file should contain the following columns, in order:**
+
+	(1) G1 - name of parental genome 1 for alignment
+	(2) G2 - name of parental genome 2 for alignment
+	(3) sampleID - sample identifier (no spaces)
+	(4) fqName - name of the column containing the FASTQ file names, WITHOUT the extension
+	(5) fqExtension - FASTQ file extension, for example, .fq or .fastq (NOT gzipped)
+	(6) techRep - name of the column containing the technical replicates for each sampleID, for example, the same library run on different lanes.
+	(7) readLength - the read length in base pairs
+
+The sample identifier must contain the biological replicate number, and the comparate conditions to be tested in the Bayesian Model for Allelic Imbalance. 
+
+An example of a comparate condition is W1118_F, where W1118 is the genome and F refers to female. There must be at least two comparate conditions for Bayesian Analysis.
+
+In the example below, there are two comparate condtions, W55_Mated and W55_Virgin, and E1, refers to the biological replicate number. 
+
+An example design file::
+
+	G1	G2	sampleID		fqName			fqExtension	techRep	readLength 
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150        
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150        
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150        
+	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R1	.fq		1	150        
+	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R2	.fq		2	150
+	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R3	.fq		3	150
+
+If using simulated reads, include the technical replicate column, but label the technical replicates with the same number
+
+Example design file for simulated data ::
+ 
+	G1	G2      sampleID   fqName	fqExtension	techRep	readLength 
+	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96        
+	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96        
+	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96 
+	W1118	W55      W55_V_2   SRR1989594_1     .fq		1	96
+
+**Outputs**
+
+	(1) a logfile with information about whether the column names are correct and if there are any duplicated FASTQ file names.
+	(2) a text file containing a list of any duplicated FASTQ file names, if present.
+   
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

@@ -1,0 +1,80 @@
+<tool id="base_check_comparate_design_file" name="Check Comparate Design File" version="0.1.0">
+    <description>for correct formatting and header names </description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    python '$__tool_directory__/check_comparate_design_file.py'
+    --design=$design
+    --compNum=$compNum
+    --out=$out
+]]></command>
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Select Comparate Design File" help="Design file containing comparates and conditions. Please refer to the BASE User Guide for help [Required]"/>
+        <param name="compNum" size="30" type="select" value="" display="radio" label="Comparate Number" help="Select the number of comparate conditions for the data">
+            <option value="1">One Comparate</option>
+            <option value="2">Two Comparates</option>
+        </param>
+    </inputs>
+    <outputs>       
+        <data format="tabular" name="out" label="${tool.name} on ${on_string}: Comparate Design criteria"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="design" ftype="data" value="BASE/BASE_testdata/merge_priors_testdata/pre_bayesian_df_BASE.tsv"/>
+            <param name="compNum" ftype="text" value="2"/>
+            <output name="BASE/BASE_testdata/merge_priors_testdata/Pre_Bayesian_design_criteria.tabular"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+This tool checks to make sure the design file is formatted correctly and has all needed headers. It also verifies that there are no missing labels.
+
+**The design file should contain the following columns, in order:**
+
+
+    (1) C1_G1: The name of the maternal genome (G1) for comparate 1 
+    (2) C1_G2: The name of the paternal genome (G2) for comparate 1
+    (3) C2_G1: The name of the maternal genome (G1) for comparate 2
+    (4) C2_G2: The name of the paternal genome (G2) for comparate 2
+    (5) Comparate_1: The genome and first condition to be compared (ex. W55_M where M is for mated)
+    (6) Comparate_2: The genome and second condition to be compared (ex. W55_V where V is for virgin)
+    (7) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
+
+compID needs a unique identifier to assist naming output files of individual analysis procedures (ex: if male and female time10 samples compared, compID could be “M_F_time10”). 
+
+All cell values must be underscore delimited 
+
+
+An example design file for one comparate::
+
+	C1_G1	C1_G2	Comparate_1	compID			
+	W1118	W55	W55_Mated       mel_W55_Mated	  
+
+
+An example design file for two comparates::
+
+    +-------+-------+-------+-------+-------------+-------------+--------+
+    | C1_G1 | C1_G2 | C2_G1 | C2_G2 | Comparate_1 | Comparate_2 | compID |
+    +=======+=======+=======+=======+=============+=============+========+
+    | W1118 | W55   | W1118 | W55   | W55_M       | W55_V       | W55_M_V| 
+    +-------+-------+-------+-------+-------------+-------------+--------+
+
+
+**Outputs**
+
+	(1) a logfile with information about whether the column names are correct 
+	(2) a text file containing a list of any missing or misspelled labels, if present
+   
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

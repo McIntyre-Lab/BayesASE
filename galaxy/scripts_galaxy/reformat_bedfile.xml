@@ -1,0 +1,75 @@
+<tool id="base_reformat_bedfile" name="Reformat user-provided BED file"  version="0.1.0">
+    <description>for use in BASE Align and Count workflow</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command>
+<![CDATA[ 
+        awk 
+            -v FS='	' 
+            -v OFS='	' 
+            '{print $4,$2,$3,$1}' 
+            '$infile' 
+        > '$outfile' 
+]]>
+    </command>
+    <inputs>
+        <param name="infile" format="txt" type="data" label="Input 4-column BED file to reformat" />
+    </inputs>
+    <outputs>
+        <data name="outfile" format_source="infile" metadata_source="infile"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="infile"      value="BASE_testData_BEDfile.bed"/>
+            <output name="outfile"   file="reformat_BED_file_for_BASE.bed"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+This tool reorders the columns in a user-specified 4-column BED file that contains genic regions of interest, switching the chromosome name and feature ID columns so that the names of the features of interest is in column 1. This allows for the downstream SAM alignments to be reformatted to be with respect to the genic features of interest rather than chromosomal features. 
+
+
+**Inputs**
+
+The input for this script is a 4-column BED file containing the locations of the genic features for the species.
+
+The input BED file must contain these columns in the following order:
+
+(1) *Chrom*: The name of the chromosome the genic features are on
+(2) *Start*: The start position of the feature on the chromosome
+(3) *End*: The end position of the feature on the chromosome
+(4) *Name*: The name/ID of the features of interest
+
+Example input BED file:
+
+    +---------------+---------+---------+----------+
+    |   chrom       |  start  |   end   |  name    |  
+    +---------------+---------+---------+----------+
+    |     2R        |  2345   |   2899  | featureA |
+    +---------------+---------+---------+----------+
+
+**Outputs**
+
+A 4-column BED file that has the names of the Feature IDs in the first column and chromosome name column last. 
+
+
+    +---------------+-----------+------------+------------+
+    |   name        |   start   |    end     |    chrom   |  
+    +---------------+-----------+------------+------------+
+    |  featureA     |   2345    |   2899     |    2R      |
+    +---------------+-----------+------------+------------+
+
+   ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

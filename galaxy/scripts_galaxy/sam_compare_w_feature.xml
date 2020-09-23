@@ -1,0 +1,148 @@
+<tool id="sam_compare_w_feature" name="Compare SAM files and create ASE Counts Tables" version="0.1.0">
+    <description> containing read counts by how they mapped to each parental genome </description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    python '$__tool_directory__/sam_compare_w_feature.py'
+    --fastq=$fastq
+    --sama=$sama
+    --samb=$samb
+    --feature=$feature
+    --length=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'`
+    --nofqids=$nofqids
+    --counts=$counts
+    --totals=$totals
+]]></command>
+    <inputs>
+        <param name="fastq" type="data" format="fastq" label="FASTQ File" help="Select the FASTQ file used to generate the 2 SAM files [REQUIRED]"/>
+        <param name="sama" type="data" format="tabular" label="SAM file with G1 reference" help="Select SAM file for G1 containing feature ID in RNAME field [REQUIRED]"/>
+        <param name="samb" type="data" format="tabular" label="SAM file with G2 reference" help="Select SAM file for G2 containing feature ID in RNAME field [REQUIRED]"/>
+        <param name="feature" type="data" format="tabular" label="Reformatted BED file" help="Select file containing features to assign reads to, with feature ID names in first column. Can be a .tsv or .bed [REQUIRED]"/>
+	<param name="nofqids" type="select" value="" display="radio" label="Check Fastq IDs" help="Select No to skip checking SAM QNAME against the fastq sequence IDs. Saves time if already known to be good.">
+            <option value="False" selected="true">Yes</option>
+            <option value="True">No</option>
+        </param>
+    </inputs>
+    <outputs>
+        <data name="counts" format="tsv" label="SAM Compare with Feature on ${on_string}: Create ASE Counts Tables" default_identifier_source="sama"/>
+        <data name="totals" format="tsv" label="SAM Compare with Feature on ${on_string}: Create ASE Totals Tables" default_identifier_source="sama"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="fastq" ftype="data"      value="W55_M_1_1.fastq"/>
+            <param name="sama"  ftype="data"     value="W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam"/>
+            <param name="samb"  ftype="data"     value="W55_G2_create_new_SAM_file_with_features_BASE_test_data.sam" />
+            <param name="feature" ftype="data"   value="reformat_BED_file_for_BASE.bed" />
+            <param name="nofqids" ftype="select"   value="true" />
+            <output name="counts"    file="ASE_counts_table_BASE_test_data.tsv" />
+            <output name="totals"    file="ASE_totals_table_BASE_test_data.tsv" />
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+This tool is used to create an ASE Counts Table compiled from a comparison between two SAM files, generated from aligning an individual F1 FASTQ file to both updated parental genome references. 
+Using a scoring system, reads from each SAM file are compared to determine whether a read maps better to one parental genome or equally well to both. The reads are tabulated in a table illustrating the different combinations they aligned to in relation to the parental genomes. The results are summarized by read count in an ASE Totals Table. 
+    
+**Input**    
+
+**FASTQ file [REQUIRED]**
+    
+The tool requires the FASTQ file used to generate the 2 SAM files. The FASTQ file is used to determine the APN (average number of reads per nucleotide).
+
+**SAM files [Required]**
+
+The tool requires the two SAM files of uniquely mapping reads output by the *Create New SAM file* tool.
+ 
+(1) SAM file containing uniquely mapping reads that overlap with features of interest for updated reference genome G1 (SAM A).
+(2) SAM file containing uniquely mapping reads that overlap with features of interest for updated reference genome G2 (SAM B).
+
+**4- column BED file [Required]**
+
+A four column BED file containing genic features in the 1st column and chromosome name in the 4th column.
+This input BED file can be created using the *Reformat BED file* tool. 
+
+Example input BED File:: 
+
+    +---------------+-----------+------------+------------+
+    |   name        | start     |  end       |    chrom   |  
+    +===============+===========+============+============+
+    |  featureA     |   2345    |   2899     |    2R      |
+    +---------------+-----------+------------+------------+
+
+**Output**
+The tools generates 2 output TSV files:
+
+(1) An ASE counts table containing the orientation that unique reads mapped to each feature listed in the input Feature/BED
+
+Example of ASE Counts Table
+
+    +---------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
+    |Feature_ID     | BOTH_EXACT |BOTH_INEXACT_EQUAL|SAM_A_ONLY_EXACT|SAM_B_ONLY_EXACT| SAM_A_EXACT_SAM_B_INEXACT|SAM_B_EXACT_SAM_A_INEXACT|SAM_A_ONLY_SINGLE_INEXACT|SAM_B_ONLY_SINGLE_INEXACT |SAM_A_INEXACT_BETTER|SAM_B_INEXACT_BETTER|
+    +===============+============+==================+================+================+==========================+=========================+=========================+==========================+====================+====================+
+    | l(1)G0196     |  4         |2                 |   0            |    0           |    0                     |    0                    |0                        |                 0        |    1               | 1                  |
+    +---------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
+    | CG8920        |0           | 1                | 0              | 0              |  0                       | 0                       | 0                       |0                         |0                   |0                   | 
+    +---------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+ 
+    |CG10932        |  0         | 1                | 0              |  0             | 0                        | 0                       |0                        |0                         |0                   | 0                  |
+    +---------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
+    |Mapmodulin     | 2          |1                 |0               |0               | 0                        | 0                       | 0                       | 0                        | 0                  |  1                 |
+    +---------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
+
+Columns are::
+
+        ◦ FqName
+        ◦ start_read_num: The total number of reads in the FASTQ file, that are started with before the alignment and parsing steps 
+        ◦ readNum_G1: The number of reads found in the summary TSV file output for from BWASplitSAM for parental genome 1, which is after the parsing step 
+        ◦ readNum_G2: The number of reads found in the summary TSV file output for from BWASplitSAM for parental genome 2, which is after the parsing step
+        ◦ flag_start_readNum_eq_readNum_{G1/G2}: 0/1 indicator flag where “1” means that the starting reads and the ending reads for parental genome 1 or 2 are equal, and that the check was successful
+
+(2) An ASE totals table containing a summary of the reads aligning to the the G1 and G2 references
+
+Example of ASE Totals Table::
+
+           Count totals:
+    1:	a_single_exact	0
+    2:	a_single_inexact	0
+    3:	a_multi_exact	0
+    4:	a_multi_inexact	0
+    5:	b_single_exact	0
+    6:	b_single_inexact	0
+    7:	b_multi_exact	0
+    8:	b_multi_inexact	0
+    9:	both_single_exact_same	0
+    10:	both_single_exact_diff	6
+    11:	both_single_inexact_same	0
+    12:	both_single_inexact_diff	8
+    13:	both_inexact_diff_equal	5
+    14:	both_inexact_diff_a_better	1
+    15:	both_inexact_diff_b_better	2
+    16:	both_multi_exact	0
+    17:	both_multi_inexact	0
+    18:	a_single_exact_b_single_inexact	0
+    19:	a_single_inexact_b_single_exact	0
+    20:	a_single_exact_b_multi_exact	0
+    21:	a_multi_exact_b_single_exact	0
+    22:	a_single_exact_b_multi_inexact	0
+    23:	a_multi_inexact_b_single_exact	0
+    24:	a_single_inexact_b_multi_exact	0
+    25:	a_multi_exact_b_single_inexact	0
+    26:	a_single_inexact_b_multi_inexact	0
+    27:	a_multi_inexact_b_single_inexact	0
+    28:	a_multi_exact_b_multi_inexact	0
+    29:	a_multi_inexact_b_multi_exact	0
+    30:	total_count	14
+
+  
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

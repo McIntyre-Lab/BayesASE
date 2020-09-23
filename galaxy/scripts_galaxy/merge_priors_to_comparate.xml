@@ -1,0 +1,123 @@
+<tool id="merge_priors_to_comparate" name="Merge priors to comparate" version="0.1.0">
+    <description>merges filtered/summarized ASE Counts tables to file with calculated prior values for a single comparate </description>
+    <macros>
+      <import>../macros.xml</import>
+    </macros>
+    <expand macro="requirements" />
+    <command><![CDATA[
+    mkdir outputs;
+    cd outputs;
+    python '$__tool_directory__/merge_priors_to_comparate_03amm.py'
+    --design=$design
+    --collection1_identifiers="$collection1.keys()"
+    --collection1_filenames="${",".join(map(str, $collection1))}"
+    --collection2_identifiers="$collection2.keys()"
+    --collection2_filenames="${",".join(map(str, $collection2))}"
+    --out=`pwd`
+]]></command>
+    <inputs>
+        <param name="design" type="data" format="tsv" label="Design file" help="Enter the Priors Design file output from Reformat Summarization Design file; formatting is shown below"/>
+        <param name="collection1" type="data_collection" collection_type="list" label="Summarized and Filtered ASE Count Table Collection" help="Select the collection containing input filtered ASE count tables per comparate"/>
+        <param name="collection2" type="data_collection" collection_type="list" label="Calculated Priors Collection" help="Select the collection containing the Prior Probability Estimates for a given comparate"/> 
+    </inputs>
+    <outputs>
+      <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Merge Priors to Comparate">
+        <discover_datasets pattern="(?P&lt;name&gt;bayesian.*)" ext="tabular" directory="outputs" />
+      </collection>
+    </outputs>
+    <tests>
+        <test>
+            <param name="design" value="BASE_testdata/summarize_counts_testdata/prior_df.tsv" ftype="tsv"/>
+            <param name="collection1" value="/BASE_testdata/summarize_counts_testdata/filtered_ASE_counts_tables_BASE" ftype="data_collection"/>
+            <param name="collection2" value="BASE_testdata/calculated_priors_BASE_testdata" ftype="data_collection"/>
+            <output_collection name="split_output" type="list">
+              <element name="FEATURE_ID">
+                <assert_contents>
+                  <has_text_matching expression="Merge_prior_to_comparate_test_data"/>
+                </assert_contents>
+              </element>
+             </output_collection> 
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+Merge Priors to Comparate merges the file containing the calculated prior probability values for each feature to the summed ASE Counts tables that have been filtered by APN threshold and read coverage. The file generated in the Calculate Priors from ASE Count Tables tool is incorporated into a new file that also contains the output from the Summarize Counts Tables tool. The tool outputs one file per comparate. 
+
+It does this by reading the design file, and for each row, it finds the filtered files and the prior files that are associated with each other by feature ID. It then makes sure that flag analyze equals zero for features where all priors values are zero. It also ensures that features with low read count/low APN values are excluded from Bayesian analysis.
+
+**NOTE**:FEATURE_IDs in the Summarized/Filtered ASE Counts Tables must match those in the Calculated Prior file and be in the same order
+
+**Inputs**
+
+**Prior Design File [REQUIRED]** 
+
+The tool requires the priors design file output from the Summarize ASE Counts Table tool
+
+The design file must contain the following columns in the exact order::
+
+    1. G1- This is the name of the paternal genome
+    2. G2- The name of the maternal genome 
+    3. comparate-contains comparate conditions
+
+Comparate conditions refers to the conditions to be tested for allelic specific expression. (ie W55_M or W55_V where W55 is the name of the parental genome for the comparate and M/v (mated and virgin) refer to the condition
+ 
+
+
+Example of input design file::
+
+    +-------+------+---------+
+    |   G1  |  G2  |comparate| 
+    +-------+------+---------+
+    | W1118 |  W55 | W55_M   |
+    +-------+------+---------+
+    | W1118 | W55  | W55_M   |
+    +-------+------+---------+
+
+**Collection of Filtered/Summarized ASE Counts Tables [REQUIRED]**
+
+The output collection of summed and filtered ASE Counts table, containing only features to be analyzed in the Bayesian Module is required. This can be made using the *Combine Counts Table* tool in conjunction with the *Summarize ASE Count Tables* tool
+
+An example ASE count table ::
+
+	FEATURE_ID	g1	g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2      	W55_M_APN_both_rep2
+	l(1)G0196	W1118	W55	1    			2			691				519				5020 	        		1   				29.073464805232			23.4243873865079		1075				812				7481				1			43.7266913990042		        34.9168212437762
+	CG8920  	W1118	W55  	1			2			29				 62				 647    			1				10.3878993081113		9.10716914470779		38				126				920				1			15.2470189901369		        12.9534815250994
+	CG10932 	W1118	W55 	1			2			163				122		                1112		    		1				89.9299663299663		71.5858585858586		237				134				1881				1			144.974410774411	            	121.086195286195
+
+**Collection of files with Calculated Prior Estimates [REQUIRED]**
+
+A collection containing calculated prior estimates for each of the comparates is needed. This can be created using the *Calculate Prior Probabilities* tool.
+
+
+An example prior file (W55_M_prior)::
+	
+	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1	prior_W55_M_g2
+	l(1)G0196	0.802196053		0.114417568	0.083386378
+	CG10932		0.866028708		0.034449761	0.099521531
+	CG8920		0.821591949		0.1084172	0.069990851
+	Mapmodulin	0.904654394		0.076762765	0.018582841
+	
+**Outputs**
+
+	(1) One CSV file containing the output from both the Calculate Priors tool and the Summarize ASE Counts tables tool merged together into one file for a given comparate. 
+	 
+Example output. The comparate is W55_M::
+
+	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1             prior_W55_M_g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2     	W55_M_APN_both_rep2	
+	l(1)G0196	0.802196053469128	0.114417568427753         0.0833863781031191	1    	        	2			691				519				5020 	        		1   				29.073464805232			23.4243873865079		1075				812				7481				1			43.7266913990042		34.9168212437762
+	CG8920  	0.866028708133971	0.0344497607655502        0.0995215311004785	1			2			29				 62				 647    			1				10.3878993081113		9.10716914470779		38				126				920				1			15.2470189901369		12.9534815250994
+	CG10932 	0.821591948764867	0.108417200365965         0.0699908508691674	1			2			163				122		                1112		    		1				89.9299663299663		71.5858585858586		237				134				1881				1 			144.974410774411		121.086195286195
+
+
+   
+    ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>

@@ -1,0 +1,101 @@
+<tool id="base_reformat_design_file" name="Reformat Sample Design File"  version="0.1.0">
+    <description>for entry into Calculate Priors Module for BASE</description>
+    <macros>
+        <import>../macros.xml</import>
+    </macros>
+    <requirements>
+    </requirements>
+    <command>
+<![CDATA[ 
+  awk 'BEGIN{FS="\t"; OFS="\t"} { print $1"\t"$2"\t"$4}' ${DESIGN} | sort -u > ${OUTFILE}
+]]>
+    </command>
+    <inputs>
+        <param name="DESIGN" format="tabular" type="data" label="Input Sample Design file" help=" See help section for required format. This Design file can be created by the Combine Counts Tables tool" />
+    </inputs>
+    <outputs>
+        <data name="OUTFILE" format="tsv" label="${tool.name} on ${on_string}: Prior Design File"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="DESIGN" value="BASE_testdata/summarize_counts_testdata/sample_df_BASE.tabular" ftype="tabular"/>
+            <output name="OUTFILE" file="BASE_testdata/summarize_counts_testdata/prior_design_file.tsv" ftype="tsv"/>
+        </test>
+    </tests>
+    <help><![CDATA[
+**Tool Description**
+
+The Reformat Design File tool takes the input "Sample design file” and modifies it, removing the sampleID column in preparation for entry into the Calculate Priors tool, and for use in downstream tools making up the Bayesian Model Module. The Sample Design file contains the information for the summed biological replicates and the genotype + conditions of the comparate(s). The sample contains the list of comparates, which refers to the desired genotype and the condition that the user wishes to be tested for allelic specific expression, and should have the same format as the sampleID, but excludes the biological replicate number.
+
+**WARNING:** The design file must contain at least two different comparates for entry into the Bayesian Model. 
+
+An example of two comparate conditions is W55_M versus W55_V, where W55 is the name of the parental genome for comparison, and M (mated) or V (virgin) are the conditions.  
+
+Another example is W55_M and W1118_F, where M and F refer to male and female. 
+
+---------------------------------------------------------------------------------------------------------------------------
+
+**Inputs**
+
+**Sample Design File** 
+
+The input for this tool is the user's Sample Design File
+
+The design file can be made by using the *Combine Counts Tables* tool.
+
+**The design file should contain the following columns, in order:**
+    
+    (1) G1 - name of parental genome 1 for alignment
+    (2) G2 - name of parental genome 2 for alignment
+    (3) sampleID - sample identifier (no spaces). Contains comparate + biological replicate number
+    (4) comparate- contains comparate information only
+
+The comparate conditions must be written in the following format:
+
+{Genotype}_{condition} (ie W1118_V)
+
+These tell BASE what conditions are to be tested in Bayesian Analysis for Allelic Specific Expression.
+
+Example of input Sample design file::
+
+    +-------+------+---------+----------+
+    |   G1  |  G2  |sampleID |comparate |  
+    +-------+------+---------+--------- +
+    | W1118 |  W55 | W55_M_1 | W55_M    |
+    +-------+------+---------+----------+
+    | W1118 | W55  | W55_M_2 | W55_M    |  
+    +-------+------+---------+----------+
+    | W1118 | W55  | W55_M_3 | W55_M    |
+    +-------+------+---------+----------+
+    | W1118 | W55  | W55_V_1 | W55_V    |
+    +-------+------+---------+----------+
+   
+
+**Outputs**
+
+(1) A TSV file of the reformatted design file with the sampleID column removed. 
+
+Example of output design file::
+
+    +-------+------+----------+
+    |   G1  |  G2  |comparate |  
+    +-------+------+----------+
+    | W1118 |  W55 | W55_M    |
+    +-------+------+----------+
+    | W1118 | W55  | W55_M    |  
+    +-------+------+----------+
+    | W1118 | W55  | W55_M    | 
+    +-------+------+----------+
+    | W1118 | W55  | W55_V    | 
+    +-------+------+----------+
+
+   ]]></help>
+    <citations>
+            <citation type="bibtex">@ARTICLE{Miller20BASE,
+            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
+            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            journal = {????},
+            year = {in press}
+            }</citation>
+        </citations>
+</tool>
