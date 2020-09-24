@@ -121,10 +121,10 @@ Example Priors Calculation File::
     ]]></help>
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,
-            author = {Brecca Miller, Alison Morse, Elyse Borgert, Gavin Gamble, Fei Zhou, Jeremy Newman, Fabio Marroni, Lauren M. McIntyre},
-            title = {BASE: Bayesian analysis of allele specific expression reveals statistically significant regulatory variation},
+            author = {Brecca Miller, Alison M. Morse, Elyse Borgert, Zihao Liu, Kelsey Sinclair, Gavin Gamble, Fei Zou, Jeremy Newman, Luis Leon Novello, Fabio Marroni, Lauren M. McIntyre},
+            title = {Testcrosses are an efficient strategy for identifying cis regulatory variation: Bayesian analysis of allele imbalance among conditions (BASE)},
             journal = {????},
-            year = {in press}
+            year = {submitted for publication}
             }</citation>
-        </citations> 
+        </citations>
 </tool>
