@@ -1,13 +1,12 @@
 #!/usr/bin/env python
-#Standar Libraries
+
 import os
 import re
 import logging
 import argparse
 import numpy as np
-
-#AddOn Libraries
 from Bio.SeqIO.QualityIO import FastqGeneralIterator
+
 
 def getOptions():
     """Function to pull in arguments"""
@@ -21,8 +20,9 @@ def getOptions():
     output.add_argument("--uniq", dest="uniq", action="store", required=True, help="mapped reads file")
     output.add_argument("--summ", dest="summ",  action="store", required=True, help="summary file")
     args=parser.parse_args()
-    
+
     return (args)
+
 
 def readFastQ(fastq_path):
     """
@@ -35,6 +35,7 @@ def readFastQ(fastq_path):
 
     return (readDict)
 
+
 def writeOutput (headList,readDict,out_path):
     """
     Reads a list of headers and a dictionary to output a fastq file format
@@ -45,16 +46,14 @@ def writeOutput (headList,readDict,out_path):
             OUTFILE.write ('\n'.join(['@'+head,readDict[head][0],'+',
                             readDict[head][1],'']))
 
-def SplitSAMSE (sam,summname):
-    """Function to split all the reads in PE SAM files"""
 
-    # Setting flags
+def SplitSAMSE (sam,summname):
+    """Split all reads in PE SAM files"""
     flags_uniq         = ["0","16"]
     flags_chimeric       = ["2048","2064"]
     flags_unmappedreads  = ["4"]
     flags_notprimary     = ["256","272"]
 
-    # Setting counters
     counter_total         = 0
     counter_mapped        = 0
     counter_oppositestrand = 0
@@ -63,40 +62,29 @@ def SplitSAMSE (sam,summname):
     counter_unmappedread  = 0
     counter_notprimary    = 0
 
-    # Lists for mapped and ambiguous reads
     unmappedread = []
     ambiguous    = []
 
-    # Filename
     bname = os.path.basename(sam)
     name  = os.path.splitext(bname)[0]
 
-    # Open SAM file and output files in SAM format.
     SAM        = open(sam,'r')
     UNIQ     = open(args.uniq, 'w')
-    # Open Sumary file
     SUMMARY    = open(args.summ, 'w')
 
-    # Reading line by line SAM file (except headers)
     for line in SAM:
         if line.startswith('@'):continue
         elements = line.strip().split("\t")
-
-        # Getting unmapped reads
         if elements[1] in flags_unmappedreads:
             unmappedread.append(elements[0])
             counter_total        += 1
             counter_unmappedread += 1
-        # Getting & printing "CHIMERIC" reads
         elif elements[1] in flags_chimeric:
             counter_total    += 1
             counter_chimeric += 1
-        # Getting & printing "NOT PRIMARY" reads
         elif elements[1] in flags_notprimary:
             counter_total    += 1
             counter_notprimary += 1
-        # Getting & printing AMBIGUOUS reads, those who are not ambiguous are 
-        # store as mapped reads
         elif elements[1] in flags_uniq:
             if(elements[1]=="0"):
                 regmatch=re.match(".+\tAS:i:([0-9]+)\tXS:i:([0-9]+).*", line)
@@ -112,12 +100,9 @@ def SplitSAMSE (sam,summname):
                 print('\t'.join(elements), file=UNIQ)
                 counter_total         += 1
                 counter_oppositestrand += 1
-
-        #If not in the previous categories then unknown
         else:
             print("Warning: "+elements[1]+" key is not recognized")
 
-    #Print summary
     count_names = ["name",
                     "count_total_reads",
                     "count_mapped_read_opposite_strand",
@@ -139,18 +124,16 @@ def SplitSAMSE (sam,summname):
     print('\t'.join(count_names), file=SUMMARY)
     print('\t'.join(count_values), file=SUMMARY)
 
-    #Clossing all files
     SAM.close()
     UNIQ.close()
     SUMMARY.close()
 
-    #return(unmappedread1,unmappedread2)
     return(unmappedread,ambiguous)
 
-def main(args):
-    """Here we call all other functions"""
 
-    # Paths
+def main():
+    """Main function for command-line execution."""
+    args = getOptions()
     bname = os.path.basename(args.sam)
     name  = os.path.splitext(bname)[0]
 
@@ -158,15 +141,8 @@ def main(args):
         summname = name
     else:
         summname = args.summname
-
-    # Split SAM FILE for Single End
     unmapped,ambiguous = SplitSAMSE(args.sam, summname)
 
-    # If FastQ provided then output unmmaped and ambiguous reads as FQ else finish
 
 if __name__=='__main__':
-    # Setting parser
-    args = getOptions()
-
-    # Starting script
-    main(args)
+    main()
