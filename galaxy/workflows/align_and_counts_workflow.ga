@@ -1,0 +1,1023 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "The BASE Align and Count workflow\n generates SAM files comprised of alignments between the input FQ files and the input updated genotype specific reference genomes. These SAM files are subsequently parsed, and the uniquely mapping reads are compared and tabulated in an ASE Counts Table, which depicts whether the reads align preferentially to one parent, or the same to both, for a set of user specified features of interest. There are several checking mechanisms put in place throughout the module to prevent the loss of reads, and ensure that the scripts have generated the correct files. **NOTE:\n The workflow only takes single-end alignments! The input FQ files in a collection must contain technical replicates that all belong to the same biological F1 cross (G1 and G2)",
+    "format-version": "0.1",
+    "name": "Align and Counts Workflow for BASE",
+    "steps": {
+        "0": {
+            "annotation": "Collection of FASTQ files containing the sequences for experimental F1 technical replicates. **These FQ files will all be individually aligned to the input parental reference genomes**",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Collection of FASTQ files containing the sequences for experimental F1 technical replicates. **These FQ files will all be individually aligned to the input parental reference genomes**",
+                    "name": "Input FASTQ Collection"
+                }
+            ],
+            "label": "Input FASTQ Collection",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 218,
+                "top": 403
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "7cfddfeb-4956-4bc1-848c-0e762ebd9aff",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "a59ae473-aee5-492c-8131-1800ebf638ee"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Genotype specific FASTA file for parental genome 1",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Genotype specific FASTA file for parental genome 1",
+                    "name": "Input FASTA File (G1)"
+                }
+            ],
+            "label": "Input FASTA File (G1)",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 200,
+                "top": 612.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "b429d878-ce8d-4bda-82ec-cbb1eff6cbb9",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "eca88f79-3801-4123-a630-f6a684fae867"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "Genotype specific FASTA file for parental genome 2",
+            "content_id": null,
+            "errors": null,
+            "id": 2,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Genotype specific FASTA file for parental genome 2",
+                    "name": "Input FASTA File (G2)"
+                }
+            ],
+            "label": "Input FASTA File (G2)",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 224,
+                "top": 821.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "202ccd8b-629d-4615-965b-d7bd247eda88",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "4e0fb76b-d517-4319-8763-ea0d58918d96"
+                }
+            ]
+        },
+        "3": {
+            "annotation": "Input 4 column BED file containing the locations of genic features (sequences for features of interest) for the species **See the BASE User Guide for proper format**",
+            "content_id": null,
+            "errors": null,
+            "id": 3,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input 4 column BED file containing the locations of genic features (sequences for features of interest) for the species **See the BASE User Guide for proper format**",
+                    "name": "Input BED File"
+                }
+            ],
+            "label": "Input BED File",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 861,
+                "top": 199
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "fba07c9e-1e65-4550-90bc-cf0dc8a39387",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "5d70e7e1-0f45-4fa3-b190-8be5c1115b10"
+                }
+            ]
+        },
+        "4": {
+            "annotation": "Aligns genotype specific reference file  to input FASTQ files",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.1",
+            "errors": null,
+            "id": 4,
+            "input_connections": {
+                "fastq_input|fastq_input1": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "reference_source|ref_file": {
+                    "id": 1,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Map with BWA-MEM",
+                    "name": "fastq_input"
+                },
+                {
+                    "description": "runtime parameter for tool Map with BWA-MEM",
+                    "name": "reference_source"
+                }
+            ],
+            "label": "Map With BWA-MEM (G1)",
+            "name": "Map with BWA-MEM",
+            "outputs": [
+                {
+                    "name": "bam_output",
+                    "type": "bam"
+                }
+            ],
+            "position": {
+                "left": 475,
+                "top": 462
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.1",
+            "tool_shed_repository": {
+                "changeset_revision": "3fe632431b68",
+                "name": "bwa",
+                "owner": "devteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"analysis_type\": {\"analysis_type_selector\": \"illumina\", \"__current_case__\": 0}, \"fastq_input\": {\"fastq_input_selector\": \"single\", \"__current_case__\": 1, \"fastq_input1\": {\"__class__\": \"RuntimeValue\"}}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"ref_file\": {\"__class__\": \"RuntimeValue\"}, \"index_a\": \"auto\"}, \"rg\": {\"rg_selector\": \"do_not_set\", \"__current_case__\": 3}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.7.17.1",
+            "type": "tool",
+            "uuid": "1d803566-bab2-4c0c-84e3-3622e6cb3644",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "bam_output",
+                    "uuid": "b9f6904b-4b54-4203-93bd-98294d17c57f"
+                }
+            ]
+        },
+        "5": {
+            "annotation": "When running tool, make sure the following parameters are selected to properly deploy the BASE Align and Count workflow(For both G1 and G2) : 1. Select \"Use a Genome from history and build index\" from drop down menu under \u2018Will you select a reference genome from your history or use a built-in index?\u2019 2. Select the dataset to use as the reference sequence from the drop down menu 3. Select Auto. Let BWA decide the best algorithm to use. If the genome is very large (&gt;2 GB), the algorithm can be switched to BWA-ST. 4. Select Single reads. This is a required setting if using SAM Align and Compare module. 5. Select the fastq dataset from the drop down menu 6. Under set read groups information, select Do not set 7. Select Simple Illumina mode from the drop down menu under Select Analysis mode. Other sequencing tools are supported such as PacBio and Nanopore. ",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.1",
+            "errors": null,
+            "id": 5,
+            "input_connections": {
+                "fastq_input|fastq_input1": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "reference_source|ref_file": {
+                    "id": 2,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "MAP with BWA-MEM (G2)",
+            "name": "Map with BWA-MEM",
+            "outputs": [
+                {
+                    "name": "bam_output",
+                    "type": "bam"
+                }
+            ],
+            "position": {
+                "left": 486,
+                "top": 625
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bwa/bwa_mem/0.7.17.1",
+            "tool_shed_repository": {
+                "changeset_revision": "3fe632431b68",
+                "name": "bwa",
+                "owner": "devteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"analysis_type\": {\"analysis_type_selector\": \"illumina\", \"__current_case__\": 0}, \"fastq_input\": {\"fastq_input_selector\": \"single\", \"__current_case__\": 1, \"fastq_input1\": {\"__class__\": \"ConnectedValue\"}}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"ref_file\": {\"__class__\": \"ConnectedValue\"}, \"index_a\": \"auto\"}, \"rg\": {\"rg_selector\": \"do_not_set\", \"__current_case__\": 3}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.7.17.1",
+            "type": "tool",
+            "uuid": "b9460dc5-7ef0-4f84-ba1a-8a0d33b0b602",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "bam_output",
+                    "uuid": "9653caba-9242-4790-be15-62224962b6da"
+                }
+            ]
+        },
+        "6": {
+            "annotation": "Rearranges input BED4 file so that chromosome name column is last and the names of features of interest are first",
+            "content_id": "base_reformat_bedfile",
+            "errors": null,
+            "id": 6,
+            "input_connections": {
+                "infile": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Reformat BED File ",
+            "name": "Reformat user-provided BED file",
+            "outputs": [
+                {
+                    "name": "outfile",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 468,
+                "top": 916
+            },
+            "post_job_actions": {},
+            "tool_id": "base_reformat_bedfile",
+            "tool_state": "{\"infile\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "551cd556-f64b-4319-b6d1-05026d21e3b3",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "outfile",
+                    "uuid": "2a3263b8-9604-4fcc-9707-135e55ac0e79"
+                }
+            ]
+        },
+        "7": {
+            "annotation": "Converts BAM file created from BWA-MEM tool to SAM file for entry into BWASplitSAM. ",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/bam_to_sam/2.0.1",
+            "errors": null,
+            "id": 7,
+            "input_connections": {
+                "input1": {
+                    "id": 4,
+                    "output_name": "bam_output"
+                }
+            },
+            "inputs": [],
+            "label": "BAM-to-SAM (G1)",
+            "name": "BAM-to-SAM",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "sam"
+                }
+            ],
+            "position": {
+                "left": 722,
+                "top": 537
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/bam_to_sam/2.0.1",
+            "tool_shed_repository": {
+                "changeset_revision": "88eedb4abea0",
+                "name": "bam_to_sam",
+                "owner": "devteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"header\": \"\", \"input1\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2.0.1",
+            "type": "tool",
+            "uuid": "5e6de26a-5add-49c7-90e7-71b617331536",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output1",
+                    "uuid": "1b23e2ec-6405-4881-b29d-b159fa15fa59"
+                }
+            ]
+        },
+        "8": {
+            "annotation": "Make sure that the following parameter is set to utilize BASE Align and Count workflow (for both G1 and G2): 1. Select \"Exclude header\" from drop-down menu under \"Header options\" ",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/bam_to_sam/2.0.1",
+            "errors": null,
+            "id": 8,
+            "input_connections": {
+                "input1": {
+                    "id": 5,
+                    "output_name": "bam_output"
+                }
+            },
+            "inputs": [],
+            "label": "BAM-to-SAM (G2)",
+            "name": "BAM-to-SAM",
+            "outputs": [
+                {
+                    "name": "output1",
+                    "type": "sam"
+                }
+            ],
+            "position": {
+                "left": 726,
+                "top": 687
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/devteam/bam_to_sam/bam_to_sam/2.0.1",
+            "tool_shed_repository": {
+                "changeset_revision": "88eedb4abea0",
+                "name": "bam_to_sam",
+                "owner": "devteam",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"header\": \"\", \"input1\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2.0.1",
+            "type": "tool",
+            "uuid": "43c47aaa-c646-4c70-a28d-b59286120463",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output1",
+                    "uuid": "1638747c-d007-4910-9ea3-63339e9704e0"
+                }
+            ]
+        },
+        "9": {
+            "annotation": "Creates a unique SAM file comprised of all uniquely mapped reads and a summary TSV file containing the different orientations reads mapped as a result of the sequence alignment process by read count (mapped, unmapped, chimeric, etc.). **Must use single end alignments** ",
+            "content_id": "base_BWASplitSam_2output",
+            "errors": null,
+            "id": 9,
+            "input_connections": {
+                "sam": {
+                    "id": 7,
+                    "output_name": "output1"
+                }
+            },
+            "inputs": [],
+            "label": "BWASplitSAM (G1)",
+            "name": "BWASplitSAM",
+            "outputs": [
+                {
+                    "name": "uniq",
+                    "type": "sam"
+                },
+                {
+                    "name": "summ",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 967,
+                "top": 489
+            },
+            "post_job_actions": {},
+            "tool_id": "base_BWASplitSam_2output",
+            "tool_state": "{\"sam\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "414384b0-4452-4842-809a-35b38efb5b4b",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "summ",
+                    "uuid": "bc5c4e18-8a62-4dc3-94e4-2438d27ce791"
+                },
+                {
+                    "label": null,
+                    "output_name": "uniq",
+                    "uuid": "72c2913d-03a3-4d2e-b034-1ddaf3169a69"
+                }
+            ]
+        },
+        "10": {
+            "annotation": "",
+            "content_id": "base_BWASplitSam_2output",
+            "errors": null,
+            "id": 10,
+            "input_connections": {
+                "sam": {
+                    "id": 8,
+                    "output_name": "output1"
+                }
+            },
+            "inputs": [],
+            "label": "BWASplitSAM (G2)",
+            "name": "BWASplitSAM",
+            "outputs": [
+                {
+                    "name": "uniq",
+                    "type": "sam"
+                },
+                {
+                    "name": "summ",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 923,
+                "top": 674
+            },
+            "post_job_actions": {},
+            "tool_id": "base_BWASplitSam_2output",
+            "tool_state": "{\"sam\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "a2f55896-788b-420d-a6d7-789a0039d0c4",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "summ",
+                    "uuid": "354cdcbb-a961-4e9f-8537-62255c903d6d"
+                },
+                {
+                    "label": null,
+                    "output_name": "uniq",
+                    "uuid": "2844fb46-95ee-4f33-8f28-96c2f268c938"
+                }
+            ]
+        },
+        "11": {
+            "annotation": "Convert unique SAM file (created in last step) to a BED file for entry into BedTools intersect tool",
+            "content_id": "base_sam2bed",
+            "errors": null,
+            "id": 11,
+            "input_connections": {
+                "SAMFILE": {
+                    "id": 9,
+                    "output_name": "uniq"
+                },
+                "fastq": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Convert SAM file to BED File (G1)",
+            "name": "SAM to BED",
+            "outputs": [
+                {
+                    "name": "AWKTMP",
+                    "type": "bed"
+                }
+            ],
+            "position": {
+                "left": 1235,
+                "top": 368
+            },
+            "post_job_actions": {},
+            "tool_id": "base_sam2bed",
+            "tool_state": "{\"SAMFILE\": {\"__class__\": \"ConnectedValue\"}, \"fastq\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "1d6e1b25-e224-4162-88af-630f6d04547b",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "AWKTMP",
+                    "uuid": "03bfbe54-d501-4978-87fd-a6c858f9d007"
+                }
+            ]
+        },
+        "12": {
+            "annotation": "Verifies that 2 SAM files that contain uniquely mapped reads are aptly created per FASTQ file, and that they each contain uniquely mapping reads ",
+            "content_id": "check_sam_present",
+            "errors": null,
+            "id": 12,
+            "input_connections": {
+                "fq": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "sam1": {
+                    "id": 9,
+                    "output_name": "uniq"
+                },
+                "sam2": {
+                    "id": 10,
+                    "output_name": "uniq"
+                }
+            },
+            "inputs": [],
+            "label": "Check for 2 SAM Files ",
+            "name": "Check for 2 SAM files - ",
+            "outputs": [
+                {
+                    "name": "out",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 780,
+                "top": 1128
+            },
+            "post_job_actions": {},
+            "tool_id": "check_sam_present",
+            "tool_state": "{\"G1\": {\"__class__\": \"ConnectedValue\"}, \"G2\": {\"__class__\": \"ConnectedValue\"}, \"alnType\": \"SE\", \"fq\": {\"__class__\": \"ConnectedValue\"}, \"sam1\": {\"__class__\": \"ConnectedValue\"}, \"sam2\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "772d36e5-a653-4592-9223-fe1f1d7ad8e4",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "out",
+                    "uuid": "a97e2121-6a37-4c9e-a179-e2afcc1f8b89"
+                }
+            ]
+        },
+        "13": {
+            "annotation": "",
+            "content_id": "base_sam2bed",
+            "errors": null,
+            "id": 13,
+            "input_connections": {
+                "SAMFILE": {
+                    "id": 10,
+                    "output_name": "uniq"
+                },
+                "fastq": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Convert SAM file to BED File (G2)",
+            "name": "SAM to BED",
+            "outputs": [
+                {
+                    "name": "AWKTMP",
+                    "type": "bed"
+                }
+            ],
+            "position": {
+                "left": 1349,
+                "top": 580
+            },
+            "post_job_actions": {},
+            "tool_id": "base_sam2bed",
+            "tool_state": "{\"SAMFILE\": {\"__class__\": \"ConnectedValue\"}, \"fastq\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "0183d2a3-2dad-4027-8c5e-b707a809e97b",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "AWKTMP",
+                    "uuid": "d58d129b-3b2e-4c1c-9cd9-839bc1923c55"
+                }
+            ]
+        },
+        "14": {
+            "annotation": "Confirms that number of reads in each summary file are consistent with those from input FASTQ file, and that none have been lost after alignment step",
+            "content_id": "check_for_lost_reads",
+            "errors": null,
+            "id": 14,
+            "input_connections": {
+                "alnSum1": {
+                    "id": 9,
+                    "output_name": "summ"
+                },
+                "alnSum2": {
+                    "id": 10,
+                    "output_name": "summ"
+                },
+                "fq": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Check for Lost Reads ",
+            "name": "Check for lost reads",
+            "outputs": [
+                {
+                    "name": "out",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 1185,
+                "top": 1115
+            },
+            "post_job_actions": {},
+            "tool_id": "check_for_lost_reads",
+            "tool_state": "{\"alnSum1\": {\"__class__\": \"ConnectedValue\"}, \"alnSum2\": {\"__class__\": \"ConnectedValue\"}, \"fq\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "a809069e-e592-4880-a042-3c0af3bc9495",
+            "workflow_outputs": [
+                {
+                    "label": "",
+                    "output_name": "out",
+                    "uuid": "160ade22-d034-42e5-87b7-17e2c3da64cb"
+                }
+            ]
+        },
+        "15": {
+            "annotation": "BEDTools Intersect is used to identify overlapping regions between the locations of the uniquely mapped reads and that of  genic features of interest through a left outer join.",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_intersectbed/2.29.2",
+            "errors": null,
+            "id": 15,
+            "input_connections": {
+                "inputA": {
+                    "id": 11,
+                    "output_name": "AWKTMP"
+                },
+                "reduce_or_iterate|inputB": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "BEDTools Intersect Intervals (G1)",
+            "name": "bedtools Intersect intervals",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 1612,
+                "top": 435
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_intersectbed/2.29.2",
+            "tool_shed_repository": {
+                "changeset_revision": "0a5c785ac6db",
+                "name": "bedtools",
+                "owner": "iuc",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"bed\": \"false\", \"count\": \"false\", \"fraction_cond\": {\"fraction_select\": \"default\", \"__current_case__\": 0}, \"header\": \"false\", \"inputA\": {\"__class__\": \"ConnectedValue\"}, \"invert\": \"false\", \"once\": \"false\", \"overlap_mode\": [\"-loj\"], \"reduce_or_iterate\": {\"reduce_or_iterate_selector\": \"iterate\", \"__current_case__\": 0, \"inputB\": {\"__class__\": \"ConnectedValue\"}}, \"sorted\": \"false\", \"split\": \"false\", \"strand\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2.29.2",
+            "type": "tool",
+            "uuid": "5e518182-005b-477b-bbdd-9c3d9532eb85",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "4f0995d3-64e8-4b3b-a1b5-fc1fd6955549"
+                }
+            ]
+        },
+        "16": {
+            "annotation": "Make sure the following parameters are selected to properly deploy Align and Counts workflow (For both G1 and G2): 1. Select File A to be intersected with file B from the drop down menu 2. Select One output file per \u2018input B\u2019 file from the drop down menu under Combines or separate output files 3. Select File B to be intersected with file A 4. Under \u2018What should be written to the output file\u2019, select Perform a \u201cleft outer join\u201d. That is for each feature in A report each overlap with B. If no overlaps are found, report a NULL feature for B (-loj) 5. Select no under \u2018Treat split/spliced BAM or BED12 entries as distinct BED intervals when computing coverage.\u2019 6. Select no under the tab for \u2018Report only those alignments that **do not** overlap with file(s) B\u2019 7. For the tab, \u2018For each entry in A, report the number of overlaps with B\u2019; select no. 8. For the parameter \u2018When using BAM input (-abam), write output as BED instead of BAM.\u2019 select no. 9. For the parameter \u2018For coordinate sorted input file the more efficient sweeping algorithm is enabled\u2019, select no. 10. For the parameter \u2018Print the header from the A file prior to results\u2019, select no. ",
+            "content_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_intersectbed/2.29.2",
+            "errors": null,
+            "id": 16,
+            "input_connections": {
+                "inputA": {
+                    "id": 13,
+                    "output_name": "AWKTMP"
+                },
+                "reduce_or_iterate|inputB": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "BEDTools Intersect Intervals (G2)",
+            "name": "bedtools Intersect intervals",
+            "outputs": [
+                {
+                    "name": "output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 1560,
+                "top": 719
+            },
+            "post_job_actions": {},
+            "tool_id": "toolshed.g2.bx.psu.edu/repos/iuc/bedtools/bedtools_intersectbed/2.29.2",
+            "tool_shed_repository": {
+                "changeset_revision": "0a5c785ac6db",
+                "name": "bedtools",
+                "owner": "iuc",
+                "tool_shed": "toolshed.g2.bx.psu.edu"
+            },
+            "tool_state": "{\"bed\": \"false\", \"count\": \"false\", \"fraction_cond\": {\"fraction_select\": \"default\", \"__current_case__\": 0}, \"header\": \"false\", \"inputA\": {\"__class__\": \"ConnectedValue\"}, \"invert\": \"false\", \"once\": \"false\", \"overlap_mode\": [\"-loj\"], \"reduce_or_iterate\": {\"reduce_or_iterate_selector\": \"iterate\", \"__current_case__\": 0, \"inputB\": {\"__class__\": \"ConnectedValue\"}}, \"sorted\": \"false\", \"split\": \"false\", \"strand\": \"\", \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "2.29.2",
+            "type": "tool",
+            "uuid": "8bcac03c-2a9f-43db-a09d-9af69c776359",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "31bde362-fd64-49ee-942a-069947a3563f"
+                }
+            ]
+        },
+        "17": {
+            "annotation": "Removes uniquely mapped reads that do not intersect with regions of genic features. Also creates a summary file telling user amount of rows remaining in file after reads were dropped\n",
+            "content_id": "base_remove_nonoverlapping_reads",
+            "errors": null,
+            "id": 17,
+            "input_connections": {
+                "BEDINT": {
+                    "id": 15,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Remove Reads that do not Intersect (G1)",
+            "name": "Remove Reads",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                },
+                {
+                    "name": "summary",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 1590,
+                "top": 397
+            },
+            "post_job_actions": {},
+            "tool_id": "base_remove_nonoverlapping_reads",
+            "tool_state": "{\"BEDINT\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "ef0b9101-d106-44af-8a79-b3061f3fded2",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "summary",
+                    "uuid": "83c4cfae-1901-4220-9ff1-764ee47e0cd9"
+                },
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "bee5285d-6574-41b4-805c-8cd1f6f4bf0f"
+                }
+            ]
+        },
+        "18": {
+            "annotation": "",
+            "content_id": "base_remove_nonoverlapping_reads",
+            "errors": null,
+            "id": 18,
+            "input_connections": {
+                "BEDINT": {
+                    "id": 16,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Remove Reads that do not Intersect (G2)",
+            "name": "Remove Reads",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                },
+                {
+                    "name": "summary",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 1552,
+                "top": 780
+            },
+            "post_job_actions": {},
+            "tool_id": "base_remove_nonoverlapping_reads",
+            "tool_state": "{\"BEDINT\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "21be2d7e-bb11-466b-9e29-3523c8b57267",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "summary",
+                    "uuid": "e811bf5b-67cc-46d6-b5d3-4fc7e0a6dfcd"
+                },
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "9682e3d9-7df2-41d3-9da6-2c6df8c9c6be"
+                }
+            ]
+        },
+        "19": {
+            "annotation": "Create SAM file based on alignments of reads that map uniquely regions of genic features ",
+            "content_id": "base_create_new_sam_file",
+            "errors": null,
+            "id": 19,
+            "input_connections": {
+                "BED3": {
+                    "id": 17,
+                    "output_name": "split_output"
+                },
+                "SAMFILE": {
+                    "id": 9,
+                    "output_name": "uniq"
+                }
+            },
+            "inputs": [],
+            "label": "Create new SAM file based on Genic Features (G1)",
+            "name": "Create new SAM file",
+            "outputs": [
+                {
+                    "name": "NEWSAM",
+                    "type": "sam"
+                }
+            ],
+            "position": {
+                "left": 1988,
+                "top": 318
+            },
+            "post_job_actions": {},
+            "tool_id": "base_create_new_sam_file",
+            "tool_state": "{\"BED3\": {\"__class__\": \"ConnectedValue\"}, \"SAMFILE\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "78def861-bceb-49b7-91f0-c0373bbf484c",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "NEWSAM",
+                    "uuid": "3e867668-d8fc-4628-9da0-d482dd0c9901"
+                }
+            ]
+        },
+        "20": {
+            "annotation": "",
+            "content_id": "base_create_new_sam_file",
+            "errors": null,
+            "id": 20,
+            "input_connections": {
+                "BED3": {
+                    "id": 18,
+                    "output_name": "split_output"
+                },
+                "SAMFILE": {
+                    "id": 10,
+                    "output_name": "uniq"
+                }
+            },
+            "inputs": [],
+            "label": "Create new SAM file Based on Genic Features (G2)",
+            "name": "Create new SAM file",
+            "outputs": [
+                {
+                    "name": "NEWSAM",
+                    "type": "sam"
+                }
+            ],
+            "position": {
+                "left": 1900,
+                "top": 744
+            },
+            "post_job_actions": {},
+            "tool_id": "base_create_new_sam_file",
+            "tool_state": "{\"BED3\": {\"__class__\": \"ConnectedValue\"}, \"SAMFILE\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "5398b3af-0f9a-412d-a4e1-e3a42dcfeca8",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "NEWSAM",
+                    "uuid": "01f747dc-7c06-425d-8bd3-e63c363a2990"
+                }
+            ]
+        },
+        "21": {
+            "annotation": "Compares uniquely mapping reads to determine whether they map preferentially to one parent or equally to each file\u2019s alternate parental genome ",
+            "content_id": "sam_compare_w_feature",
+            "errors": null,
+            "id": 21,
+            "input_connections": {
+                "fastq": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "feature": {
+                    "id": 6,
+                    "output_name": "outfile"
+                },
+                "sama": {
+                    "id": 19,
+                    "output_name": "NEWSAM"
+                },
+                "samb": {
+                    "id": 20,
+                    "output_name": "NEWSAM"
+                }
+            },
+            "inputs": [],
+            "label": "SAM Compare with Feature",
+            "name": "Compare SAM files and create ASE Counts Tables",
+            "outputs": [
+                {
+                    "name": "counts",
+                    "type": "tsv"
+                },
+                {
+                    "name": "totals",
+                    "type": "tsv"
+                }
+            ],
+            "position": {
+                "left": 2151,
+                "top": 508
+            },
+            "post_job_actions": {},
+            "tool_id": "sam_compare_w_feature",
+            "tool_state": "{\"fastq\": {\"__class__\": \"ConnectedValue\"}, \"feature\": {\"__class__\": \"ConnectedValue\"}, \"nofqids\": \"False\", \"sama\": {\"__class__\": \"ConnectedValue\"}, \"samb\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "e1ba7fc9-670f-4afe-a5ee-16e6924950fd",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "totals",
+                    "uuid": "40de5acc-4868-492b-bcd9-4613f7bbc84c"
+                },
+                {
+                    "label": null,
+                    "output_name": "counts",
+                    "uuid": "5b62bf3c-af9f-4ccc-b330-09b5a1de88c0"
+                }
+            ]
+        },
+        "22": {
+            "annotation": "Ensures that no reads have been lost after the BASE Align and Counts workflow has ran successfully",
+            "content_id": "check_samcomp_for_lost_reads",
+            "errors": null,
+            "id": 22,
+            "input_connections": {
+                "ase": {
+                    "id": 21,
+                    "output_name": "totals"
+                },
+                "fq": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "sum1": {
+                    "id": 17,
+                    "output_name": "summary"
+                },
+                "sum2": {
+                    "id": 18,
+                    "output_name": "summary"
+                }
+            },
+            "inputs": [],
+            "label": "Check SAM Compare Output",
+            "name": "Check Sam Compare Output",
+            "outputs": [
+                {
+                    "name": "out",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 2267,
+                "top": 905
+            },
+            "post_job_actions": {},
+            "tool_id": "check_samcomp_for_lost_reads",
+            "tool_state": "{\"ase\": {\"__class__\": \"ConnectedValue\"}, \"fq\": {\"__class__\": \"ConnectedValue\"}, \"sum1\": {\"__class__\": \"ConnectedValue\"}, \"sum2\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "ad716430-7277-4e32-9506-4a330fd62da4",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "out",
+                    "uuid": "a1253dbe-9055-4d3b-9a52-d8426e9992fc"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "6b88527d-3f64-40e9-bd77-228e4368a7ce",
+    "version": 12
+}

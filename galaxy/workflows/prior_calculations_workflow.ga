@@ -5,14 +5,14 @@
     "name": "Prior Calculations workflow for BASE",
     "steps": {
         "0": {
-            "annotation": "Input design file output from Reformat Summarization Design file Script",
+            "annotation": "Input design file output from Reformat Sample Design file tool",
             "content_id": null,
             "errors": null,
             "id": 0,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "Input design file output from Reformat Summarization Design file Script",
+                    "description": "Input design file output from Reformat Sample Design file tool",
                     "name": "Input Priors Design File"
                 }
             ],
@@ -32,7 +32,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "f653328b-f8be-40e7-8ee9-d365f7fff76d"
+                    "uuid": "72d5531b-9b86-4633-a075-626c2c306f22"
                 }
             ]
         },
@@ -64,12 +64,12 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "7b2df332-8ddb-4711-bc2e-58976c6e989e"
+                    "uuid": "eeaca057-d784-4fd2-b774-348946f86cae"
                 }
             ]
         },
         "2": {
-            "annotation": "Calculates the Prior Probability estimate for the input collection, or the chances that an outcome will occur without collecting new data",
+            "annotation": "Calculates the Prior Probability estimate for the input collection, or the chances that a given read will map preferentially to either genome or equally well to both",
             "content_id": "calculate_priors_from_ase_count_tables",
             "errors": null,
             "id": 2,
@@ -83,7 +83,16 @@
                     "output_name": "output"
                 }
             },
-            "inputs": [],
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Calculate Priors Probability Estimates",
+                    "name": "collection"
+                },
+                {
+                    "description": "runtime parameter for tool Calculate Priors Probability Estimates",
+                    "name": "design"
+                }
+            ],
             "label": "Calculate Priors from ASE Counts Tables ",
             "name": "Calculate Priors Probability Estimates",
             "outputs": [
@@ -94,11 +103,11 @@
             ],
             "position": {
                 "left": 362.5,
-                "top": 200
+                "top": 198
             },
             "post_job_actions": {},
             "tool_id": "calculate_priors_from_ase_count_tables",
-            "tool_state": "{\"collection\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"collection\": {\"__class__\": \"RuntimeValue\"}, \"design\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "0.1.0",
             "type": "tool",
             "uuid": "dcf8b90f-9313-41cc-9191-bf84f9a1213a",
@@ -112,6 +121,6 @@
         }
     },
     "tags": [],
-    "uuid": "46f074e1-c5ca-406c-a423-52aff679c134",
-    "version": 4
+    "uuid": "3d3d9042-6c92-47a4-b26d-aa1fa1d8fad5",
+    "version": 6
 }

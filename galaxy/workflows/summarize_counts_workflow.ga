@@ -1,27 +1,27 @@
 {
     "a_galaxy_workflow": "true",
-    "annotation": "The Summarize Counts workflow\n prepares the input datasets for entry into the Bayesian model by flagging features that have low read count as well as those that do not meet a user-\ndefined APN (Average Reads per Nucleotide) threshold. These features are not removed from the dataset, however they are excluded from further analysis in order to prevent the likelihood of low confidence in data.",
+    "annotation": "The Summarize Counts workflow\n prepares the input datasets for entry into the Bayesian model by flagging features that do not meet a user-\ndefined APN (Average Reads per Nucleotide) threshold, and thus have low read coverage. These features are not removed from the dataset, however they are excluded from further analysis in order to prevent the likelihood of low confidence in data. **NOTE: There are input parameters that are automatically collapsed/hidden by Galaxy\n that should be examined prior to  running workflow\n**",
     "format-version": "0.1",
     "name": "Summarize Counts for BASE",
     "steps": {
         "0": {
-            "annotation": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Pre-Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
+            "annotation": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
             "content_id": null,
             "errors": null,
             "id": 0,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Pre-Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
-                    "name": "Input Pre-Alignment Design File"
+                    "description": "**Must be sorted by biological replicate** More information on how the design file should be formatted can be checked by reading the BASE Galaxy User Guide, or looking at the Combine Counts Table tool help section. The **Check Alignment Design File tool** is also available to verify whether the input design file is of the proper format and does not contain any errors such as duplicate FASTQ file names ",
+                    "name": "Input Alignment Design File"
                 }
             ],
-            "label": "Input Pre-Alignment Design File",
+            "label": "Input Alignment Design File",
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 393,
-                "top": 200
+                "left": 314.4000244140625,
+                "top": 183
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false}",
@@ -32,19 +32,19 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "d526572b-1585-4900-9712-6ecb1cfa2930"
+                    "uuid": "bf4184fc-f95f-4354-b690-5e7c551e7ad1"
                 }
             ]
         },
         "1": {
-            "annotation": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The ASE Counts Tables collection should contain all the technical replicates from a given biological replicate",
+            "annotation": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The design file should contain only the FQ files that are within the collection of ASE Counts table ",
             "content_id": null,
             "errors": null,
             "id": 1,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The ASE Counts Tables collection should contain all the technical replicates from a given biological replicate",
+                    "description": "Collection of ASE Counts tables can be created by using the SAM Compare with Feature tool. The design file should contain only the FQ files that are within the collection of ASE Counts table ",
                     "name": "Input Collection of ASE Counts tables "
                 }
             ],
@@ -52,8 +52,8 @@
             "name": "Input dataset collection",
             "outputs": [],
             "position": {
-                "left": 286,
-                "top": 400
+                "left": 229.79998779296875,
+                "top": 344
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
@@ -64,19 +64,19 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "54fa701f-494c-4f6b-893b-5ee93de5e9bd"
+                    "uuid": "f96caa64-e4d3-44f3-922c-ea47ccc1de58"
                 }
             ]
         },
         "2": {
-            "annotation": "4- column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and SAM Compare workflow",
+            "annotation": "4-column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and Counts workflow **See the BASE User Guide for correct format**",
             "content_id": null,
             "errors": null,
             "id": 2,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "4- column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and SAM Compare workflow",
+                    "description": "4-column BED file that contains the locations of the features of interest. Do not use the reformatted BED file that was output from the Align and Counts workflow **See the BASE User Guide for correct format**",
                     "name": "Input BED file"
                 }
             ],
@@ -84,8 +84,8 @@
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 380,
-                "top": 323
+                "left": 304,
+                "top": 281.3999938964844
             },
             "tool_id": null,
             "tool_state": "{\"optional\": false}",
@@ -96,19 +96,19 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "6753caf4-4519-4513-9113-2a7dc81078b1"
+                    "uuid": "97af324a-4a2a-474b-8bc3-28b38b8986a2"
                 }
             ]
         },
         "3": {
-            "annotation": "Indicate whether data contains real data or simulated reads. \n\n**Select \"False\" for real data**\n**Select \"True\" for simulated data**",
+            "annotation": "Indicate whether data contains real data or simulated reads. \n\n**Enter \"False\" for real data**\n**Enter \"True\" for simulated data**",
             "content_id": null,
             "errors": null,
             "id": 3,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "Indicate whether data contains real data or simulated reads. \n\n**Select \"False\" for real data**\n**Select \"True\" for simulated data**",
+                    "description": "Indicate whether data contains real data or simulated reads. \n\n**Enter \"False\" for real data**\n**Enter \"True\" for simulated data**",
                     "name": "Indicate Dataset Type"
                 }
             ],
@@ -116,11 +116,11 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 418.5,
-                "top": 497
+                "left": 334.79998779296875,
+                "top": 420.6000061035156
             },
             "tool_id": null,
-            "tool_state": "{\"default\": \"False\", \"restrictions\": [\"False\", \"True\"], \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_state": "{\"default\": \"False\", \"parameter_type\": \"text\", \"optional\": true}",
             "tool_version": null,
             "type": "parameter_input",
             "uuid": "c581508a-8805-4442-b58d-28a675d7ac35",
@@ -128,28 +128,28 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "62bc9906-9e7d-404d-966c-0c347c31c307"
+                    "uuid": "4c94c2dd-3d09-4fe3-9d00-86a0994fc794"
                 }
             ]
         },
         "4": {
-            "annotation": "[OPTIONAL] Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
+            "annotation": "Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
             "content_id": null,
             "errors": null,
             "id": 4,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "[OPTIONAL] Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
-                    "name": "Start point in Design File"
+                    "description": "Enter where the biological replicates of interest start in the design file. Use if only doing analysis on a certain subset within the input design file ",
+                    "name": "Start point in Design File [OPTIONAL]"
                 }
             ],
-            "label": "Start point in Design File",
+            "label": "Start point in Design File [OPTIONAL]",
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 357.5,
-                "top": 595.5
+                "left": 286,
+                "top": 499.4000244140625
             },
             "tool_id": null,
             "tool_state": "{\"parameter_type\": \"text\", \"optional\": true}",
@@ -160,28 +160,28 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "68222c33-d4da-40e4-9e8b-1ca7335c0203"
+                    "uuid": "2cf2a952-da1b-4304-8e10-38247cf6d197"
                 }
             ]
         },
         "5": {
-            "annotation": "[OPTIONAL] Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
+            "annotation": "Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
             "content_id": null,
             "errors": null,
             "id": 5,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "[OPTIONAL] Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
-                    "name": "End point in Design File"
+                    "description": "Enter the point in design file where user wants to exclude further FASTQ files from data analysis. Use only if analyzing a subset of FASTQ files within the design file\n",
+                    "name": "End point in Design File [OPTIONAL]"
                 }
             ],
-            "label": "End point in Design File",
+            "label": "End point in Design File [OPTIONAL]",
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 541.5,
-                "top": 662.5
+                "left": 433.20001220703125,
+                "top": 553
             },
             "tool_id": null,
             "tool_state": "{\"parameter_type\": \"text\", \"optional\": false}",
@@ -192,19 +192,19 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "5d5de259-c90c-4e64-a46f-1b8f82b8d4df"
+                    "uuid": "7b08491a-8dac-41bc-80dd-c02244a938fa"
                 }
             ]
         },
         "6": {
-            "annotation": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and thus are eligible for continued analysis in the Bayesian Model (assuming that they have enough read counts) **Default setting is 5**",
+            "annotation": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and have high enough read coverage, and thus are eligible for continued analysis in the Bayesian Model **Default setting is 5**",
             "content_id": null,
             "errors": null,
             "id": 6,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and thus are eligible for continued analysis in the Bayesian Model (assuming that they have enough read counts) **Default setting is 5**",
+                    "description": "Indicate the APN threshold. Features that are above this threshold are deemed expressed and have high enough read coverage, and thus are eligible for continued analysis in the Bayesian Model **Default setting is 5**",
                     "name": "APN threshold"
                 }
             ],
@@ -212,8 +212,8 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 932.5,
-                "top": 621
+                "left": 746,
+                "top": 519.7999877929688
             },
             "tool_id": null,
             "tool_state": "{\"default\": \"5\", \"parameter_type\": \"text\", \"optional\": true}",
@@ -224,7 +224,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "84706a46-8202-4c2c-ad64-f90bfc35ad14"
+                    "uuid": "114545cb-06b4-4134-8927-6a4645133b06"
                 }
             ]
         },
@@ -244,8 +244,8 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 892.5,
-                "top": 707.5
+                "left": 714,
+                "top": 589
             },
             "tool_id": null,
             "tool_state": "{\"default\": \"G1\", \"parameter_type\": \"text\", \"optional\": true}",
@@ -256,7 +256,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "b878f664-dc7e-4d1c-944a-620f61b7099f"
+                    "uuid": "29e1654b-7b7e-495d-96ce-a397bc81323d"
                 }
             ]
         },
@@ -276,8 +276,8 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 997,
-                "top": 847.5
+                "left": 798.5999755859375,
+                "top": 702
             },
             "tool_id": null,
             "tool_state": "{\"default\": \"G2\", \"parameter_type\": \"text\", \"optional\": true}",
@@ -288,7 +288,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "b10b7de2-aecd-43a5-aee4-8a218a69f871"
+                    "uuid": "003f33a7-fef5-482a-9932-63046b8b5354"
                 }
             ]
         },
@@ -308,8 +308,8 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 1000,
-                "top": 964.5
+                "left": 800,
+                "top": 794.5999755859375
             },
             "tool_id": null,
             "tool_state": "{\"default\": \"sampleID\", \"parameter_type\": \"text\", \"optional\": true}",
@@ -320,7 +320,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "0d8f079f-f981-457b-b733-3473b0771d09"
+                    "uuid": "a5f3216e-e886-4dfc-9513-6910714b4f9c"
                 }
             ]
         },
@@ -340,8 +340,8 @@
             "name": "Input parameter",
             "outputs": [],
             "position": {
-                "left": 1021.5,
-                "top": 1093.5
+                "left": 817.199951171875,
+                "top": 897.7999877929688
             },
             "tool_id": null,
             "tool_state": "{\"default\": \"comparate\", \"parameter_type\": \"text\", \"optional\": true}",
@@ -352,7 +352,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "e184b08b-92f8-48f7-a993-a9428f995587"
+                    "uuid": "d171b2eb-fe5a-45a9-a825-703648dd9cc6"
                 }
             ]
         },
@@ -401,8 +401,8 @@
                 }
             ],
             "position": {
-                "left": 876,
-                "top": 247
+                "left": 719.7999877929688,
+                "top": 151.60000610351562
             },
             "post_job_actions": {},
             "tool_id": "combine_cnt_tables",
@@ -424,7 +424,7 @@
             ]
         },
         "12": {
-            "annotation": "Filters features in the summed ASE Counts tables and flags those that are below the user-defined APN threshold as well as those with low read count, preventing them from being analyzed in the Bayesian Model. Flagged features (indicated by a 0 in the flag_analyze column) are not removed from the dataset, however. ",
+            "annotation": "Filters features in the summed ASE Counts tables and flags those that are below the user-defined APN threshold, preventing them from being analyzed in the Bayesian Model due to low read coverage. Flagged features (indicated by a 0 in the flag_analyze column) are not removed from the dataset, however. ",
             "content_id": "summarize_sam_compare_cnts_table_1cond",
             "errors": null,
             "id": 12,
@@ -468,8 +468,8 @@
                 }
             ],
             "position": {
-                "left": 1392.5,
-                "top": 354
+                "left": 1114,
+                "top": 306.20001220703125
             },
             "post_job_actions": {},
             "tool_id": "summarize_sam_compare_cnts_table_1cond",
@@ -482,16 +482,11 @@
                     "label": null,
                     "output_name": "split_output",
                     "uuid": "c788ab68-7de3-434c-aec1-6759635bce78"
-                },
-                {
-                    "label": null,
-                    "output_name": "outputDesignFile",
-                    "uuid": "9bef2599-dd96-417d-b742-086c423e0892"
                 }
             ]
         },
         "13": {
-            "annotation": "This tool reformats the summarization design file created by the Combine Counts Tables tool by removing the sampleID column. This design file is used as input into the Calculate Priors module.",
+            "annotation": "This tool reformats the Sample design file created by the Combine Counts Tables tool by removing the sampleID column, creating the Priors Design File. This design file is used as input into the Calculate Priors module.",
             "content_id": "base_reformat_design_file",
             "errors": null,
             "id": 13,
@@ -501,12 +496,7 @@
                     "output_name": "output_designFile"
                 }
             },
-            "inputs": [
-                {
-                    "description": "runtime parameter for tool Reformat Sample Design File",
-                    "name": "DESIGN"
-                }
-            ],
+            "inputs": [],
             "label": "Reformat Sample Design File",
             "name": "Reformat Sample Design File",
             "outputs": [
@@ -516,12 +506,12 @@
                 }
             ],
             "position": {
-                "left": 1610,
-                "top": 816
+                "left": 1242,
+                "top": 832.7999877929688
             },
             "post_job_actions": {},
             "tool_id": "base_reformat_design_file",
-            "tool_state": "{\"DESIGN\": {\"__class__\": \"RuntimeValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"DESIGN\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "0.1.0",
             "type": "tool",
             "uuid": "804887ca-df1f-4c8c-87fa-fab3bdcef5e3",
@@ -535,6 +525,6 @@
         }
     },
     "tags": [],
-    "uuid": "f99fd9ca-ed0c-4434-80d8-ce43c6a8c013",
-    "version": 11
+    "uuid": "b5e1664e-69e1-4447-bc79-986ec117b3fb",
+    "version": 20
 }

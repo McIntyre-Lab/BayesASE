@@ -1,0 +1,90 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "Verifies that the user-supplied Alignment Design file meets BASE requirements and that all FASTQ file names are unique. A TSV file containing unmet requirements, and any duplicate file names is output. **For formatting help, please see the BASE User Guide or the tool help section**\n",
+    "format-version": "0.1",
+    "name": "Check Alignment Design File ",
+    "steps": {
+        "0": {
+            "annotation": "Input the Design file matching the FASTQ files to their technical replicate and biological replicate numbers. **Must be sorted by biological replicate number**",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input the Design file matching the FASTQ files to their technical replicate and biological replicate numbers. **Must be sorted by biological replicate number**",
+                    "name": "Input Alignment Design File "
+                }
+            ],
+            "label": "Input Alignment Design File ",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 174.41668701171875,
+                "top": 130.9166717529297
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "26c77524-5651-478b-93a4-36b2bbd34ca7",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "e5cd3e56-0c8a-461f-9084-9b22ced9abb9"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Ensures that user-supplied alignment design file aligns with BASE requirements and outputs a summary TSV file explaining what is wrong with design file, if needed. ",
+            "content_id": "base_check_alignment_design_file",
+            "errors": null,
+            "id": 1,
+            "input_connections": {
+                "design": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Check Alignment Design File ",
+            "name": "Check Alignment Design File",
+            "outputs": [
+                {
+                    "name": "dups",
+                    "type": "tabular"
+                },
+                {
+                    "name": "logfile",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 466.91668701171875,
+                "top": 201.91668701171875
+            },
+            "post_job_actions": {},
+            "tool_id": "base_check_alignment_design_file",
+            "tool_state": "{\"design\": {\"__class__\": \"ConnectedValue\"}, \"ext\": {\"__class__\": \"ConnectedValue\"}, \"fq\": {\"__class__\": \"ConnectedValue\"}, \"g1\": {\"__class__\": \"ConnectedValue\"}, \"g2\": {\"__class__\": \"ConnectedValue\"}, \"id\": {\"__class__\": \"ConnectedValue\"}, \"readlen\": {\"__class__\": \"ConnectedValue\"}, \"rep\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "897a9483-2a19-434c-9838-961f9df9b33d",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "dups",
+                    "uuid": "963b7645-bb07-4483-bbc7-f6f2a6120a59"
+                },
+                {
+                    "label": null,
+                    "output_name": "logfile",
+                    "uuid": "481d4d11-03ea-441c-a0e7-78d2e04dc823"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "b295f3bb-d157-40dd-8496-441b95f076a6",
+    "version": 5
+}

@@ -1,0 +1,239 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "The Run Bayesian for BASE workflow deploys a previously published model by Leon-Novelo et al., for the detection of allelic imbalance\n in one or between multiple conditions. The Bayesian model has been implemented in lieu of the binomial test, which reports a higher rate of type I error due to a lower capacity of estimating possible points of biases. \n\n\n\n\n This workflow requires the user to create and upload a Comparate Design file. Please refer to the BASE User Guide for help. **NOTE: There are input parameters automatically hidden/collapsed by Galaxy that should be examined prior to\n running workflow**",
+    "format-version": "0.1",
+    "name": "Run Bayesian Workflow",
+    "steps": {
+        "0": {
+            "annotation": "Select the design file containing the comparate conditions to be tested for Allelic Imbalance. **Use the Check Comparate design file tool to ensure proper formatting, or refer to the BASE User Guide for help**",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Select the design file containing the comparate conditions to be tested for Allelic Imbalance. **Use the Check Comparate design file tool to ensure proper formatting, or refer to the BASE User Guide for help**",
+                    "name": "Input Comparate Design File "
+                }
+            ],
+            "label": "Input Comparate Design File ",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 194,
+                "top": 186.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "e6f5ced5-146a-4a4a-b6a4-fc78ad102ef2",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "7e43a373-0fe0-4372-b45b-690aafee7f13"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Input the file or collection of files that contain the ASE Counts tabled merged with the prior probability calculations, with the correct headers needed for recognition by the Bayesian tool. This is output from the Merge Priors workflow ",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input the file or collection of files that contain the ASE Counts tabled merged with the prior probability calculations, with the correct headers needed for recognition by the Bayesian tool. This is output from the Merge Priors workflow ",
+                    "name": "Input the Collection of Files with Merged Priors and Newly Generated Headers "
+                }
+            ],
+            "label": "Input the Collection of Files with Merged Priors and Newly Generated Headers ",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 207,
+                "top": 302.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "135b17c9-b537-4756-bb26-ea4a56c7cc0b",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "5d1d7b3a-8a9c-4cfd-9eae-2b0edca3a402"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "Type in the number of comparate conditions being tested for allelic imbalance. (Default number is 2)",
+            "content_id": null,
+            "errors": null,
+            "id": 2,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Type in the number of comparate conditions being tested for allelic imbalance. (Default number is 2)",
+                    "name": "Enter the number of comparate conditions"
+                }
+            ],
+            "label": "Enter the number of comparate conditions",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 207,
+                "top": 423.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"2\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "10daf990-ab14-49a3-b0e2-78429e4696a9",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "1df8f558-1689-442a-82cd-029700a3e0ae"
+                }
+            ]
+        },
+        "3": {
+            "annotation": "Default is 100000 ",
+            "content_id": null,
+            "errors": null,
+            "id": 3,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Default is 100000 ",
+                    "name": "Enter the Number of model Iterations"
+                }
+            ],
+            "label": "Enter the Number of model Iterations",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 233,
+                "top": 538.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"100000\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "5fc40d2e-61f7-4dc6-80b1-6a69e4bf076c",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "98afd130-94a4-4fba-b258-f084c16d2fe0"
+                }
+            ]
+        },
+        "4": {
+            "annotation": "Default is 10000. Enter number of iterations needed for tuning the Markov Chain Monte Carlo process before keeping estimates ",
+            "content_id": null,
+            "errors": null,
+            "id": 4,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Default is 10000. Enter number of iterations needed for tuning the Markov Chain Monte Carlo process before keeping estimates ",
+                    "name": "Enter the Warmup Number"
+                }
+            ],
+            "label": "Enter the Warmup Number",
+            "name": "Input parameter",
+            "outputs": [],
+            "position": {
+                "left": 225,
+                "top": 664.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"default\": \"10000\", \"parameter_type\": \"text\", \"optional\": true}",
+            "tool_version": null,
+            "type": "parameter_input",
+            "uuid": "ffb0471d-3e34-4cc7-bbc8-4e3f6bb01fae",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "289bcf18-8f3b-4a38-95c2-7a7d01246c5f"
+                }
+            ]
+        },
+        "5": {
+            "annotation": "Executes the method described by Novelo et al. to detect allelic imbalance within sequencing data through the application of a Bayesian model",
+            "content_id": "NBmodel_stan2_galaxy",
+            "errors": null,
+            "id": 5,
+            "input_connections": {
+                "collection": {
+                    "id": 1,
+                    "output_name": "output"
+                },
+                "cond": {
+                    "id": 2,
+                    "output_name": "output"
+                },
+                "design": {
+                    "id": 0,
+                    "output_name": "output"
+                },
+                "warmup": {
+                    "id": 4,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [
+                {
+                    "description": "runtime parameter for tool Run the Bayesian model: ",
+                    "name": "collection"
+                },
+                {
+                    "description": "runtime parameter for tool Run the Bayesian model: ",
+                    "name": "design"
+                }
+            ],
+            "label": "Run Bayesian Model",
+            "name": "Run the Bayesian model: ",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                },
+                {
+                    "name": "test",
+                    "type": "tsv"
+                }
+            ],
+            "position": {
+                "left": 551,
+                "top": 197.5
+            },
+            "post_job_actions": {},
+            "tool_id": "NBmodel_stan2_galaxy",
+            "tool_state": "{\"collection\": {\"__class__\": \"RuntimeValue\"}, \"cond\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"RuntimeValue\"}, \"iterations\": {\"__class__\": \"ConnectedValue\"}, \"warmup\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "65f444bf-ec45-4d54-8b65-c43385e6426e",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "cb2449a9-97c6-4f66-8cc7-b00bea987239"
+                },
+                {
+                    "label": null,
+                    "output_name": "test",
+                    "uuid": "33ac101c-37a4-47ac-b945-22f9ba5ec53c"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "07aa4eb0-8aa0-4add-b7b7-e085db410c98",
+    "version": 13
+}

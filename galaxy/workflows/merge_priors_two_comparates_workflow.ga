@@ -1,0 +1,265 @@
+{
+    "a_galaxy_workflow": "true",
+    "annotation": "Merge Priors consolidates the files created in the previous BASE workflows into one file. The summed and filtered ASE Counts tables and the calculated prior probabilities for each of the features are integrated into one file per comparate. These individual files are then subsequently  integrated into one file with all of the user-designated comparates.  This file is used for entry into the Bayesian Model to test for Allelic Imbalance. **NOTE: Workflow requires a *comparate design file **created by the user** \ncontaining the designated comparates. More information can be found in the BASE User Guide \nand in the Merge Two or More\n Comparates and Generate Headers tool help section.**",
+    "format-version": "0.1",
+    "name": "Merge Priors (At least 2 Comparates) workflow for BASE",
+    "steps": {
+        "0": {
+            "annotation": "Input Design file output from Reformat Sample Design File from Summarize Counts workflow\n\n**See tool help section for formatting**",
+            "content_id": null,
+            "errors": null,
+            "id": 0,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Input Design file output from Reformat Sample Design File from Summarize Counts workflow\n\n**See tool help section for formatting**",
+                    "name": "Input Priors Design file"
+                }
+            ],
+            "label": "Input Priors Design file",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 200,
+                "top": 251.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "6370fe0f-f882-4960-bf60-cf74f699904c",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "f9b96280-9ce2-41bf-8df7-c65151975d86"
+                }
+            ]
+        },
+        "1": {
+            "annotation": "Enter the collection of counts tables that have been filtered for features that have enough coverage for analysis in the Bayesian Model. This is the output made by running the Summarize Counts workflow",
+            "content_id": null,
+            "errors": null,
+            "id": 1,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the collection of counts tables that have been filtered for features that have enough coverage for analysis in the Bayesian Model. This is the output made by running the Summarize Counts workflow",
+                    "name": "Input collection of Summarized and Filtered ASE Counts Tables"
+                }
+            ],
+            "label": "Input collection of Summarized and Filtered ASE Counts Tables",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 233,
+                "top": 400.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "f2cee6a8-e221-4c82-81ae-c391fea26fb8",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "d850646a-0b40-4194-ac4a-f840b0c7739a"
+                }
+            ]
+        },
+        "2": {
+            "annotation": "Enter the collection of files containing Prior Probability Estimates for each feature within a given comparate. This can be made by using the Calculate Priors workflow ",
+            "content_id": null,
+            "errors": null,
+            "id": 2,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the collection of files containing Prior Probability Estimates for each feature within a given comparate. This can be made by using the Calculate Priors workflow ",
+                    "name": "Calculated Priors Collection"
+                }
+            ],
+            "label": "Calculated Priors Collection",
+            "name": "Input dataset collection",
+            "outputs": [],
+            "position": {
+                "left": 425,
+                "top": 448.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false, \"collection_type\": \"list\"}",
+            "tool_version": null,
+            "type": "data_collection_input",
+            "uuid": "da2a5b0e-4929-4321-a7c2-411cb8427590",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "95746de6-eae3-4419-ac3b-ce97c9eeffd8"
+                }
+            ]
+        },
+        "3": {
+            "annotation": "Enter the design file containing the user's desired comparates. There must be at least two different comparates for entry into the Bayesian Model. ",
+            "content_id": null,
+            "errors": null,
+            "id": 3,
+            "input_connections": {},
+            "inputs": [
+                {
+                    "description": "Enter the design file containing the user's desired comparates. There must be at least two different comparates for entry into the Bayesian Model. ",
+                    "name": "Enter Comparate Design File"
+                }
+            ],
+            "label": "Enter Comparate Design File",
+            "name": "Input dataset",
+            "outputs": [],
+            "position": {
+                "left": 611,
+                "top": 564.5
+            },
+            "tool_id": null,
+            "tool_state": "{\"optional\": false}",
+            "tool_version": null,
+            "type": "data_input",
+            "uuid": "0f4a5496-eaa4-4a47-97a0-ac8a0920e275",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "output",
+                    "uuid": "3c9dea72-efb3-4cc0-a7e1-1e62fc107846"
+                }
+            ]
+        },
+        "4": {
+            "annotation": "Merges the input files together for a given comparate",
+            "content_id": "merge_priors_to_comparate",
+            "errors": null,
+            "id": 4,
+            "input_connections": {
+                "collection1": {
+                    "id": 1,
+                    "output_name": "output"
+                },
+                "collection2": {
+                    "id": 2,
+                    "output_name": "output"
+                },
+                "design": {
+                    "id": 0,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Merge Priors to Comparate",
+            "name": "Merge priors to comparate",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 568,
+                "top": 171.5
+            },
+            "post_job_actions": {},
+            "tool_id": "merge_priors_to_comparate",
+            "tool_state": "{\"collection1\": {\"__class__\": \"ConnectedValue\"}, \"collection2\": {\"__class__\": \"ConnectedValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "4e620df7-e02c-4316-abed-03e8100fa371",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "7b16bd4b-fc5c-4451-a862-27e7994364c0"
+                }
+            ]
+        },
+        "5": {
+            "annotation": "Ensures that user-supplied comparate design file aligns with BASE formatting requirements ",
+            "content_id": "base_check_comparate_design_file",
+            "errors": null,
+            "id": 5,
+            "input_connections": {
+                "design": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Check Comparate Design File ",
+            "name": "Check Comparate Design File",
+            "outputs": [
+                {
+                    "name": "out",
+                    "type": "tabular"
+                }
+            ],
+            "position": {
+                "left": 879.5,
+                "top": 560.5
+            },
+            "post_job_actions": {},
+            "tool_id": "base_check_comparate_design_file",
+            "tool_state": "{\"compNum\": \"2\", \"design\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "806ce725-046e-407a-b4cd-ce4859ecd824",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "out",
+                    "uuid": "18a0f755-2711-4a9f-8ce9-21aec2cb2f17"
+                }
+            ]
+        },
+        "6": {
+            "annotation": "Merges the files made from the previous tool (Merge Priors to Comparate) to generate one file with the prior calculations and filtered features for all the user-defined comparates.",
+            "content_id": "merge_comparates_and_gen_headers_for_bayesian",
+            "errors": null,
+            "id": 6,
+            "input_connections": {
+                "collection": {
+                    "id": 4,
+                    "output_name": "split_output"
+                },
+                "design": {
+                    "id": 3,
+                    "output_name": "output"
+                }
+            },
+            "inputs": [],
+            "label": "Merge Comparates and Generate Headers",
+            "name": "Merge Two or More Comparate Datasets and Generate Headers",
+            "outputs": [
+                {
+                    "name": "split_output",
+                    "type": "input"
+                }
+            ],
+            "position": {
+                "left": 902.5,
+                "top": 270.5
+            },
+            "post_job_actions": {},
+            "tool_id": "merge_comparates_and_gen_headers_for_bayesian",
+            "tool_state": "{\"collection\": {\"__class__\": \"ConnectedValue\"}, \"comp_collection\": {\"__class__\": \"RuntimeValue\"}, \"design\": {\"__class__\": \"ConnectedValue\"}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_version": "0.1.0",
+            "type": "tool",
+            "uuid": "6b21243f-10fe-4098-ac9c-6cbf08f16692",
+            "workflow_outputs": [
+                {
+                    "label": null,
+                    "output_name": "split_output",
+                    "uuid": "b18c56b3-e0e5-4cfc-8d02-4ec71cc00c1c"
+                }
+            ]
+        }
+    },
+    "tags": [],
+    "uuid": "8bacd618-a664-4927-bec7-193e31863d4e",
+    "version": 3
+}

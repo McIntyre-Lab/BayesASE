@@ -1,6 +1,6 @@
 {
     "a_galaxy_workflow": "true",
-    "annotation": "This module creates an updated genotype specific reference file\n\n to reduce mapping biases that may occur when a common reference is used to infer polymorphisms simultaneously\n with mapping. The may be skipped if the user already has a\n genome specific reference FASTA file. \n\n\n This module utilizes VCFTools Consensus (Sanger Institute), which is already \navailable in the Galaxy Toolshed. **NOTE: The module only considers SNPs when incorporating variants into the starting reference**",
+    "annotation": "This module creates a\n genotype specific reference file\n\n to reduce mapping biases that may occur when a common reference is used to infer polymorphisms simultaneously\n with mapping. The may be skipped if the user already has a\n genome specific reference FASTA file. \n\n\n This module utilizes VCFTools Consensus (Sanger Institute), which is already \navailable in the Galaxy Toolshed. **NOTE: The module only considers SNPs when incorporating variants into the starting reference. Also make sure to run the tool twice to generate the\n reference files for both parental \ngenomes**",
     "format-version": "0.1",
     "name": "Genotype Specific References Module for BASE",
     "steps": {
@@ -20,7 +20,7 @@
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 200,
+                "left": 206,
                 "top": 200
             },
             "tool_id": null,
@@ -31,14 +31,14 @@
             "workflow_outputs": []
         },
         "1": {
-            "annotation": "VCF file containing location data for SNPs and structural variation calls",
+            "annotation": "VCF file containing location data for SNPs and structural variation calls. ",
             "content_id": null,
             "errors": null,
             "id": 1,
             "input_connections": {},
             "inputs": [
                 {
-                    "description": "VCF file containing location data for SNPs and structural variation calls",
+                    "description": "VCF file containing location data for SNPs and structural variation calls. ",
                     "name": "VCF File "
                 }
             ],
@@ -46,7 +46,7 @@
             "name": "Input dataset",
             "outputs": [],
             "position": {
-                "left": 200,
+                "left": 206,
                 "top": 320
             },
             "tool_id": null,
@@ -57,7 +57,7 @@
             "workflow_outputs": []
         },
         "2": {
-            "annotation": "Identifies differences in polymorphisms within parental VCF file and replaces them with reference bases, thus creating one updated reference genome in FASTA format per each VCF input file. ",
+            "annotation": "Identifies differences in polymorphisms within parental VCF file and replaces them with reference bases, thus creating one genotype specific reference file in FASTA format per each VCF input file. ",
             "content_id": "toolshed.g2.bx.psu.edu/repos/devteam/vcftools_consensus/vcftools_consensus/0.1.11",
             "errors": null,
             "id": 2,
@@ -90,7 +90,7 @@
                 }
             ],
             "position": {
-                "left": 420,
+                "left": 428,
                 "top": 200
             },
             "post_job_actions": {},
@@ -109,6 +109,6 @@
         }
     },
     "tags": [],
-    "uuid": "206f3d30-94fa-43a1-af15-737cca51d5ae",
-    "version": 0
+    "uuid": "02187804-be78-41db-aebc-10a99d9480fd",
+    "version": 3
 }
