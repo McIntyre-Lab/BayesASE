@@ -32,7 +32,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "a59ae473-aee5-492c-8131-1800ebf638ee"
+                    "uuid": "981e5f46-f447-4ea1-991f-684a1e0d5e1c"
                 }
             ]
         },
@@ -64,7 +64,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "eca88f79-3801-4123-a630-f6a684fae867"
+                    "uuid": "75a57f87-5eae-419f-98a2-bbd11f15cc60"
                 }
             ]
         },
@@ -96,7 +96,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "4e0fb76b-d517-4319-8763-ea0d58918d96"
+                    "uuid": "eaa45c0a-12a1-40bd-98c4-92dc7aef4c91"
                 }
             ]
         },
@@ -128,7 +128,7 @@
                 {
                     "label": null,
                     "output_name": "output",
-                    "uuid": "5d70e7e1-0f45-4fa3-b190-8be5c1115b10"
+                    "uuid": "92a1ec5f-be6c-484b-bc11-cde2b8912775"
                 }
             ]
         },
@@ -147,16 +147,7 @@
                     "output_name": "output"
                 }
             },
-            "inputs": [
-                {
-                    "description": "runtime parameter for tool Map with BWA-MEM",
-                    "name": "fastq_input"
-                },
-                {
-                    "description": "runtime parameter for tool Map with BWA-MEM",
-                    "name": "reference_source"
-                }
-            ],
+            "inputs": [],
             "label": "Map With BWA-MEM (G1)",
             "name": "Map with BWA-MEM",
             "outputs": [
@@ -177,7 +168,7 @@
                 "owner": "devteam",
                 "tool_shed": "toolshed.g2.bx.psu.edu"
             },
-            "tool_state": "{\"analysis_type\": {\"analysis_type_selector\": \"illumina\", \"__current_case__\": 0}, \"fastq_input\": {\"fastq_input_selector\": \"single\", \"__current_case__\": 1, \"fastq_input1\": {\"__class__\": \"RuntimeValue\"}}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"ref_file\": {\"__class__\": \"RuntimeValue\"}, \"index_a\": \"auto\"}, \"rg\": {\"rg_selector\": \"do_not_set\", \"__current_case__\": 3}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
+            "tool_state": "{\"analysis_type\": {\"analysis_type_selector\": \"illumina\", \"__current_case__\": 0}, \"fastq_input\": {\"fastq_input_selector\": \"single\", \"__current_case__\": 1, \"fastq_input1\": {\"__class__\": \"ConnectedValue\"}}, \"reference_source\": {\"reference_source_selector\": \"history\", \"__current_case__\": 1, \"ref_file\": {\"__class__\": \"ConnectedValue\"}, \"index_a\": \"auto\"}, \"rg\": {\"rg_selector\": \"do_not_set\", \"__current_case__\": 3}, \"__page__\": null, \"__rerun_remap_job_id__\": null}",
             "tool_version": "0.7.17.1",
             "type": "tool",
             "uuid": "1d803566-bab2-4c0c-84e3-3622e6cb3644",
@@ -742,11 +733,11 @@
             },
             "inputs": [],
             "label": "Remove Reads that do not Intersect (G1)",
-            "name": "Remove Reads",
+            "name": "Remove reads",
             "outputs": [
                 {
-                    "name": "split_output",
-                    "type": "input"
+                    "name": "BED3",
+                    "type": "tabular"
                 },
                 {
                     "name": "summary",
@@ -754,8 +745,8 @@
                 }
             ],
             "position": {
-                "left": 1590,
-                "top": 397
+                "left": 1640,
+                "top": 513
             },
             "post_job_actions": {},
             "tool_id": "base_remove_nonoverlapping_reads",
@@ -773,6 +764,11 @@
                     "label": null,
                     "output_name": "split_output",
                     "uuid": "bee5285d-6574-41b4-805c-8cd1f6f4bf0f"
+                },
+                {
+                    "label": null,
+                    "output_name": "BED3",
+                    "uuid": "0a270628-ab77-4da5-9473-07676b67e9f6"
                 }
             ]
         },
@@ -789,11 +785,11 @@
             },
             "inputs": [],
             "label": "Remove Reads that do not Intersect (G2)",
-            "name": "Remove Reads",
+            "name": "Remove reads",
             "outputs": [
                 {
-                    "name": "split_output",
-                    "type": "input"
+                    "name": "BED3",
+                    "type": "tabular"
                 },
                 {
                     "name": "summary",
@@ -801,8 +797,8 @@
                 }
             ],
             "position": {
-                "left": 1552,
-                "top": 780
+                "left": 1733,
+                "top": 829
             },
             "post_job_actions": {},
             "tool_id": "base_remove_nonoverlapping_reads",
@@ -820,6 +816,11 @@
                     "label": null,
                     "output_name": "split_output",
                     "uuid": "9682e3d9-7df2-41d3-9da6-2c6df8c9c6be"
+                },
+                {
+                    "label": null,
+                    "output_name": "BED3",
+                    "uuid": "13625b42-1ef3-40c9-9225-a1899d9188b6"
                 }
             ]
         },
@@ -831,7 +832,7 @@
             "input_connections": {
                 "BED3": {
                     "id": 17,
-                    "output_name": "split_output"
+                    "output_name": "BED3"
                 },
                 "SAMFILE": {
                     "id": 9,
@@ -848,8 +849,8 @@
                 }
             ],
             "position": {
-                "left": 1988,
-                "top": 318
+                "left": 1907,
+                "top": 295
             },
             "post_job_actions": {},
             "tool_id": "base_create_new_sam_file",
@@ -873,7 +874,7 @@
             "input_connections": {
                 "BED3": {
                     "id": 18,
-                    "output_name": "split_output"
+                    "output_name": "BED3"
                 },
                 "SAMFILE": {
                     "id": 10,
@@ -890,8 +891,8 @@
                 }
             ],
             "position": {
-                "left": 1900,
-                "top": 744
+                "left": 2063,
+                "top": 815
             },
             "post_job_actions": {},
             "tool_id": "base_create_new_sam_file",
@@ -944,8 +945,8 @@
                 }
             ],
             "position": {
-                "left": 2151,
-                "top": 508
+                "left": 2354,
+                "top": 609
             },
             "post_job_actions": {},
             "tool_id": "sam_compare_w_feature",
@@ -976,10 +977,6 @@
                     "id": 21,
                     "output_name": "totals"
                 },
-                "fq": {
-                    "id": 0,
-                    "output_name": "output"
-                },
                 "sum1": {
                     "id": 17,
                     "output_name": "summary"
@@ -999,8 +996,8 @@
                 }
             ],
             "position": {
-                "left": 2267,
-                "top": 905
+                "left": 2405,
+                "top": 961
             },
             "post_job_actions": {},
             "tool_id": "check_samcomp_for_lost_reads",
@@ -1018,6 +1015,6 @@
         }
     },
     "tags": [],
-    "uuid": "6b88527d-3f64-40e9-bd77-228e4368a7ce",
-    "version": 12
+    "uuid": "421c8921-3e5e-4ca9-a63a-22e15324d33b",
+    "version": 13
 }
