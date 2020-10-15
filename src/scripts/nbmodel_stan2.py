@@ -30,97 +30,44 @@ def main():
     identifiers = [pattern.search(i).group() for i in args.collection_identifiers.split(",")]
     filenames = [i.strip() for i in args.collection_filenames.split(",")]
     input_dict = dict(zip(identifiers, filenames))
-    
+
     ##(1) Parsing datafile to extract rows with sampleID specified in design file, set c1 and c2
 
-    ##Standardized Paths##
+    # Standardized Paths##
     args.output = os.path.abspath(args.output)
     args.routput = os.path.abspath(args.routput)
 
-    ## Read in design file as dataframe
+    # Read in design file as dataframe
     df = pd.read_csv(args.design, sep='\t')
 
-    ## iterate over design file
+    # Iterate over design file
     for index, row in df.iterrows():
 
-        #Make variable for number of conditions
+        # Make variable for number of conditions
         compnum=args.cond
 
-        #Make variable for working directory (stan and wrapper in same place)
+        # Make variable for working directory (stan and wrapper in same place)
         workdir = args.workdir
 
-        df.set_index('C1_G1')
-        print(df)
+        df.set_index('Comparate_1')
 
         print('PRINTING data_row')
         print(row)
-        c1_g1=row['C1_G1']
-        c1_g2=row['C1_G2']
-        c2_g1=row['C2_G1']
-        c2_g2=row['C2_G2']
         comparison=row['compID']
-        design_c1=row['Comparate_1']
-        design_c2=row['Comparate_2']
+        c1=row['Comparate_1']
+        c2=row['Comparate_2']
 
         del row['compID']
-        del row['C1_G1']
-        del row['C1_G2']
-        del row['C2_G1']
-        del row['C2_G2']
         row = row.to_frame()
 
         row_list = row.values.tolist()
-
-        ## remove empty if don't exist
-        #row_list = [i for i in row_list if i]
-        print(row_list)
-
-        ## name of input file
-        if design_c2 is False:
-            comparison = design_c1
-        elif design_c1 is False:
-            comparison = design_c2
-        else:
-            comparison = comparison
 
         infileName = "bayesian_input_" + comparison
 
         infile=pd.read_csv(os.path.join(input_dict[infileName]),sep='\t')
         infile.set_index('FEATURE_ID')
 
-        pre_headers=list(infile.columns.values)
-        ## AMM changed below from 3 to 4
-        pre_headers_split=pre_headers[:4]
-        pre_headers_split2=pre_headers[4:]
-
-        print('PRINTING pre_headers_split2')
-        print(pre_headers_split2)
-
-        for index,val in enumerate(row_list):
-            c = 'c' + str(index + 1)
-            val = ''.join(val)
-            print('PRINTING val')
-            print(val)
-
-            for i in range(len(pre_headers_split2)):
-                if val in pre_headers_split2[i]:
-                    pre_headers_split2[i] = pre_headers_split2[i].replace(val, c)
-        pre_headers_cat = pre_headers_split + pre_headers_split2
-        print('printing pre_headers_cat')
-        print(pre_headers_cat)
-        infile.columns=pre_headers_cat
-
-
-        ## c1 = M
-        ## c2 = V
-        ## g1 = tester or T
-        ## g2 = line or L or Line
-
-
-
-        infile.columns = pre_headers_cat
-        
-        ## add comparison column (last)
+        # Add comparison column (last)
         infile['comparison']=comparison
 
         datafile2 = args.datafile2 + '/' + comparison + '_temp'
@@ -130,33 +77,29 @@ def main():
         rout = comparison + '_r_out'
         routput=os.path.join(args.routput, rout)
 
-        ## (2) Calls subprocess to run R script where args1 is the input csv and args2 is the output path for NBmodel.R##
+        # (2) Calls subprocess to run R script where args1 is the input csv and args2 is the output path for NBmodel.R##
         rscript = subprocess.call(['Rscript', args.subpath, datafile2, routput, compnum, workdir, args.iterations, args.warmup])
 
-        ## (3) Format input from Rscript and get list of default header names, change headers back to actual comparates from c1 and c2
+        # (3) Format input from Rscript and get list of default header names, change headers back to actual comparates from c1 and c2
         df2 = pd.read_csv(routput)
 
-        headers_all =list(df2.columns.values)
-        print('printing headers_all')
-        print(headers_all)
+        headers_out =list(df2.columns.values)
 
-        for a in range(len(headers_all)):
-            if 'c1' in headers_all[a]:
-                headers_all[a] = headers_all[a].replace('c1', design_c1)
-            if 'c2' in headers_all[a]:
-                headers_all[a] = headers_all[a].replace('c2', design_c2)
-        print('printing new headers_all')
-        print(headers_all)
+        for a in range(len(headers_out)):
+            if 'c1' in headers_out[a]:
+                headers_out[a] = headers_out[a].replace('c1', c1)
+            if 'c2' in headers_out[a]:
+                headers_out[a] = headers_out[a].replace('c2', c2)
 
-        df2.columns = headers_all
-    
-        ##Write to new CSV##
+        df2.columns = headers_out
+
+        # Write to new CSV
         outfile = 'bayesian_out_' + comparison
         output=os.path.join(args.output, outfile)
 
         df2.to_csv(output, na_rep = 'NA', index=False, sep='\t')
 
+
 if __name__=='__main__':
     main()
-
 
