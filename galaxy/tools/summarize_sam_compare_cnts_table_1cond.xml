@@ -22,15 +22,15 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
     <inputs>
         <param name="design" type="data" format="tabular" label="Sample Design file" help="Select the Sample Design File--this may be created with the Combine Counts Tables tool"/>
         <param name="collection" type="data_collection" collection_type="list" label="Collection of Combined ASE Count Tables" help="Select the collection containing combined/summed ASE count tables"/>
-        <param name="parent1" type="text" label="Parent 1" value="G1" help="Enter the header name of the parent 1 (eg G1) column in your design file."/>
-        <param name="parent2" type="text" label="Parent 2" value="G2" help="Enter the header name of the parent 2 (eg G2) column in your design file."/>
-        <param name="sampleIDCol" type="text" value="sampleID" label="Sample ID Column" help="Enter the name of the column in design file containing sample ID names"/>
+        <param name="parent1" type="text" label="Genome 1 (G1)" value="G1" help="Enter the header name of genome 1 (eg G1) column in your design file."/>
+        <param name="parent2" type="text" label="Genome 2 (G2)" value="G2" help="Enter the header name of genome 2 (eg G2) column in your design file."/>
+        <param name="sampleIDCol" type="text" value="sampleID" label="Sample ID Column" help="Enter the name of the column in design file containing sampleIDs"/>
        <param name="sampleCol" type="text" value="comparate" label="Comparate Column" help="Enter the header name of the column in design file containing comparate names "/>
        <param name="apn" type="text" label="APN (Average Reads per Nucleotide) threshold" value="5" help="Enter desired APN threshold for flagging a feature as 'expressed' in each replicate. The default setting is 5."/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Summarized and Filtered ASE Counts table">
-        <discover_datasets pattern="(?P&lt;name&gt;ase.*)" ext="tabular" directory="outputs" />
+        <discover_datasets pattern="(?P&lt;name&gt;ase.*)" ext="tabular" sort_by="reverse_filename" directory="outputs" />
       </collection>
     </outputs>
     <tests>
@@ -54,9 +54,9 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
     <help><![CDATA[
 **Tool Description**
 
-Summarize SAM Compare Counts Tables analyzes the input sample design file, and groups the number of summed ASE count tables for a given biological replicate together. It then combines the information for each biological replicate, creating one file with all the biological replicates for a given comparate.  The data is then sorted and refined, filtering out features that do not meet a user defined APN threshold, as well as features that have low read counts. Not having enough reads that map to a certain feature lowers confidence in data.  
+Summarize SAM Compare Counts Tables analyzes the input sample design file, and groups the number of summed ASE count tables for a given biological replicate together. It then combines the information for each biological replicate, creating one file with all the biological replicates for a given comparate.  The data is then sorted and refined, filtering out features that do not meet a user defined APN (average reads per nucleotide) threshold, indicating low read coverage. Not having enough reads that map to a certain feature lowers confidence in data.  
 
-**NOTE**:If the summed ASE Counts Table does not have enough reads counts mapped to a given feature, then the **flag_analyze** column will be flagged a 0, and that feature will be excluded from the Baseyian module for that particular comparate. However, it will not be removed from the data set. 
+**NOTE**:If the summed ASE Counts Table does not have enough reads counts mapped to a given feature, then the **flag_analyze** column will be flagged a 0, and that feature will be excluded from Bayesian analysis for that particular comparate. However, it will not be removed from the data set. 
 
 **INPUTS**
 
@@ -103,7 +103,7 @@ Type in the designated names of the following columns in the design file:
         
 **APN Threshold [REQUIRED]**
 
-Specify an APN threshold for flagging features as 'expressed' in reach replicate. Features that do not meet this threshold will not be included in Bayesian analysis. 
+Specify an APN threshold for flagging features as 'expressed' in reach replicate. Features that do not meet this threshold are considered to have low read coverage, and will not be included in Bayesian analysis. 
 
 **NOTE**: The default setting is 5. 
 
@@ -120,10 +120,12 @@ The first three rows of an example output file::
 
 In the example output above, the features have low read counts and they do not surpass the default APN threshold of 5 (APN threshold can be changed by user), therefore the flag_analyze variable=0, and the features are excluded from Bayesian Analysis.
 
+The amount of columns is dependent on the number of biological replicates. For instance, in the above example, two sets of technical replicates have been summed, so two different biological replicates are present. Therefore, there are a set of columns for each of the two biological replicates. 
+
 Columns are::
 
-        ◦ {comparate}_flag_analyze: 0/1 indicator flag where a “1” means that the feature has enough read counts and has an APN above the defined threshold, indicating that the feature will be included in Bayesian Analysis.
-        ◦ {comparate}_num_reps:  The amount of biological replicates that  represent the summed ASE Count table(s). 
+        ◦ {comparate}_flag_analyze: 0/1 indicator flag where a “1” means that the feature has enough read coverage (met the user-defined APN threshold) for analysis of allelic imbalance.
+        ◦ {comparate_n}_num_reps:  The amount of biological replicates that represent the summed ASE Count table(s) for the comparate. 
         ◦ {comparate}_g1_total_{biological_replicate_number}: Total amount of unique reads from a given biological replicate that mapped to parental genome 1
         ◦ {comparate}_g2_total_{biogical_replicate_number}: Total amount of unique reads from a given biological replicate that mapped to parental genome 2
         ◦ {comparate}_both_total_{biological_replicate_number}: Total amount of unique reads from a given biological replicate that mapped to equally to both parental genomes
@@ -131,7 +133,7 @@ Columns are::
         ◦ {comparate}_total_reads_APN_{biological_replicate_number}: The calculated APN value for the total amount of unique reads that mapped to a given feature
         ◦ {comparate}_both_APN_{biological_replicate_number}: The calculated APN value for the unique reads that mapped equally to both parental genomes for a given feature
    
-The amount of columns is dependent on the number of biological replicates. For instance, in the above example, two sets of technical replicates have been summed, so two different biological replicates are present. Therefore, there are a set of columns for each of the two biological replicates. 
+
  
 
   ]]></help>
