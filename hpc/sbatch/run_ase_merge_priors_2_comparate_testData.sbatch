@@ -20,7 +20,7 @@ SCRIPTS=${PROJ}/scripts/ase_scripts
 DF=${PROJ}/design_files
 
 ## user must provide following design file for merging comparates:
-DESIGN2=${DF}/df_merge_comparates_4_bayesian.csv
+DESIGN2=${DF}/comparate_design_file_02amm.csv
 
 DESIGN=${DF}/df_priors.csv
 PRIORS=${PROJ}/priors_fromData
@@ -40,7 +40,7 @@ BAYESIN=${PROJ}/bayesian_in
         --design ${DESIGN}
 
 
-    python3 ${SCRIPTS}/merge_comparates_and_gen_headers_for_bayesian_02amm.py \
+    python3 ${SCRIPTS}/merge_comparates_and_gen_headers_for_bayesian_03amm.py \
     --output ${BAYESIN} \
     --comp ${BAYESIN} \
     --design ${DESIGN2}

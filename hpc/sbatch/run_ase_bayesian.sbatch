@@ -33,15 +33,11 @@ BAYESOUT=$PROJ/bayesian_out
     mkdir -p $BAYESOUT
 
 ## Set design file with G1, G2, c1, c2, and input filename columns
-DESIGN_FILE=$PROJ/design_files/df_merge_comparates_4_bayesian.csv
+DESIGN_FILE=$PROJ/design_files/comparate_design_file_02amm.csv
 
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
 
-C1_G1=${ARRAY[0]}
-C1_G2=${ARRAY[1]}
-C2_G1=${ARRAY[2]}
-C2_G2=${ARRAY[3]}
 COMP_1=${ARRAY[4]}
 COMP_2=${ARRAY[5]}
 COMPID=${ARRAY[6]}
@@ -58,11 +54,7 @@ ITER=100000
 WARMUP=10000
 
 ######  Run python script calling environmental bayesian model (stan2, 2 conditions)
-python3 $SCRIPTS/NBmodel_stan2_slurm_02amm.py \
-    -c1_g1 $C1_G1 \
-    -c1_g2 $C1_G2 \
-    -c2_g1 $C2_G1 \
-    -c2_g2 $C2_G2 \
+python3 $SCRIPTS/NBmodel_stan2_slurm_06amm.py \
     -comparate_1 $COMP_1 \
     -comparate_2 $COMP_2 \
     -compID $COMPID \
