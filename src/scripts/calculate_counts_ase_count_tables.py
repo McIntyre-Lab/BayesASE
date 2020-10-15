@@ -70,7 +70,7 @@ def main():
         prior_df = pd.DataFrame()
         prior_df['FEATURE_ID'] = ase_df['FEATURE_ID']
 
-        prior_df['prior_' + comparate + '_both'] = ase_df['both_counts'] / ase_df['total_counts']
+        prior_df['prior_' + comparate + '_both'] = 1-(ase_df['both_counts'] / ase_df['total_counts'])
         prior_df['prior_' + comparate + '_g1'] = ase_df['g1_counts'] / ase_df['total_counts']
         prior_df['prior_'+ comparate + '_g2'] = ase_df['g2_counts'] / ase_df['total_counts']
 
