@@ -13,7 +13,8 @@ println """\
     summarized ASE counts:          ${FILT}
     scripts:                        ${SCRIPTS}
     priors:                         ${PRIORS}
-    design file:	            ${DESIGN}
+    design priors:	            ${DESIGN}
+    design comparate:               ${DESIGN2}
     output for bayesian:            ${BAYESIN}
     """
     .stripIndent()
@@ -51,8 +52,8 @@ process mergePriors {
 }
 
 // design file for comparing
-//  C1_G1,C1_G2,C2_G1,C2_G2,Comparate_1,Comparate_2,compID
-//  W1118,W55,W1118,W55,W55_M,W55_V,W55_M_V
+//  Comparate_1,Comparate_2,compID
+//  W55_M,W55_V,W55_M_V
 
 process merge4Bayes {
 

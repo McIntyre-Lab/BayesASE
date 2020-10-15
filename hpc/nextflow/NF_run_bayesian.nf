@@ -17,14 +17,14 @@ println """\
     .stripIndent()
 
 //  design file
-//  C1_G1,C1_G2,C2_G1,C2_G2,Comparate_1,Comparate_2,compID
-//  W1118,W55,W118,W55,W55_M,W55_V,W55_M_V
+//  Comparate_1,Comparate_2,compID
+//  W55_M,W55_V,W55_M_V
 // split design file into 1 row chunks
 // want to execute a task for each row
 
 Channel
     .fromPath( DESIGN_FILE )
-    .splitCsv( header: ['C1_G1','C1_G2','C2_G1','C2_G2','COMP_1','COMP_2','COMPID'], skip: 1 )
+    .splitCsv( header: ['COMP_1','COMP_2','COMPID'], skip: 1 )
     .set { chunks_ch }
 
 process runBayesian {
@@ -44,11 +44,7 @@ process runBayesian {
     "
 
     ######  Run python script calling environmental bayesian model (stan2, 2 conditions)
-    python3 !{SCRIPTS}/NBmodel_stan2_slurm_02amm.py \
-        -c1_g1 !{row.C1_G1} \
-        -c1_g2 !{row.C1_G2} \
-        -c2_g1 !{row.C2_G1} \
-        -c2_g2 !{row.C2_G2} \
+    python3 !{SCRIPTS}/NBmodel_stan2_slurm_06amm.py \
         -comparate_1 !{row.COMP_1} \
         -comparate_2 !{row.COMP_2} \
         -compID !{row.COMPID} \
