@@ -17,30 +17,9 @@ def get_args():
     parser = argparse.ArgumentParser(
         description="check read numbers into and out of sam compare, must be within minimum unique reads and sum of uniq reads from both summary files"
     )
-    parser.add_argument(
-        "-b1",
-        "--bwa1",
-        dest="bwa1",
-        action="store",
-        required=True,
-        help="The bwa split sam summary file containing uniq read counts sam1 [Required]",
-    )
-    parser.add_argument(
-        "-b2",
-        "--bwa2",
-        dest="bwa2",
-        action="store",
-        required=True,
-        help="The bwa split sam summary file containing uniq read counts sam2 [Required]",
-    )
-    parser.add_argument(
-        "-fq",
-        "--fq",
-        dest="fq",
-        action="store",
-        required=True,
-        help="fastq filename [Required]",
-    )
+    parser.add_argument('-s1','--summary1',dest='summary1', action='store', required=True, help='The sam summary file containing read counts after dropping [Required]')
+    parser.add_argument('-s2','--summary2',dest='summary2', action='store', required=True, help='The sam summary file containing read counts after dropping [Required]')
+    parser.add_argument('-ase_names','--ase_names',dest='ase_names', action='store', required=True, help='fastq filename [Required]')
     parser.add_argument(
         "-a",
         "--ase",
@@ -75,25 +54,21 @@ def main():
     galaxy/test-data/align_and_counts_test_data/check_SAM_compare_for_lost_reads_BASE_test_data.tabular
     """
     args = get_args()
-    with open(args.bwa1, "r") as bwa_table:
+    with open(args.summary1,'r') as bwa_table:
         B1 = csv.reader(bwa_table, delimiter="\t")
         # Discard the header
         next(B1)
         row = next(B1)
-        opposite1 = int(row[2])
-        mapped1 = int(row[4])
-        # Total unique reads = sum of the opposite [2] and mapped [4] columns
-        uniq_b1 = opposite1 + mapped1
+        # total reads after dropping
+        uniq_b1 = int(row[1])
 
-    with open(args.bwa2, "r") as bwa2_table:
+    with open(args.summary2, 'r') as bwa2_table:
         B2 = csv.reader(bwa2_table, delimiter="\t")
         # Discard the header
         next(B2)
         row = next(B2)
-        opposite2 = int(row[2])
-        mapped2 = int(row[4])
-        # Total unique reads = sum of the opposite [2] and mapped [4] columns
-        uniq_b2 = opposite2 + mapped2
+        # total reads after dropping
+        uniq_b2 = int(row[1])
 
     # Read number in the sam file should be between greater of uniq_b1 or uniq_b2.
     # It should be the same number as in the ase_totals table.
@@ -104,13 +79,12 @@ def main():
         df = pd.read_csv(ase_table, sep="\t")
         count_tot = int(df["Count totals:"].iloc[len(df) - 1])
 
-    if minReads <= count_tot <= sumReads * 2:
+    if minReads <= count_tot <= sumReads:
         flag_readnum_in_range = 1
     else:
         flag_readnum_in_range = 0
 
-    bname = os.path.basename(args.fq)
-    name = os.path.splitext(bname)[0]
+    name = os.path.basename(args.ase_names)
 
     ## counts in ase file should be betweeen minReads and the sum of uniq mapped reads
     ## open file to write to
