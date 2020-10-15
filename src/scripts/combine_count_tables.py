@@ -53,8 +53,16 @@ def sum_counts_sim(input_dict,df_design,out,designdir):
         dfsum = dfsum.set_index('FEATURE_ID')
 
         ## Iterate through the list of filenames in the filenames column
+        if_found = 0
         for fqName in filelist:
-            filename = fqName + '.fastq'
+            filename = fqName
+            for i in input_dict.keys():
+                if filename in i:
+                    filename = i
+                    if_found = 1
+            if(if_found ==0):
+                report = "Error: Cannot find file" + i  + "in the input collection!"
+                raise ValueError(report)
             headers_check(input_dict[filename], filename)
             ddict[filename] = pd.read_table(input_dict[filename]) ##we create a dictionary to store each count table file as a dataframe with their filename as the key
             ddict[filename] = ddict[filename].set_index('FEATURE_ID')
@@ -62,23 +70,19 @@ def sum_counts_sim(input_dict,df_design,out,designdir):
 
         outfile = out +'/' + sampleID  ##create outfile for summed matrix
         dfsum.to_csv(outfile, sep='\t')
-        
+
     df_design['sample'] = df_design['sampleID'].str.rsplit('_', 1).str[0]
-    print(df_design)
     df_drop = df_design.drop(['fqName','readLength', 'fqExtension', 'techRep'], axis=1)
     df_unique = df_drop.drop_duplicates()
     df_unique.to_csv(os.path.join(designdir), index=False, sep='\t')
 
-        
+
 def sum_counts_data(input_dict,df_design,feature_lengths,out,designdir):
-    
     ##groupby sampleID; this allows us to select the correct count table files to sum together
     df_grouped = df_design.groupby('sampleID').agg(lambda x: x.tolist())
 
     ## count number of unique sampleIDs
     sampleID_count = len(df_grouped.index)
-    print("Number of Sample IDs:")
-    print(sampleID_count)
 
     row = -1 ##this variable keeps track of which row in the design file (or subset design file) the filename would have been located in; we use this variable to extract the corresponding 
                   ##read length from the design file
@@ -90,9 +94,15 @@ def sum_counts_data(input_dict,df_design,feature_lengths,out,designdir):
  
         ## Iterate through the list of filenames in the filenames column
         for fqName in filelist:
-            print(fqName)
-            row += 1 
-            filename = fqName + '.fastq'
+            row += 1
+            filename = fqName
+            for i in input_dict.keys():
+                if filename in i:
+                    filename = i
+                    if_found = 1
+            if(if_found ==0):
+                report = "Error: Cannot find file" + i  + "in the input collection!"
+                raise ValueError(report)
             headers_check(input_dict[filename], filename)
             ddict[filename] = pd.read_table(input_dict[filename]) ##we create a dictionary to store each count table file as a dataframe with their filename as the key
 
