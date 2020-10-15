@@ -82,10 +82,10 @@ seqcond<-paste("c",seq(1,nconditions),sep="")
 
 # Prepare output File
 fileout = args[2]
-fornames1=paste("g1_",seqcond,sep="") #Tester given condition
+fornames1=seqcond #Neutral prefix for output names
 
 
-fornames2=c("sampleprop","theta","q025","q975","Bayes_pval","AI_decision")
+fornames2=c("sampleprop","theta","q025","q975","Bayes_evidence","AI_decision")
 fornames=paste(paste(rep(fornames1,each=length(fornames2)),fornames2,sep="_"),collapse=",")
 #The three possible alignment states: better to tester (G1?), better to line (G2?), equally good (both).
 #alnto<-c("g1","g2","Both")
@@ -101,7 +101,7 @@ firstheaders=paste(c("comparison","FEATURE_ID",
                      seqreps,
                      countheader,
                       allpriors, 
-					  "H3_independence_Bayesian_pvalue"),
+                      "H3_independence_Bayes_evidence"),
                       collapse=",")
 
 alpha_post_names<-paste(paste("alpha",seq(1,nconditions),"_postmean",sep=""),collapse=",")
@@ -133,29 +133,9 @@ while(length(newline) != 0 ){
 	names(mydata)=headers_in[1:length(mydata)]
         # print(paste("length mydata",length(mydata)))
         # print(paste("names mydata",names(mydata)))
-	
-    
-	cat("Starting names formatting and checking\n")
-	#Formatting just tries to fix some old bad habits we had in naming!
-	#Standard users should not rely on this formatting, but they should carefully follow user's guide rules for naming conventions.
-	names(mydata)<-gsub("_tester_","_g1_",names(mydata))
-	names(mydata)<-gsub("_Line_","_g2_",names(mydata))
-	names(mydata)<-gsub("_Both_","_both_",names(mydata))
-	names(mydata)<-gsub("M_g1_","c1_g1_",names(mydata))
-	names(mydata)<-gsub("M_g2_","c1_g2_",names(mydata))
-	names(mydata)<-gsub("M_both_","c1_both_",names(mydata))
-	names(mydata)<-gsub("V_g1_","c2_g1_",names(mydata))
-	names(mydata)<-gsub("V_g2_","c2_g2_",names(mydata))
-	names(mydata)<-gsub("V_both_","c2_both_",names(mydata))
-	names(mydata)<-gsub("qsim_tester","qsim_g1",names(mydata))
-	names(mydata)<-gsub("qsim_line","qsim_g2",names(mydata))
-	names(mydata)<-gsub("M_flag_analyze","c1_flag_analyze",names(mydata))
-	names(mydata)<-gsub("V_flag_analyze","c2_flag_analyze",names(mydata))
-	names(mydata)<-gsub("M_num_reps","c1_num_reps",names(mydata))
-	names(mydata)<-gsub("V_num_reps","c2_num_reps",names(mydata))
-	names(mydata)<-gsub("fusion_id","FEATURE_ID",names(mydata))
-	if(length(grep("total_rep",names(mydata)))==0) names(mydata)<-gsub("total_","total_rep",names(mydata))
-	#Here we check if column names satisfy the rules
+
+    cat("Starting names checking\n")
+    #Here we check if column names satisfy the rules
 	if(sum(names(mydata)%in%allpriors)!=length(allpriors)) stop("Specified column names for priors do not match expectations. At least the following prior columns must be present: ",paste(allpriors,collapse=" "))
 	if(sum(names(mydata)%in%seqreps)!=length(seqreps)) stop("Specified column names for replicate number do not match expectations. At least the following replicate number columns must be present: ",paste(seqreps,collapse=" "))
 	if(sum(names(mydata)%in%activeflag)!=length(activeflag)) stop("Specified column names for activeflag do not match expectations. At least the following activeflag columns must be present: ",paste(activeflag,collapse=" "))
