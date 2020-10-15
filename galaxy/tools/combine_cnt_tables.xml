@@ -17,7 +17,7 @@
     --sim=$sim
     --out=`pwd`
     --designdir=$output_designFile
-]]></command>  
+]]></command>
     <inputs>
         <param name="design" type="data" format="tabular" label="Design File" help="Select the Alignment Design File. The design file must be sorted by biological replicate (sampleID) "/>
         <param name="bed" type="data" format="tabular" label="Bed File" help="Select the input BED file. Do not use the reformatted BED file created in the Align and Count workflow"/>
@@ -31,16 +31,16 @@
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Combined and Summed ASE Table">
-	<discover_datasets pattern="(?P&lt;name&gt;.*)" ext="tabular" directory="outputs" />	
+        <discover_datasets pattern="(?P&lt;name&gt;.*)" ext="tabular" sort_by="reverse_filename" directory="outputs" />
       </collection>
       <data name="output_designFile" format="tabular" label="${tool.name} on ${on_string}: Sample Design File" />
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/summarize_counts_testdata/combine_cnts_table_df_for_BASE.tsv" ftype="tsv"/>
+            <param name="design" value="BASE_testdata/summarize_counts_testdata/alignment_design_test_file.tsv" ftype="tsv"/>
             <param name="bed" value="BASE_testData_galaxy.bed" ftype="bed"/>
             <param name="collection" value="BASE_testdata/summarize_counts_testdata/ASE_counts_tables" ftype="data_collection"/>
-            <output name="output_designFile" file="BASE_testdata/summarize_counts_testdata/sample_df_BASE.tabular" ftype="tabular"/>
+            <output name="output_designFile" file="BASE_testdata/summarize_counts_testdata/sample_design_file.tabular" ftype="tabular"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
                 <assert_contents>
@@ -53,14 +53,15 @@
     <help><![CDATA[
 **Tool Description** 
 
-The Combine Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Pre-Alignment Design File and calculates the average coverage per nucleotide (APN) values for each feature.
+The Combine Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File and calculates the average coverage per nucleotide (APN) values for each feature.
 
-APNtotal= ([total alignment count] x [readLength]) /(genic feature length)
-APNboth= ([reads mapping equally to both parental genomes] x (readlength)/ (genic feature length)
+APN_total= ([total alignment count] x [readLength]) /(genic feature length)
+APN_both= ([reads mapping equally to both parental genomes] x (readlength)/ (genic feature length)
 
 The generated output is a TSV file containing the summed ASE Count Tables between the technical replicates of a given biological replicate. 
 
-This tool also generates a "Sample Design File" which contains infomation on the biological replicates that each technical replicates was summed under by Sample ID. This design file is used in downstream tools to create files needed for entry into the Bayesian Module. 
+This tool also generates a "Sample Design File" which contains infomation on the biological replicates that each technical replicates was summed under by Sample ID. This design file is used in downstream tools to create files needed for the Run Bayesian workflow.
+
 
 -------------------------------------------------------------------------------------------
 
@@ -72,32 +73,32 @@ This tool also generates a "Sample Design File" which contains infomation on the
 
 **TIP**: Check if the design file is in the correct format by using the *Check Align Design file* tool
 
-The Alignment Design File is required as input.  The Design File must contain the FASTQ files that the input ASE Counts tables were derived from, as well as the biological replicate number of each (noted in the Sample ID column), and the technical replicate number (noted in the designated techRep column)
+The Alignment Design File is required as input.  The Design File must contain the FASTQ files that the input ASE Counts tables were derived from, as well as the biological replicate number of each (noted in the Sample ID column), and the technical replicate number (noted in the designated techRep column).
 
 The Alignment Design File should be in the following format, and contain the appropriate headers in the same order.
 
 Example design file::
- 
-	G1	G2	sampleID		fqName			fqExtension	techRep	readLength 
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150        
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150        
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150        
 
-In the example design file above, one summed ASE Counts table would be output, comprised of the three technical replicates belonging to biological replicate 1 (E1).    
+	G1	G2	sampleID		fqName			fqExtension	techRep	readLength
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150
+
+In the example design file above, one summed ASE Counts table would be output, comprised of the three technical replicates belonging to biological replicate 1 (E1).
 
 **NOTE:** If using simulated reads, include the technical replicate column, but label the technical replicates with the same number
 
 Example design file for simulated data ::
- 
-	G1	G2      sampleID   fqName	fqExtension	techRep	readLength 
-	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96        
-	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96        
-	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96 
+
+	G1	G2      sampleID   fqName	fqExtension	techRep	readLength
+	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96
+	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96
+	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96
 	W1118	W55      W55_V_2   SRR1989594_1     .fq		1	96
 
 **BED File [REQUIRED]**
 
-The user-supplied BED file used to identify overlapping genic features is required. Do **not** use the reformatted BED file created in the Align and Count workflow where feature ID is in the first column and chromosome name is in the last. Chromosome name must be in the first column.   
+The user-supplied BED file used to identify overlapping genic features is required. Do **not** use the reformatted BED file created in the Align and Count workflow where feature ID is in the first column and chromosome name is in the last. Chromosome name must be in the first column.
 
 **ASE Count Tables [REQUIRED]**
 
@@ -106,7 +107,7 @@ A collection of ASE Count Tables generated by the Sam Compare with Feature Tool.
 
 **Start [OPTIONAL]**
 
-Enter point for script to start at in design file. Use if only a certain section of fq files in the design file is wanted in data analysis 
+Enter point for script to start at in design file. Use if only a certain subset of fq files in the design file is wanted in data analysis.
 
 **End [OPTIONAL]**
 
@@ -136,7 +137,8 @@ Example of a Combined ASE Count Table::
     +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+ 
 
 
-(2) A Sample Design File containing the biological replicates that were summed in the generated ASE Counts Table collection. G1 and G2 refer to the names of the parental genomes. The sampleID differs from the sample in that it contains the biological replicate number, whereas the sample does not. 
+(2) A Sample Design File containing the biological replicates that were summed in the generated ASE Counts Table collection. G1 and G2 refer to the names of the parental genomes.
+
 
 Example Sample Design File:
 
