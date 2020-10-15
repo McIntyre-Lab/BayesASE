@@ -7,50 +7,32 @@
     <command><![CDATA[
     python '$__tool_directory__/check_aln_design_file.py'
     --design=$design
-    --g1=$g1
-    --g2=$g2
-    --sampleID=$id
-    --fqName=$fq
-    --ext=$ext
-    --rep=$rep
-    --readLen=$readlen
+    --design_identifier=$design.element_identifier
     --logfile=$logfile
     --dups=$dups
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tabular" label="Alignment Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the instructions at the bottom of this page for the format. [Required]"/>
-        <param name="g1" type="text" label="G1 header name" help="Name of the column in the design file containing the names for the first parental genome [Required]"/>
-        <param name="g2" type="text" label="G2 header name" help="Name of the column in the design file containing the names for the second parental genome [Required]"/>
-        <param name="id" type="text" label="SampleID header name" help="Name of the column in the design file containing the sampleID names [Required]"/>
-        <param name="fq" type="text" label="Fastq file name header" help="Name of the column in the design file containing the FASTQ file names without extensions [Required]"/>
-        <param name="ext" type="text" label="FASTQ extension header" help="Name of the column in the design file containing the extension of FASTQ files, ex: .fq, .fastq. [Required]"/>
-        <param name="readlen" type="text" label="Read length header" help="Name of column in the design file containing the read lengths for the FASTQ files [Required]"/>
-        <param name="rep" type="text" label="Tech rep indentifier header" help="Name of the column in the design file containing the tech rep identifiers, ex: lanes, etc. [Required]"/>
-
+        <param name="design" type="data" format="tabular" label="Alignment Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the help section at the bottom of this page for the format. [Required]"/>
     </inputs>
     <outputs>
-        <data format="tabular" name="dups" label="${tool.name} on ${on_string}: Duplicates"/>        
+        <data format="tabular" name="dups" label="${tool.name} on ${on_string}: FASTQ Duplicates"/>
         <data format="tabular" name="logfile" label="${tool.name} on ${on_string}: Alignment Design Criteria"/>
     </outputs>
     <tests>
         <test>
-            <param name="design" ftype="data"     value="BASE_testdata/check_pre_align_design_testdata/df_BASE_galaxy_test_data_W55_noEmptyFq.tsv"/>
-            <param name="g1" ftype="text" value="G1" />
-            <param name="g2" ftype="text" value="G2" />
-            <param name="id" ftype="text" value="sampleID"/>
-            <param name="fq" ftype="text" value="fqName"/>
-            <param name="ext" ftype="text" value="fqExtension"/>
-            <param name="readlen" ftype="text" value="readLength"/>
-            <param name="rep" ftype="text"  value="techRep"/>         
-            <output name="dups"  ftype="data" file="check_df_formatting_BASE_test_data.tabular" />
+            <param name="design" ftype="data"     value="BASE_testdata/check_align_design_testdata/alignment_design_file.tsv"/>
+            <output name="dups"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_duplicates.tabular" />
+            <output name="logfile"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_criteria.csv" />
         </test>
     </tests>
     <help><![CDATA[
 **Tool Description**
 
-This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. 
+This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. Default values are already in place to save user time.
 
-**NOTE:** There are two design files in BASE that must be created and supplied by the user. They are the *Alignment Design file* and the *Comparate Design file*. 
+**NOTE:** There are two Design Files that must be created and supplied by the user. They are the *Alignment Design File* and the *Comparate Design File*.
+
+All others (Sample and Priors) are created and used as intermediates by the BASE workflows.
 
 **The design file should contain the following columns, in order:**
 
@@ -66,7 +48,7 @@ The sample identifier must contain the biological replicate number, and the comp
 
 An example of a comparate condition is W1118_F, where W1118 is the genome and F refers to female. There must be at least two comparate conditions for Bayesian Analysis.
 
-In the example below, there are two comparate condtions, W55_Mated and W55_Virgin, and E1, refers to the biological replicate number. 
+In the example below, there are two comparate condtions, W55_Mated and W55_Virgin, and E1 refers to the biological replicate number.
 
 An example design file::
 
