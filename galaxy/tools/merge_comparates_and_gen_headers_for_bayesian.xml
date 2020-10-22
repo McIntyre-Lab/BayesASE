@@ -7,7 +7,7 @@
     <command><![CDATA[
     mkdir outputs;
     cd outputs;
-    python '$__tool_directory__/merge_comparates_and_gen_headers_for_bayesian_02amm.py'
+    python '$__tool_directory__/merge_comparates_and_gen_headers_for_bayesian_03amm.py'
     --output=`pwd`
     --collection_identifiers="$collection.keys()"
     --collection_filenames="${",".join(map(str, $collection))}"
@@ -19,12 +19,12 @@
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Merged Comparates with Headers">
-        <discover_datasets pattern="(?P&lt;name&gt;bayesian_input_.*)" ext="tabular" directory="outputs" />
+        <discover_datasets pattern="(?P&lt;name&gt;bayesian_input_.*)" ext="tabular" sort_by="reverse_filename" directory="outputs" />
       </collection>
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/merge_priors_testdata/comparate_df_BASE.tsv" ftype="tsv"/>
+            <param name="design" value="BASE_testdata/merge_priors_testdata/comparate_df_two_conditions_BASE.tsv" ftype="tsv"/>
             <param name="collection" value="BASE_testdata/merge_priors_testdata/merge_priors_to_comparate" ftype="data_collection"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
@@ -57,29 +57,25 @@ Example of a merged prior to comparate file in the collection (W55_Mated)::
 
 **Comparate Design File [REQUIRED]**
 
-This tool requires a Comparate design file created by the user that contains the desired comparates. The comparates are what the user wishes to be tested.
+This tool requires a Comparate design file created by the user that contains the desired comparates. The comparates are the conditions that the user wishes to be tested.
 
 **NOTE**:The Comparate Design File is created and supplied by the user. It explicitly lists the comparates that the user wants to compare.
 
 The design file must contain the following columns, in order::
 
-    (1) C1_G1: The name of the maternal genome (G1) for comparate 1
-    (2) C1_G2: The name of the paternal genome (G2) for comparate 1
-    (3) C2_G1: The name of the maternal genome (G1) for comparate 2
-    (4) C2_G2: The name of the paternal genome (G2) for comparate 2
-    (5) Comparate_1: The genome and first condition to be compared (ex. W55_M)
-    (6) Comparate_2: The genome and second condition to be compared (ex. W55_V)
-    (7) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
+    (1) Comparate_1: The genome and first condition to be compared (ex. W55_M)
+    (2) Comparate_2: The genome and second condition to be compared (ex. W55_V)
+    (3) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
 
-**WARNING:** The design file must contain at least two comparates for Bayesian Analysis.
+**WARNING:** The design file must contain at least two comparates for Bayesian Analysis. If testing one condition, use the *Generate Header* tool which generates headers for one comparate. 
 
 An example design file:
 	
-    +-------+-------+-------+-------+-------------+-------------+--------+
-    | C1_G1 | C1_G2 | C2_G1 | C2_G2 | Comparate_1 | Comparate_2 | compID |
-    +=======+=======+=======+=======+=============+=============+========+
-    | W1118 | W55   | W1118 | W55   | W55_M       | W55_V       | W55_M_V| 
-    +-------+-------+-------+-------+-------------+-------------+--------+
+    +-------------+-------------+--------+
+    | Comparate_1 | Comparate_2 | compID |
+    +=============+=============+========+
+    | W55_M       | W55_V       | W55_M_V| 
+    +-------------+-------------+--------+
 
 **Outputs**
     
