@@ -1,40 +1,9 @@
 <tool id="NBmodel_stan2_galaxy" name="Run the Bayesian model: " version="0.1.0">
-    <description>NBModel_stan2_flex_prior.R</description>
+    <description>nbmodel_stan2_flex_prior.R</description>
     <macros>
       <import>../macros.xml</import>
     </macros>
     <expand macro="requirements" />
-    <command><![CDATA[
-    mkdir outputs;
-    cd outputs;
-    echo "test" > $test;
-    python '$__tool_directory__/NBmodel_stan2_galaxy_02amm.py'
-    --collection_identifiers="$collection.keys()"
-    --collection_filenames="${",".join(map(str, $collection))}"
-    --datafile2=`pwd`
-    --design=$design
-    --workdir='$__tool_directory__/'
-    --subpath='$__tool_directory__/NBModel_stan2_flex_prior.R'
-    -o=`pwd`
-    -routput=`pwd`
-    -cond=$cond
-    -iterations=$iterations
-    -warmup=$warmup
-
-]]></command>  
-    <inputs>
-        <param name="design" type="data" format="tabular" label="Design File" help="Select your Comparate Design File."/>
-        <param name="collection" type="data_collection" collection_type="list" label="Select the dataset or collection of datasets containing the comparates merged with the priors" help="Select the dataset or collection of datasets that contain the merged comparates."/>
-        <param name="cond" type="text" label="conditions" value="2" help="Enter the number of conditions your're comparing (e.g. M v F would be 2)"/>
-	<param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
-	<param name="warmup" type="text" label="warmup" value="10000" help="Enter the warmup number [default = 10000]"/>
-    </inputs>
-    <outputs>
-      <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Bayesian Model Output">
-	<discover_datasets pattern="(?P&lt;name&gt;bayesian.*)" ext="tabular" directory="outputs" />	
-      </collection>
-      <data name="test" format="tsv" label="test"/>
-    </outputs>
     <stdio>
       <exit_code range="1:" level="fatal" />
       <regex match="recommend"
@@ -53,12 +22,76 @@
 	     level="fatal"
 	     description="An undefined error occured, please check your intput carefully and contact your administrator." />
     </stdio>
+    <command><![CDATA[
+    mkdir outputs;
+    cd outputs;
+    echo "test" > $test;
+
+    #set identifiers = []
+    #for $i in $collection:
+        #silent identifiers.append($i.element_identifier);
+    #end for
+
+    python '$__tool_directory__/nbmodel_stan2.py'
+    --collection_identifiers="${",".join(map(str, $identifiers))}"
+    --collection_filenames="${",".join(map(str, $collection))}"
+    --datafile2=`pwd`
+    --design=$design
+    --workdir='$__tool_directory__/'
+    --subpath='$__tool_directory__/NBModel_stan2_flex_prior.R'
+    -o=`pwd`
+    -routput=`pwd`
+    -cond=$cond
+    -iterations=$iterations
+    -warmup=$warmup
+
+]]></command>  
+    <inputs>
+        <param name="design" type="data" format="tabular" label="Design File" help="Select your Comparate Design File."/>
+        <param name="collection" type="data" multiple="true" format="tabular" label="Select the dataset or collection of datasets containing the comparates merged with the priors" help="Select the dataset or collection of datasets that contain the merged comparates and new headers."/>
+        <param name="cond" type="text" label="conditions" value="2" help="Enter the number of conditions your're comparing (e.g. M v F would be 2)"/>
+	<param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
+	<param name="warmup" type="text" label="warmup" value="10000" help="Enter the warmup number [default = 10000]"/>
+    </inputs>
+    <outputs>
+      <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Bayesian Model Output">
+	<discover_datasets pattern="(?P&lt;name&gt;bayesian.*)" ext="tabular" directory="outputs" />	
+      </collection>
+      <data name="test" format="tsv" label="test"/>
+    </outputs>
+    <tests>
+        <test>
+            <param name="design" ftype="data" value="BASE_testdata/run_bayesian_testdata/comparate_df_two_conditions_BASE.tsv"/>
+            <param name="cond" ftype="text" value="2" />
+            <param name="iterations" ftype="text" value="100000" />
+            <param name="warmup" ftype="text" value="10000" />
+            <param name="collection">
+              <collection type="list">
+                <element name="collection" value="BASE_testdata/run_bayesian_testdata/bayesian_input_W55_M_V"/>
+              </collection>
+             </param>
+             <output_collection name="split_output" type="list">
+               <element name="comparison">
+                 <assert_contents>
+                   <has_text_matching expression="W55_M_V" />
+                  </assert_contents>
+                </element>
+              </output_collection>
+        </test>
+    </tests>
     <help><![CDATA[
 **Tool Description** 
-The Bayesian model itself is the STAN (Carpenter et al. 2017) implementation of a previously published model for the detection of AI in one or between multiple conditions (Leon-Novelo et al. 2018) with an extension allowing more flexibility in the prior.
+The Run Bayesian Model Tool deploys the Novelo et. al. 2014 model to test for AI within each of two conditions and between the conditions. The model implements a multi-faceted approach of analysis for Allelic Imbalance (AI) that accounts for the possibility of bias in lieu of the binomial test, a common application utilized to determine statistical significance of AI. The binomial test always returns a higher rate of type I error in comparison to the Bayesian Model, as the model estimates possible points of bias through the results of a level alpha test, thus lowering the type I error rate. The Poisson-Gamma model is used to estimate and correct for points of bias, without the need for data filtering, which can lead to sources of bias being missed.  
 
-The Run Bayesian tool uses the Bayesian Model outlined in the following paper 
+The model is used to test three hypotheses of interest:
+	for i = 1,2 and k = 1,2,…,Ki.
+		Allelic balance in Comparate 1 (e.g., Male) or, equivalently, H01: α1 = 1.
+		Allelic balance in Comparate 2 (e.g., Female), H02: α2 = 1.
+		The level of AI is not different between comparates.
 
+If either H01 or H02 are rejected, (at a threshold of  posterior p-value 0.05) “AI_{cn }_decision” , where n refers to the comparate number, is set to 1. If either of these cannot be rejected, these column values remain 0.
+
+Testing the third null hypothesis tests determines if the true proportion of reads coming from the G1 is the same within Comparate 1 as it is within Comparate 2 (Novelo et. al 2018). This is a separate process that effectively tests if α1 = α2. If H03 is rejected, the Bayesian model output columns “AI_diffinc2andc1” =1. All model output is compiled into one wide format TSV file per Bayesian input file to be deposited in the user inputted directory. 
 
 
 **Inputs**
@@ -70,20 +103,24 @@ The Run Bayesian tool uses the Bayesian Model outlined in the following paper
 
 The Comparate Design File must contain the following columns, in order::
 
-    (1) C1_G1: The name of the maternal genome (G1) for comparate 1
-    (2) C1_G2: The name of the paternal genome (G2) for comparate 1
-    (3) C2_G1: The name of the maternal genome (G1) for comparate 2
-    (4) C2_G2: The name of the paternal genome (G2) for comparate 2
-    (5) Comparate_1: The genome and first condition to be compared (ex. W55_M)
-    (6) Comparate_2: The genome and second condition to be compared (ex. W55_V)
-    (7) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
+    (1) Comparate_1: The genome and first condition to be compared (ex. W55_M)
+    (2) Comparate_2: The genome and second condition to be compared (ex. W55_V)
+    (3) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
  
+
+Example Comparate Design File
+
+    +---------------+---------------+----------+
+    |  Comparate_1  |  Comparate_2  |  compID  |
+    +---------------+---------------+----------+
+    |  R105_F       |  R105_M       | R105_F_M |
+    +---------------+---------------+----------+
+
 
 **Dataset or Collection of Datasets where Comparates and Priors have been merged together[REQUIRED]**
 
+These files can be generated from the Merge Priors Workflow (specifically the Merge Two or More Comparate Datasets).
 
-
-The Bayesian tool requires the dataset containing the new headers for each comparate. This is the output from Merge Comparates and Generate Headers (or the Generate Headers tool if testing one comparate)
 
 Example Input File 
 
@@ -101,43 +138,76 @@ Example Input File
 
 **Output**
 
-. 
+
 The tool generates a single TSV for every comparison (row) in the Comparate Design File: 
 
 The TSV details whether or not a set of alleles are indicative of allelic imbalance for a given comparison, based on a series of Bayesian analyses.
 
-Example Bayesian Output file::
+Example Bayesian Output file:
 
-    comparison	FEATURE_ID	W55_M_num_reps	W55_V_num_reps	counts_W55_M_g1	counts_W55_M_g2	counts_W55_M_both	counts_W55_V_g1	counts_W55_V_g2	counts_W55_V_both	prior_W55_M_g1	prior_W55_M_g2	prior_W55_V_g1	        prior_W55_V_g2	chisqpvalue	independence_Bayesian_pvalue	g1_W55_M_sampleprop	g1_W55_M_mean	g1_W55_M_q025	g1_W55_M_q975	g1_W55_M_Bayes_pval	g1_W55_M_AI_decision	        g1_W55_V_sampleprop	g1_W55_V_mean	g1_W55_V_q025	g1_W55_V_q975	g1_W55_V_Bayes_pval	g1_W55_V_AI_decision	alpha1_postmean	alpha2_postmean	flaganalyze
-    W55_M_V	l(1)G0196   	3	        3	        2808	            1939	    18977	        2157	        1572	        15123	                0.6045548654	0.6045548654	    0.6045548654	0.6045548654	0.2331	    0.9939	0.5915	0.5166	0.2781	0.7485	0.8958	0	0.5784	        0.5155	0.2782	0.7478	0.9002	0	0.9988	1.001	1
-    W55_M_V	CG10932	        3	        3	        157	            227	            2244	        72	        208	        1810	                0.1795977012	 0.1795977012	    0.1795977012	0.1795977012	0.0001	    0.1085	0.4089	0.4033	0.3074	0.5105	0.0735	0	0.2571	0.2879	0.2029	        0.4019	0.0023	1	1.2263	1.5942	1
-    W55_M_V	CG8920	        3	        3	        620	            340	            4065	        474	        306	        3592	                0.182225846	 0.182225846	    0.182225846	                      0.182225846	    0.1123	    0.1023	0.6458	0.675	0.6038	0.7388	0.0004	1	0.6077	0.5927	0.5147	0.6636	0.0237	1	    0.6946	0.8306	1
+    +-------------+------------+----------------+-----------------+------------------+------------------+----------------------+------------------+-----------------+-------------------+----------------------+--------------------+---------------------+------------------+----------------------------------+--------------------+-----------------+---------------+--------------+---------------------+--------------------+--------------------+---------------+--------------+----------------+---------------------+---------------------+----------------+-----------------+--------------+ 
+    | comparison  |FEATURE_ID  | W55_M_num_reps | W55_V_num_reps  | counts_W55_M_g1  | counts_W55_M_g2  |  counts_W55_M_both   | counts_W55_V_g1  | counts_W55_V_g2 | counts_W55_V_both | prior_W55_M_g1       |prior_W55_M_g2      |prior_W55_V_g1       | prior_W55_V_g2   | H3_independence_Bayesian_pvalue  |g1_W55_M_sampleprop | g1_W55_M_theta  |g1_W55_M_q025  |g1_W55_M_q975 | g1_W55_M_Bayes_pval |g1_W55_M_AI_decision|g1_W55_V_sampleprop |g1_W55_V_theta |g1_W55_V_q025 | g1_W55_V_q975  | g1_W55_V_Bayes_pval |g1_W55_V_AI_decision |alpha1_postmean | alpha2_postmean | flaganalyze  |
+    +=============+============+================+=================+==================+==================+======================+==================+=================+===================+======================+====================+=====================+==================+==================================+====================+=================+===============+==============+=====================+====================+====================+===============+==============+================+=====================+=====================+================+=================+==============+
+    | W55_M_V     | l(1)G0196  |        3       |        3        |       362        |       520        |          3990        |         413      |         605     |         4475      | 0.0743021346469622   |0.106732348111658   |0.0751866011287093   |0.110140178408884 |0.866                             |0.4104              |0.4948           |0.3778         |0.612         |0.9284               | 0                  | 0.4057             |0.5082         | 0.3912       | 0.6231         | 0.8839              | 0                   | 1.0182         | 0.9905          |     1        |
+    +-------------+------------+----------------+-----------------+------------------+------------------+----------------------+------------------+-----------------+-------------------+----------------------+--------------------+---------------------+------------------+----------------------------------+--------------------+-----------------+---------------+--------------+---------------------+--------------------+--------------------+---------------+--------------+----------------+---------------------+---------------------+----------------+-----------------+--------------+  
+    | W55_M_V     | CG10932    |        3       |        3        |        45        |        79        |           661        |          91      |         101     |          723      | 0.0573248407643312   |0.100636942675159   |0.0994535519125683   |0.110382513661202 |00.5916                           |0.3629              |0.5006           |0.3518         |0.6487        |0.993                | 0                  |0.474               |0.4446         | 0.3019       | 0.5949         | 0.4525              |0                    | 1.0108         | 1.1341          |     1        |
+    +-------------+------------+----------------+-----------------+------------------+------------------+----------------------+------------------+-----------------+-------------------+----------------------+--------------------+---------------------+------------------+----------------------------------+--------------------+-----------------+---------------+--------------+---------------------+--------------------+--------------------+---------------+--------------+----------------+---------------------+---------------------+----------------+-----------------+--------------+ 
+    | W55_M_V     | CG8920     |        3       |        3        |        49        |        18        |           336        |          41      |          25     |          337      | 0.121588089330025    |0.0446650124069479  |0.101736972704715    |0.0620347394540943|0.8316                            |0.7313              |0.5274           |0.3786         |0.6721        |0.7099               | 0                  |0.6212              |0.5057         | 0.3621       | 0.6482         | 0.9345              |0                    | 0.9566         | 0.9996          |      1       |
+    +-------------+------------+----------------+-----------------+------------------+------------------+----------------------+------------------+-----------------+-------------------+----------------------+--------------------+---------------------+------------------+----------------------------------+--------------------+-----------------+---------------+--------------+---------------------+--------------------+--------------------+---------------+--------------+----------------+---------------------+---------------------+----------------+-----------------+--------------+
+    | W55_M_V     | Mapmodulin |        3       |        3        |        23        |       136        |          1553        |          15      |         188     |         1912      | 0.0134345794392523   |0.0794392523364486  |0.00709219858156028  |0.0888888888888889|0.8649                            |0.1447              |0.4709           |0.3396         |0.6084        |0.6644               |0                   |0.0739              |0.4552         |0.3175        | 0.602          | 0.5348              |0                    | 1.0717         | 1.1083          |      1       |
+    +-------------+------------+----------------+-----------------+------------------+------------------+----------------------+------------------+-----------------+-------------------+----------------------+--------------------+---------------------+------------------+----------------------------------+--------------------+-----------------+---------------+--------------+---------------------+--------------------+--------------------+---------------+--------------+----------------+---------------------+---------------------+----------------+-----------------+--------------+
 
-
-
-    +----------------
-    | comparison
 
 Headers are: 
 
-    • Comparison- Same as compID ( just a tag for the comparison performed in the file)
-    • FEATURE_ID- Genic feature ID
-    • c1_num_reps- Number of biological replicates data is present for in comparate 1
-    • c2_num_reps- Number of biological replicates data is present for in comparate 2
-    • counts_c1_g1- Number of aligned reads to G1 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to F)
-    • counts_c1_g2- Number of aligned reads to G2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to G)
-    • counts_c1_both- Number of aligned reads mapped equally well to G1 and G2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M equally to F and G)
-    • counts_c2_g1- Number of aligned reads to G1 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to G)
-    • counts_c2_g2-  Number of aligned reads to G2 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to F)
-    • counts_c2_both- Number of aligned reads mapped equally well to G1 and G2 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M equally to G and F)	
-    • prior_c1_g1- “prior estimate” proportion of reads aligning to G1 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to F)
-    • prior_c1_g: “prior estimate” proportion of reads aligning to gG2 in comparate 1 (so for FG_GF_M, the number of mapped reads in FG_M to G)
-    • prior_c1_both: “prior estimate” proportion of reads aligning equally well to G1 and G2 in comparate 1 (so for FG_GF_M, the proportion of mapped reads in FG_M equally to F and G)
-    • prior_c2_g1: “prior estimate” proportion of reads aligning to G1 in comparate 2 (so for FG_GF_M, the number of mapped reads in GF_M to G)
-
-
-
-
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    | Comparison                      | • Same as compID ( just a tag for the comparison performed in the file)                          |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    | FEATURE_ID                      | • Unique genic feature ID                                                                        |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    | c1_num_reps                     | • Number of biological replicates for comparate_1                                                |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    | c2_num_reps                     | • Number of biological replicates for comparate 2                                                |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |counts_{comparate}_{g1/g2}       | • Number of reads that aligned preferentially to G1 (or G2) for indicated comparate              |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |counts_{comparate}_both          | • Number of reads that aligned equally to both parental genomes for indicated comparate          |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    | prior_{comparate}_{g1/g2}       | • The prior probability that a given read will map to G1 (or G2) for {comparate}                 |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |H3_independence_Bayesian_ev      | • Bayesian evidence for testing the null that the alleles are independent variables.             |
+    |                                 |   Minimum value of ev such that the 1−ev central credible interval for α1−α2.                    |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate}_sampleprop           | • The sample proportion of reads among the reads mapped to G1 or G2 (but not both) that have     |
+    |                                 |   mapped preferentially to G1 within {comparate}.                                                |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate}_theta                | • The point estimate of the proportion generated by G1 after adjusting for systematic bias in    |
+    |                                 |   {comparate}.  This proportion different from 1/2 implies AI in the comparate.  Since           |
+    |			              |   {comparate}_theta is an estimate of θn1, credible intervals for θn1 are used to flag the       |
+    |                                 |   comparate as in AI or not.                                                                     |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate}_q025                 | • Lower bound for the 95% central credible interval, or equivalently, the 2.5% quantile of the   |
+    |                                 |   posterior distribution of θ1                                                                   |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate}_q975                 | • Upper bound for the 95% central credible interval, or equivalently, the 97.5% quantile of      |
+    |                                 |   the posterior distribution of θ(n1)                                                            |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate}_Bayes_evidence       | • The Bayesian evidence. Smaller values can lead to rejection of the null. "ev" is the smallest  |
+    |                                 |   value such that the 1−ev central credible interval for θ(n1) does not contain the value        |
+    |                                 |   θ(n1) = 1/2, that implies allelic balance in comparate n.                                      |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |{comparate_n}_AI_decision        | • A 0/1 flag where a "1" indicates that the Bayesian evidence was less than 0.05                 |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |alpha_postmean                   | • Alpha value for comparate 1, θ(1,1)!=0.5. Indicator of allelic imbalance.                      |
+    |                                 |   α1 = sqrt ((1/ Θi) – 1)                                                                        |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |alpha2_postmean                  | • Alpha value for comparate θ(1,2) != 0.5 indicator of allelic imbalance.                        |
+    |                                 |   α2 = sqrt ((1/ Θi) – 1)                                                                        |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    |flaganalyze                      | • 0/1 flag where a "1" indicates that the comparate_flag_analyze variables going into the        |
+    |                                     model were BOTH equal to 1.                                                                    |
+    +---------------------------------+--------------------------------------------------------------------------------------------------+
+    
 
     ]]></help>
     <citations>
