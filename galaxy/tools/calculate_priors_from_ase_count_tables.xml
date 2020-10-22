@@ -7,7 +7,7 @@
     <command><![CDATA[                                                                                                                                                                                   
     mkdir outputs;                                                                                                                                                                               
     cd outputs;
-    python '$__tool_directory__/calculate_priors_from_ase_count_tables_03amm.py'
+    python '$__tool_directory__/calculate_priors_ase_count_tables.py'
     --output=`pwd`
     --design=$design
     --collection_identifiers="$collection.keys()"
