@@ -11,7 +11,7 @@
     --samb=$samb
     --feature=$feature
     --length=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'`
-    --nofqids=$nofqids
+    $nofqids
     --counts=$counts
     --totals=$totals
 ]]></command>
@@ -20,10 +20,7 @@
         <param name="sama" type="data" format="tabular" label="SAM file with G1 reference" help="Select SAM file for G1 containing feature ID in RNAME field [REQUIRED]"/>
         <param name="samb" type="data" format="tabular" label="SAM file with G2 reference" help="Select SAM file for G2 containing feature ID in RNAME field [REQUIRED]"/>
         <param name="feature" type="data" format="tabular" label="Reformatted BED file" help="Select file containing features to assign reads to, with feature ID names in first column. Can be a .tsv or .bed [REQUIRED]"/>
-	<param name="nofqids" type="select" value="" display="radio" label="Check Fastq IDs" help="Select No to skip checking SAM QNAME against the fastq sequence IDs. Saves time if already known to be good.">
-            <option value="False" selected="true">Yes</option>
-            <option value="True">No</option>
-        </param>
+        <param name="nofqids" type="boolean" checked="false" truevalue="--nofqids" falsevalue="" label="Check FASTQ IDs" help="Select to skip checking SAM QNAME against the fastq sequence IDs. Saves time if already known to be good."/>
     </inputs>
     <outputs>
         <data name="counts" format="tsv" label="SAM Compare with Feature on ${on_string}: Create ASE Counts Tables" default_identifier_source="sama"/>
@@ -35,7 +32,7 @@
             <param name="sama"  ftype="data"     value="W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam"/>
             <param name="samb"  ftype="data"     value="W55_G2_create_new_SAM_file_with_features_BASE_test_data.sam" />
             <param name="feature" ftype="data"   value="reformat_BED_file_for_BASE.bed" />
-            <param name="nofqids" ftype="select"   value="true" />
+            <param name="nofqids" type="boolean"   value="--nofqids" />
             <output name="counts"    file="ASE_counts_table_BASE_test_data.tsv" />
             <output name="totals"    file="ASE_totals_table_BASE_test_data.tsv" />
         </test>

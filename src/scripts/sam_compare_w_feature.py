@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 
-
 ## @package sam_compare
 #  This script compares two SAM files (sequence alignment maps) and
 #  generates counts for similarly mapped reads.
@@ -27,10 +26,12 @@ from Bio import SeqIO
 
 # This code is the translation, with modifications, of an existing perl script to python
 #
-__author__  = "Oleksandr Moskalenko <om@hpc.ufl.edu> and Hector del Risco <hdelrisco@ufl.edu>"
-__version__ = '1.0.0'
+__author__ = (
+    "Oleksandr Moskalenko <om@hpc.ufl.edu> and Hector del Risco <hdelrisco@ufl.edu>"
+)
+__version__ = "1.0.0"
 
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, "")
 logger = logging.getLogger()
 
 
@@ -49,7 +50,9 @@ def parse_options():
     #  @brief Generate command-line switches and help, process options and arguments
     #  @param None
     #  @return options, arguments
-    parser = argparse.ArgumentParser(description="Merge 2 sam files and count variant combinations.", epilog="""This tool keeps track of the
+    parser = argparse.ArgumentParser(
+        description="Merge 2 sam files and count variant combinations.",
+        epilog="""This tool keeps track of the
             number of alignments, whether the alignment is exact, and chromosome (RNAME)
             and position of the alignment. Only alignments in the top 'strata'
             are counted, meaning if there is 1 exact match and 3 inexact
@@ -58,22 +61,78 @@ def parse_options():
             nucleotides aligned. In the event of an exact match, this number is
             equal to the read length. Once both alignments processed, reads are
             compared one at a time and counted depending on the relationship
-            between the two alignments.\n""")
-   # parser.add_argument("-l", "--length", dest="length", required=True, help="Read length")
-    parser.add_argument("-l", "--length", dest="length", required=True, help="Read length",type=int)
-    parser.add_argument("-q", "--fastq", dest="fastq", required=True, help="Source FastQ data file name")
-    parser.add_argument("-A", "--sama", dest="sama", required=True, help="First SAM file (A)", metavar="SAM_A")
-    parser.add_argument("-B", "--samb", dest="samb", required=True, help="Second SAM file (B)", metavar="SAM_B")
-    parser.add_argument("-f", "--feature", dest="feature", required=True, help="Fusion file name, TSV or BED")
-    parser.add_argument("-c", "--counts", dest="counts", help="Output file name for the counts - CSV file. Defaults to counts_username_date_time_rand.csv. To output to console, set to -o stdout")
-    parser.add_argument("-t", "--totals", dest="totals", help="Output file name for the totals - text file. Defaults to totals_username_date_time_randint.txt. To output to console, set to -t stdout")
-    parser.add_argument("-n", "--nofqids", dest="nofqids", default=False, help="Do not check SAM reads QNAME against the fastq sequence ids. Saves time if already known to be good. Must still set -q op\tion.")
-    
-   # parser.add_argument("-n", "--nofqids", dest="nofqids", default=False, action='store_true', help="Do not check SAM reads QNAME against the fastq sequence ids. Saves time if already known to be good. Must still set -q option.")
-    parser.add_argument("-g", "--log", dest="log", required=False, help="Log file name. Defaults to samcompare_username_date_time_rand.log. To output to console, set to -g stdout. There is normally no stdout unless specifically requested via options.")
-    parser.add_argument("-d", "--debug", dest="debug", required=False, default=False, action='store_true', help="Debugging mode (verbose). Includes elapsed time display for performance tracking.")
+            between the two alignments.\n""",
+    )
+    # parser.add_argument("-l", "--length", dest="length", required=True, help="Read length")
+    parser.add_argument(
+        "-l", "--length", dest="length", required=True, help="Read length", type=int
+    )
+    parser.add_argument(
+        "-q", "--fastq", dest="fastq", required=True, help="Source FastQ data file name"
+    )
+    parser.add_argument(
+        "-A",
+        "--sama",
+        dest="sama",
+        required=True,
+        help="First SAM file (A)",
+        metavar="SAM_A",
+    )
+    parser.add_argument(
+        "-B",
+        "--samb",
+        dest="samb",
+        required=True,
+        help="Second SAM file (B)",
+        metavar="SAM_B",
+    )
+    parser.add_argument(
+        "-f",
+        "--feature",
+        dest="feature",
+        required=True,
+        help="Fusion file name, TSV or BED",
+    )
+    parser.add_argument(
+        "-c",
+        "--counts",
+        dest="counts",
+        help="Output file name for the counts - CSV file. Defaults to counts_username_date_time_rand.csv. To output to console, set to -o stdout",
+    )
+    parser.add_argument(
+        "-t",
+        "--totals",
+        dest="totals",
+        help="Output file name for the totals - text file. Defaults to totals_username_date_time_randint.txt. To output to console, set to -t stdout",
+    )
+    parser.add_argument(
+        "-n",
+        "--nofqids",
+        dest="nofqids",
+        default=False,
+        action="store_true",
+        help="Do not check SAM reads QNAME against the fastq sequence ids. Saves time if already known to be good. Must still set -q op\tion.",
+    )
+
+    parser.add_argument(
+        "-g",
+        "--log",
+        dest="log",
+        required=False,
+        help="Log file name. Defaults to samcompare_username_date_time_rand.log. To output to console, set to -g stdout. There is normally no stdout unless specifically requested via options.",
+    )
+    parser.add_argument(
+        "-d",
+        "--debug",
+        dest="debug",
+        required=False,
+        default=False,
+        action="store_true",
+        help="Debugging mode (verbose). Includes elapsed time display for performance tracking.",
+    )
     opts = parser.parse_args()
     return opts
+
 
 # set log output to either go to file or sys.stdout
 # error level messages, and above, will be sent to sys.stderr
@@ -81,26 +140,38 @@ def setLogger(logfilename, level):
     global logger
 
     console = True if logfilename.lower() == "stdout" else False
-    loghandler = logging.StreamHandler(stream=sys.stdout) if console else logging.FileHandler(logfilename)
+    loghandler = (
+        logging.StreamHandler(stream=sys.stdout)
+        if console
+        else logging.FileHandler(logfilename)
+    )
     errhandler = logging.StreamHandler(stream=sys.stderr)
     logger.setLevel(level)
     loghandler.setLevel(level)
     errhandler.setLevel(logging.ERROR)
 
-    logfmt = logging.Formatter('%(levelname)s - %(message)s') if console else logging.Formatter('%(levelname)s - %(message)s')
-    errfmt = logging.Formatter('%(levelname)s - %(message)s')
+    logfmt = (
+        logging.Formatter("%(levelname)s - %(message)s")
+        if console
+        else logging.Formatter("%(levelname)s - %(message)s")
+    )
+    errfmt = logging.Formatter("%(levelname)s - %(message)s")
     loghandler.setFormatter(logfmt)
     errhandler.setFormatter(errfmt)
     logger.addHandler(loghandler)
     logger.addHandler(errhandler)
 
+
 # generate a temporary file name to use for all relevant files by forming 'filename_{base}.ext'
 # will use for temporary files, output files, and log files if names not provides as arguments
 def get_temp_basefilename():
     now = datetime.datetime.now()
-    strdt = "{0:04}{1:02}{2:02}_{3:02}{4:02}{5:02}".format(now.year, now.month, now.day, now.hour, now.minute, now.second)
-    filename = "{0}_{1}_{2}".format(getpass.getuser(), strdt, random.randint(1,9999))
+    strdt = "{0:04}{1:02}{2:02}_{3:02}{4:02}{5:02}".format(
+        now.year, now.month, now.day, now.hour, now.minute, now.second
+    )
+    filename = "{0}_{1}_{2}".format(getpass.getuser(), strdt, random.randint(1, 9999))
     return filename
+
 
 # get ids from fastq file, use sed/cut for performance - avoids loading huge data file into memory
 def get_fastq_ids(infilename, basefilename):
@@ -114,23 +185,35 @@ def get_fastq_ids(infilename, basefilename):
         tstart = time.time()
         logger.debug("Loading FASTQ data from file...")
         # the check_call func has an issue, I think is due to the parsing of the args (using pipe, etc.) - figure it out later!!!
-        #result = subprocess.check_call(args, shell=True)
-        #if result == 0:
+        # result = subprocess.check_call(args, shell=True)
+        # if result == 0:
         output = subprocess.check_output(cmd, shell=True)
         out = output.decode()
         if out == "":
             with open(outfilename) as f:
                 ids = f.read().splitlines()
-            logger.debug("Time to load FASTQ file into memory: {0:n} seconds, {1:n} lines".format(time.time() - tstart, len(ids)))
+            logger.debug(
+                "Time to load FASTQ file into memory: {0:n} seconds, {1:n} lines".format(
+                    time.time() - tstart, len(ids)
+                )
+            )
             if ids:
                 logger.debug("Creating FASTQ dictionary...")
                 tstart = time.time()
-                fqids = dict((x,None) for x in ids)
-                logger.debug("Time to create FASTQ ids dictionary: {0:n} seconds, {1:n} entries".format(time.time() - tstart, len(fqids)))
+                fqids = dict((x, None) for x in ids)
+                logger.debug(
+                    "Time to create FASTQ ids dictionary: {0:n} seconds, {1:n} entries".format(
+                        time.time() - tstart, len(fqids)
+                    )
+                )
         else:
-            logger.error("Unable to get FASTQ ids from file '{0}':\n{1}".format(infilename, out))
+            logger.error(
+                "Unable to get FASTQ ids from file '{0}':\n{1}".format(infilename, out)
+            )
     except Exception as e:
-        logger.error("Unable to get FASTQ ids from file '{0}':\n{1}".format(infilename, e))
+        logger.error(
+            "Unable to get FASTQ ids from file '{0}':\n{1}".format(infilename, e)
+        )
         fqids = {}
 
     # remove temporary file, may not exist
@@ -138,7 +221,6 @@ def get_fastq_ids(infilename, basefilename):
         os.unlink(outfilename)
     except Exception as e:
         pass
-#    print(fqids)
     return fqids
 
 
@@ -149,25 +231,41 @@ def process_sam_file(samid, filename, fqids, read_length):
 
     try:
         # load data from file into memory
-        logger.debug("Loading SAM{0} data from file '{1}' ...".format(samid, os.path.basename(filename)))
+        logger.debug(
+            "Loading SAM{0} data from file '{1}' ...".format(
+                samid, os.path.basename(filename)
+            )
+        )
         tstart = time.time()
         with open(filename) as f:
             samdata = f.read().splitlines()
-        logger.debug("Time to load SAM{0} data from file: {1:n} seconds, {2:n} lines".format(samid, time.time() - tstart, len(samdata)))
+        logger.debug(
+            "Time to load SAM{0} data from file: {1:n} seconds, {2:n} lines".format(
+                samid, time.time() - tstart, len(samdata)
+            )
+        )
 
         # process data records
         try:
             logger.debug("Processing SAM{0} data records...".format(samid))
             tstart = time.time()
             samreads = get_sam_reads(samdata, fqids, read_length, samid)
-            logger.debug("Time to process SAM{0} data records: {1:n} seconds, {2:n} reads".format(samid, time.time() - tstart, len(samreads)))
+            logger.debug(
+                "Time to process SAM{0} data records: {1:n} seconds, {2:n} reads".format(
+                    samid, time.time() - tstart, len(samreads)
+                )
+            )
         except Exception as e:
             logger.error("Unable to process SAM{0} data: {1}".format(samid, e))
             samreads = {}
     except Exception as e:
-        logger.error("Unable to load SAM{0} data from file '{1}':\n{2}".format(samid, filename, e))
-    print(samid)
+        logger.error(
+            "Unable to load SAM{0} data from file '{1}':\n{2}".format(
+                samid, filename, e
+            )
+        )
     return samreads
+
 
 """
 SAM file format for reference
@@ -192,91 +290,109 @@ Optional fields:
 # process sam file data records
 REQUIRED_SAMFIELDS = 11
 
+
 def get_sam_reads(samdata, fqids, read_length, samid):
     total = 0
     nofastq = 0
     processed = 0
     dupqname = 0
     reads = {}
-    re_mmc = re.compile('(\d+)M')
-    re_chr = re.compile('^(.+?)\|')
+    re_mmc = re.compile("(\d+)M")
+    re_chr = re.compile("^(.+?)\|")
 
     # process all sam file input lines
-    #print("    Count: 0", end="")
-    #sys.stdout.flush()
+    # print("    Count: 0", end="")
+    # sys.stdout.flush()
     for line in samdata:
-        #if total and (total % 1000000) == 0:
+        # if total and (total % 1000000) == 0:
         #    print(",{0}M".format(int(total/1000000)), end="")
         #    sys.stdout.flush()
         total += 1
 
         # all file lines were loaded, only process data record lines
-        if not line.startswith('@'):
-          record = line.strip().split("\t")
-          if record and len(record) >= REQUIRED_SAMFIELDS:
-            name = record[0]
-            if not fqids or name in fqids:
-                # get reference name
-                # "If @SQ header lines are present, look for data followed by separator '|',RNAME"
-                # "An unmapped segment without coordinate has a '*' in this field."
-                match = re_chr.search(record[2])
-                if match and match.groups():
-                    rname = match.groups[0]
-                else:
-                    rname = record[2]
-
-                # process this SAM record
-                processed += 1    
-                # populate read record with default values
-                if name in reads:
-                    # "Reads/segments having identical QNAME are regarded to come from the same template"
-                    dupqname += 1
-                else:
-                    # [0] RNAME, [1] count, [2] exact_match, [3] edit_distance (opts.length)
-                    reads[name] = [rname, 0, 0, read_length]
-
-                # get alignment matches 
-                match_mismatch_count = 0
-                for mmc in re_mmc.findall(record[5]):
-                    match_mismatch_count += int(mmc)
-
-                # get edit distance - mismatches, insertions, deletions, plus the difference between aligned length and total length
-                edit_distance = 0
-                try:
-                    # don't waste time looking for NM in required fields and only deal with first find
-                    findnm = (field for field in record[REQUIRED_SAMFIELDS:] if field.startswith("NM:i:"))
-                    for nm in findnm:
-                        edit_distance = int(nm.split(':')[2])
-                except Exception as e:
-                    pass # No 'NM:i:x' record found
-                edit_distance += (len(record[9]) - match_mismatch_count)
-                # check if exact match
-                if edit_distance == 0:
-                    # check if exact match flag already set and update count if so
-                    if reads[name][2] == 1:
-                        reads[name][1] += 1
+        if not line.startswith("@"):
+            record = line.strip().split("\t")
+            if record and len(record) >= REQUIRED_SAMFIELDS:
+                name = record[0]
+                if not fqids or name in fqids:
+                    # get reference name
+                    # "If @SQ header lines are present, look for data followed by separator '|',RNAME"
+                    # "An unmapped segment without coordinate has a '*' in this field."
+                    match = re_chr.search(record[2])
+                    if match and match.groups():
+                        rname = match.groups[0]
                     else:
-                        # set exact match flag and reset count
-                        reads[name][1:] = [1, 1, 0]
+                        rname = record[2]
+
+                    # process this SAM record
+                    processed += 1
+                    # populate read record with default values
+                    if name in reads:
+                        # "Reads/segments having identical QNAME are regarded to come from the same template"
+                        dupqname += 1
+                    else:
+                        # [0] RNAME, [1] count, [2] exact_match, [3] edit_distance (opts.length)
+                        reads[name] = [rname, 0, 0, read_length]
+
+                    # get alignment matches
+                    match_mismatch_count = 0
+                    for mmc in re_mmc.findall(record[5]):
+                        match_mismatch_count += int(mmc)
+
+                    # get edit distance - mismatches, insertions, deletions, plus the difference between aligned length and total length
+                    edit_distance = 0
+                    try:
+                        # don't waste time looking for NM in required fields and only deal with first find
+                        findnm = (
+                            field
+                            for field in record[REQUIRED_SAMFIELDS:]
+                            if field.startswith("NM:i:")
+                        )
+                        for nm in findnm:
+                            edit_distance = int(nm.split(":")[2])
+                    except Exception as e:
+                        pass  # No 'NM:i:x' record found
+                    edit_distance += len(record[9]) - match_mismatch_count
+                    # check if exact match
+                    if edit_distance == 0:
+                        # check if exact match flag already set and update count if so
+                        if reads[name][2] == 1:
+                            reads[name][1] += 1
+                        else:
+                            # set exact match flag and reset count
+                            reads[name][1:] = [1, 1, 0]
+                    else:
+                        # not an exact match, check if we got closer than previous (read_length initially)
+                        if edit_distance < reads[name][3]:
+                            # we got closer to a match, set new edit distance and reset count
+                            reads[name][3] = edit_distance
+                            reads[name][1] = 1
+                        elif edit_distance == reads[name][3]:
+                            # same edit distance, inc count
+                            reads[name][1] += 1
                 else:
-                    # not an exact match, check if we got closer than previous (read_length initially)
-                    if edit_distance < reads[name][3]:
-                        # we got closer to a match, set new edit distance and reset count
-                        reads[name][3] = edit_distance
-                        reads[name][1] = 1
-                    elif edit_distance == reads[name][3]:
-                        # same edit distance, inc count
-                        reads[name][1] += 1
-            else:
-                nofastq += 1
+                    nofastq += 1
 
     # display debug stats
-    logger.debug("Processed a total of {0:n} records out of {1:n} input lines".format(processed, total))
+    logger.debug(
+        "Processed a total of {0:n} records out of {1:n} input lines".format(
+            processed, total
+        )
+    )
     if nofastq:
-        logger.warning("Found {0:n} SAM{1} record(s) with no matching sequence in FASTQ file".format(nofastq, samid))
+        logger.warning(
+            "Found {0:n} SAM{1} record(s) with no matching sequence in FASTQ file".format(
+                nofastq, samid
+            )
+        )
     if dupqname:
-        logger.warning("Found {0:n} SAM{1} records with same QNAME (read/segment from same template)".format(dupqname, samid))
-    return (reads)
+        logger.warning(
+            "Found {0:n} SAM{1} records with same QNAME (read/segment from same template)".format(
+                dupqname, samid
+            )
+        )
+    return reads
+
 
 # load feature data into dictionary
 def get_features(filename):
@@ -296,6 +412,7 @@ def get_features(filename):
             f.close()
 
     return features
+
 
 # process data to get counts and totals
 def process_read_counts(features, sama_reads, samb_reads):
@@ -336,38 +453,58 @@ def process_read_counts(features, sama_reads, samb_reads):
     total_count = 0
 
     # create template for count rows
-    count_template = {'feature':"", 'b_single_exact':0, 'b_single_inexact':0,
-            'a_single_exact':0, 'a_single_inexact':0,
-            'both_single_exact_same':0, 'both_single_exact_diff':0,
-            'both_single_inexact_same':0, 'both_single_inexact_diff':0,
-            'both_inexact_diff_equal':0, 'both_inexact_diff_a_better':0,
-            'both_inexact_diff_b_better':0, 'a_exact_b_inexact':0, 'b_exact_a_inexact':0}
+    count_template = {
+        "feature": "",
+        "b_single_exact": 0,
+        "b_single_inexact": 0,
+        "a_single_exact": 0,
+        "a_single_inexact": 0,
+        "both_single_exact_same": 0,
+        "both_single_exact_diff": 0,
+        "both_single_inexact_same": 0,
+        "both_single_inexact_diff": 0,
+        "both_inexact_diff_equal": 0,
+        "both_inexact_diff_a_better": 0,
+        "both_inexact_diff_b_better": 0,
+        "a_exact_b_inexact": 0,
+        "b_exact_a_inexact": 0,
+    }
 
     # create count rows based on feature name, add feature name to each row for later display
     tstart = time.time()
     for feature in features:
         if feature not in counts:
             counts[feature] = dict(count_template)
-            counts[feature]['feature'] = feature
-    logger.debug("Time to create count rows: {0:n} seconds, {1:n} rows".format(time.time() - tstart, len(counts)))
+            counts[feature]["feature"] = feature
+    logger.debug(
+        "Time to create count rows: {0:n} seconds, {1:n} rows".format(
+            time.time() - tstart, len(counts)
+        )
+    )
 
     # get all the unique, read ids, QNAMEs for sama and samb
     tstart = time.time()
     readkeys_sama = set(sama_reads.keys())
     readkeys_samb = set(samb_reads.keys())
     readkeys = readkeys_sama.union(readkeys_samb)
-    logger.debug("Readkey sets - A: {0:n}, B: {1:n}, Union: {2:n}".format(len(readkeys_sama), len(readkeys_samb), len(readkeys)))
-    logger.debug("Time to create readkey sets: {0:n} seconds".format(time.time() - tstart))
+    logger.debug(
+        "Readkey sets - A: {0:n}, B: {1:n}, Union: {2:n}".format(
+            len(readkeys_sama), len(readkeys_samb), len(readkeys)
+        )
+    )
+    logger.debug(
+        "Time to create readkey sets: {0:n} seconds".format(time.time() - tstart)
+    )
 
     # process all reads
     cnt = 0
     addreadid = 0
     addedids = ""
     tstart = time.time()
-    #print("    Count: 0", end="")
-    #sys.stdout.flush()
+    # print("    Count: 0", end="")
+    # sys.stdout.flush()
     for read in readkeys:
-        #if cnt and (cnt % 1000000) == 0:
+        # if cnt and (cnt % 1000000) == 0:
         #    print(",{0}M".format(int(cnt/1000000)), end="")
         #    sys.stdout.flush()
         cnt += 1
@@ -379,7 +516,7 @@ def process_read_counts(features, sama_reads, samb_reads):
             a_count = sama_reads[read][1]
             a_exact = sama_reads[read][2]
             a_edits = sama_reads[read][3]
-        else:            
+        else:
             a_rname = ""
             a_count = 0
             a_exact = 0
@@ -402,7 +539,7 @@ def process_read_counts(features, sama_reads, samb_reads):
 
         # make sure read id already included, add if not
         # use rname from A if available, else use B - if A is "*" and B is not set could end up with '' - HdR
-        read_id = b_rname if (a_rname == '' or a_rname == '*' ) else a_rname
+        read_id = b_rname if (a_rname == "" or a_rname == "*") else a_rname
         if read_id not in counts:
             addreadid += 1
             if addedids:
@@ -418,10 +555,10 @@ def process_read_counts(features, sama_reads, samb_reads):
             if b_count == 1:
                 if b_exact == 1:
                     b_single_exact += 1
-                    counts[read_id]['b_single_exact'] += 1
+                    counts[read_id]["b_single_exact"] += 1
                 elif b_exact == 0:
                     b_single_inexact += 1
-                    counts[read_id]['b_single_inexact'] += 1
+                    counts[read_id]["b_single_inexact"] += 1
             elif b_count > 1:
                 if b_exact == 1:
                     b_multi_exact += 1
@@ -429,16 +566,20 @@ def process_read_counts(features, sama_reads, samb_reads):
                     b_multi_inexact += 1
             else:
                 counts = {}
-                logger.error("Invalid b_count, {0}, with a_count = 0 for read id '{1}'".format(b_count, read_id))
+                logger.error(
+                    "Invalid b_count, {0}, with a_count = 0 for read id '{1}'".format(
+                        b_count, read_id
+                    )
+                )
                 break
         elif b_count == 0:
             if a_count == 1:
                 if a_exact == 1:
                     a_single_exact += 1
-                    counts[read_id]['a_single_exact'] += 1
+                    counts[read_id]["a_single_exact"] += 1
                 elif a_exact == 0:
                     a_single_inexact += 1
-                    counts[read_id]['a_single_inexact'] += 1
+                    counts[read_id]["a_single_inexact"] += 1
             elif a_count > 1:
                 if a_exact == 1:
                     a_multi_exact += 1
@@ -446,81 +587,95 @@ def process_read_counts(features, sama_reads, samb_reads):
                     a_multi_inexact += 1
             else:
                 counts = {}
-                logger.error("Invalid a_count, {0}, with b_count = 0 for read id '{1}'".format(a_count, read_id))
+                logger.error(
+                    "Invalid a_count, {0}, with b_count = 0 for read id '{1}'".format(
+                        a_count, read_id
+                    )
+                )
                 break
-        else: #both a_count and b_count are not zero - either 1 or > 1
+        else:  # both a_count and b_count are not zero - either 1 or > 1
             if a_count == 1:
                 if a_exact == 1:
                     if b_count == 1:
                         if b_exact == 1:
                             # Impossible as we set a_pos = 0 and b_pos = 1
                             # a=1=1/b=1=1
-                            if a_pos != '' and b_pos != '' and a_pos == b_pos and a_rname == b_rname:
+                            if (
+                                a_pos != ""
+                                and b_pos != ""
+                                and a_pos == b_pos
+                                and a_rname == b_rname
+                            ):
                                 both_single_exact_same += 1
-                                counts[read_id]['both_single_exact_same'] += 1
+                                counts[read_id]["both_single_exact_same"] += 1
                             else:
                                 both_single_exact_diff += 1
-                                counts[read_id]['both_single_exact_diff'] += 1
-                        else: # b_exact == 0
+                                counts[read_id]["both_single_exact_diff"] += 1
+                        else:  # b_exact == 0
                             a_se_b_si += 1
-                            counts[read_id]['a_exact_b_inexact'] += 1
-                    else: # b_count > 1
+                            counts[read_id]["a_exact_b_inexact"] += 1
+                    else:  # b_count > 1
                         if b_exact == 0:
                             a_se_b_mi += 1
                         else:
                             a_se_b_me += 1
-                else: # a_exact == 0
+                else:  # a_exact == 0
                     if b_count == 1:
                         if b_exact == 0:
-                            if a_pos != '' and b_pos != '' and a_pos == b_pos and a_rname == b_rname:
+                            if (
+                                a_pos != ""
+                                and b_pos != ""
+                                and a_pos == b_pos
+                                and a_rname == b_rname
+                            ):
                                 both_single_inexact_same += 1
-                                counts[read_id]['both_single_inexact_same'] += 1
+                                counts[read_id]["both_single_inexact_same"] += 1
                             else:
                                 both_single_inexact_diff += 1
-                                counts[read_id]['both_single_inexact_diff'] += 1
+                                counts[read_id]["both_single_inexact_diff"] += 1
                                 if a_edits == b_edits:
                                     both_inexact_diff_equal += 1
-                                    counts[read_id]['both_inexact_diff_equal'] += 1
+                                    counts[read_id]["both_inexact_diff_equal"] += 1
                                 elif a_edits > b_edits:
                                     both_inexact_diff_b_better += 1
-                                    counts[read_id]['both_inexact_diff_b_better'] += 1
-                                else: # a_edits < b_edits:
+                                    counts[read_id]["both_inexact_diff_b_better"] += 1
+                                else:  # a_edits < b_edits:
                                     both_inexact_diff_a_better += 1
-                                    counts[read_id]['both_inexact_diff_a_better'] += 1
-                        else: #b_exact == 1
+                                    counts[read_id]["both_inexact_diff_a_better"] += 1
+                        else:  # b_exact == 1
                             a_si_b_se += 1
-                            counts[read_id]['b_exact_a_inexact'] += 1
-                    else: #b_count > 1
+                            counts[read_id]["b_exact_a_inexact"] += 1
+                    else:  # b_count > 1
                         if b_exact == 0:
                             a_si_b_mi += 1
-                        else: #b_exact == 1
+                        else:  # b_exact == 1
                             a_si_b_me += 1
-            else: #a_count > 1
+            else:  # a_count > 1
                 if a_exact == 0:
                     if b_count == 1:
                         if b_exact == 0:
                             a_mi_b_si += 1
-                        else: #b_exact == 1
+                        else:  # b_exact == 1
                             a_mi_b_se += 1
-                    else: #b_count > 1
+                    else:  # b_count > 1
                         if b_exact == 0:
                             both_multi_inexact += 1
-                        else: #b_exact == 1
+                        else:  # b_exact == 1
                             a_mi_b_me += 1
-                else: #a_exact == 1
+                else:  # a_exact == 1
                     if b_count == 1:
                         if b_exact == 0:
                             a_me_b_si += 1
-                        else: #b_exact == 1
+                        else:  # b_exact == 1
                             a_me_b_se += 1
-                    else: #b_count > 1:
+                    else:  # b_count > 1:
                         if b_exact == 0:
                             a_me_b_mi += 1
-                        else: #b_exact == 1
+                        else:  # b_exact == 1
                             both_multi_exact += 1
 
         # check this, not sure why chg to output to console - HdR!!!
-        #if opts.output or opts.totals:
+        # if opts.output or opts.totals:
         #    if a_count > 1:
         #        a_rname = '*'
         #        a_pos = '*'
@@ -530,43 +685,124 @@ def process_read_counts(features, sama_reads, samb_reads):
 
     # total things up if no errors
     if counts:
-        logger.debug("Time to process all reads: {0:n} seconds, {1:n} records".format(time.time() - tstart, cnt))
+        logger.debug(
+            "Time to process all reads: {0:n} seconds, {1:n} records".format(
+                time.time() - tstart, cnt
+            )
+        )
 
         # calculate total count and do sanity check
-        total_count = a_single_exact + a_single_inexact + a_multi_exact + a_multi_inexact + b_single_exact + b_single_inexact + b_multi_exact + b_multi_inexact + both_unaligned + both_single_exact_same + both_single_exact_diff + both_single_inexact_same + both_single_inexact_diff + both_multi_exact + both_multi_inexact + a_se_b_si + a_si_b_se + a_se_b_me + a_me_b_se + a_se_b_mi + a_mi_b_se + a_si_b_me + a_me_b_si + a_si_b_mi + a_mi_b_si + a_me_b_mi + a_mi_b_me
+        total_count = (
+            a_single_exact
+            + a_single_inexact
+            + a_multi_exact
+            + a_multi_inexact
+            + b_single_exact
+            + b_single_inexact
+            + b_multi_exact
+            + b_multi_inexact
+            + both_unaligned
+            + both_single_exact_same
+            + both_single_exact_diff
+            + both_single_inexact_same
+            + both_single_inexact_diff
+            + both_multi_exact
+            + both_multi_inexact
+            + a_se_b_si
+            + a_si_b_se
+            + a_se_b_me
+            + a_me_b_se
+            + a_se_b_mi
+            + a_mi_b_se
+            + a_si_b_me
+            + a_me_b_si
+            + a_si_b_mi
+            + a_mi_b_si
+            + a_me_b_mi
+            + a_mi_b_me
+        )
         if len(readkeys) != total_count:
-            logger.error("Total count, {0:n}, did not match read count, {1:n}".format(total_count, len(readkeys)))
+            logger.error(
+                "Total count, {0:n}, did not match read count, {1:n}".format(
+                    total_count, len(readkeys)
+                )
+            )
         if addreadid:
-            logger.info("{0:n} records were added that did not have a matching feature read key".format(addreadid))
+            logger.info(
+                "{0:n} records were added that did not have a matching feature read key".format(
+                    addreadid
+                )
+            )
 
         # create totals list
-        totals = [a_single_exact, a_single_inexact, a_multi_exact, a_multi_inexact,
-                  b_single_exact, b_single_inexact, b_multi_exact, b_multi_inexact,
-                  both_single_exact_same, both_single_exact_diff,
-                  both_single_inexact_same, both_single_inexact_diff,
-                  both_inexact_diff_equal, both_inexact_diff_a_better,
-                  both_inexact_diff_b_better, both_multi_exact, both_multi_inexact,
-                  a_se_b_si, a_si_b_se, a_se_b_me, a_me_b_se, a_se_b_mi, a_mi_b_se,
-                  a_si_b_me, a_me_b_si, a_si_b_mi, a_mi_b_si, a_me_b_mi, a_mi_b_me,
-                  total_count]
+        totals = [
+            a_single_exact,
+            a_single_inexact,
+            a_multi_exact,
+            a_multi_inexact,
+            b_single_exact,
+            b_single_inexact,
+            b_multi_exact,
+            b_multi_inexact,
+            both_single_exact_same,
+            both_single_exact_diff,
+            both_single_inexact_same,
+            both_single_inexact_diff,
+            both_inexact_diff_equal,
+            both_inexact_diff_a_better,
+            both_inexact_diff_b_better,
+            both_multi_exact,
+            both_multi_inexact,
+            a_se_b_si,
+            a_si_b_se,
+            a_se_b_me,
+            a_me_b_se,
+            a_se_b_mi,
+            a_mi_b_se,
+            a_si_b_me,
+            a_me_b_si,
+            a_si_b_mi,
+            a_mi_b_si,
+            a_me_b_mi,
+            a_mi_b_me,
+            total_count,
+        ]
 
     return (totals, counts)
 
+
 # write read counts to file or console
 def write_counts(filename, counts):
-    #header = ['feature', 'both_single_inexact_same', 'both_single_exact_diff', 'both_single_exact_same', 
-    #          'both_single_inexact_diff', 'both_inexact_diff_equal', 'a_single_exact', 'b_single_exact', 
-    #          'a_exact_b_inexact', 'b_exact_a_inexact','a_single_inexact', 'b_single_inexact', 
+    # header = ['feature', 'both_single_inexact_same', 'both_single_exact_diff', 'both_single_exact_same',
+    #          'both_single_inexact_diff', 'both_inexact_diff_equal', 'a_single_exact', 'b_single_exact',
+    #          'a_exact_b_inexact', 'b_exact_a_inexact','a_single_inexact', 'b_single_inexact',
     #          'both_inexact_diff_a_better', 'both_inexact_diff_b_better']
-    header = ['FEATURE_ID','BOTH_EXACT','BOTH_INEXACT_EQUAL','SAM_A_ONLY_EXACT','SAM_B_ONLY_EXACT',
-              'SAM_A_EXACT_SAM_B_INEXACT','SAM_B_EXACT_SAM_A_INEXACT',
-              'SAM_A_ONLY_SINGLE_INEXACT','SAM_B_ONLY_SINGLE_INEXACT',
-              'SAM_A_INEXACT_BETTER','SAM_B_INEXACT_BETTER']
-    fields = ['feature', 'both_single_exact_diff', 'both_inexact_diff_equal', 
-              'a_single_exact', 'b_single_exact',
-              'a_exact_b_inexact', 'b_exact_a_inexact',
-              'a_single_inexact', 'b_single_inexact', 
-              'both_inexact_diff_a_better', 'both_inexact_diff_b_better']
+    header = [
+        "FEATURE_ID",
+        "BOTH_EXACT",
+        "BOTH_INEXACT_EQUAL",
+        "SAM_A_ONLY_EXACT",
+        "SAM_B_ONLY_EXACT",
+        "SAM_A_EXACT_SAM_B_INEXACT",
+        "SAM_B_EXACT_SAM_A_INEXACT",
+        "SAM_A_ONLY_SINGLE_INEXACT",
+        "SAM_B_ONLY_SINGLE_INEXACT",
+        "SAM_A_INEXACT_BETTER",
+        "SAM_B_INEXACT_BETTER",
+    ]
+    fields = [
+        "feature",
+        "both_single_exact_diff",
+        "both_inexact_diff_equal",
+        "a_single_exact",
+        "b_single_exact",
+        "a_exact_b_inexact",
+        "b_exact_a_inexact",
+        "a_single_inexact",
+        "b_single_inexact",
+        "both_inexact_diff_a_better",
+        "both_inexact_diff_b_better",
+    ]
 
     # Note: these fields are not currently written out in pearl script:
     #       'both_single_exact_same', 'both_single_inexact_same', 'both_single_inexact_diff']
@@ -576,7 +812,7 @@ def write_counts(filename, counts):
     # csvwriter.writerows(counts.values())
 
     try:
-        f = open(filename, 'w') if filename.lower() != "stdout" else sys.stdout
+        f = open(filename, "w") if filename.lower() != "stdout" else sys.stdout
         f.write("\t".join(header))
         f.write("\n")
         for row in list(counts.values()):
@@ -589,32 +825,59 @@ def write_counts(filename, counts):
         if f != sys.stdout:
             f.close()
     except Exception as e:
-        logger.error("Unable to write counts output to file '{0}':\n{1}".format(filename, e))
+        logger.error(
+            "Unable to write counts output to file '{0}':\n{1}".format(filename, e)
+        )
         if f and f != sys.stdout:
             f.close()
 
+
 # write totals to file or console
 def write_totals(filename, totals):
-    header = ['a_single_exact', 'a_single_inexact', 'a_multi_exact', 'a_multi_inexact',
-              'b_single_exact', 'b_single_inexact', 'b_multi_exact', 'b_multi_inexact', 'both_single_exact_same',
-              'both_single_exact_diff', 'both_single_inexact_same', 'both_single_inexact_diff',
-              'both_inexact_diff_equal', 'both_inexact_diff_a_better', 'both_inexact_diff_b_better', 'both_multi_exact',
-              'both_multi_inexact', 'a_single_exact_b_single_inexact', 'a_single_inexact_b_single_exact', 'a_single_exact_b_multi_exact',
-              'a_multi_exact_b_single_exact', 'a_single_exact_b_multi_inexact', 'a_multi_inexact_b_single_exact', 'a_single_inexact_b_multi_exact',
-              'a_multi_exact_b_single_inexact', 'a_single_inexact_b_multi_inexact', 'a_multi_inexact_b_single_inexact', 'a_multi_exact_b_multi_inexact',
-              'a_multi_inexact_b_multi_exact', 'total_count']
+    header = [
+        "a_single_exact",
+        "a_single_inexact",
+        "a_multi_exact",
+        "a_multi_inexact",
+        "b_single_exact",
+        "b_single_inexact",
+        "b_multi_exact",
+        "b_multi_inexact",
+        "both_single_exact_same",
+        "both_single_exact_diff",
+        "both_single_inexact_same",
+        "both_single_inexact_diff",
+        "both_inexact_diff_equal",
+        "both_inexact_diff_a_better",
+        "both_inexact_diff_b_better",
+        "both_multi_exact",
+        "both_multi_inexact",
+        "a_single_exact_b_single_inexact",
+        "a_single_inexact_b_single_exact",
+        "a_single_exact_b_multi_exact",
+        "a_multi_exact_b_single_exact",
+        "a_single_exact_b_multi_inexact",
+        "a_multi_inexact_b_single_exact",
+        "a_single_inexact_b_multi_exact",
+        "a_multi_exact_b_single_inexact",
+        "a_single_inexact_b_multi_inexact",
+        "a_multi_inexact_b_single_inexact",
+        "a_multi_exact_b_multi_inexact",
+        "a_multi_inexact_b_multi_exact",
+        "total_count",
+    ]
 
     try:
-        f = open(filename, 'w') if filename.lower() != "stdout" else sys.stdout
+        f = open(filename, "w") if filename.lower() != "stdout" else sys.stdout
         f.write("Count totals:\n")
         for idx in range(0, len(header)):
-            f.write("{0}:\t{1}\t{2}\n".format(idx+1, header[idx], totals[idx]))
+            f.write("{0}:\t{1}\t{2}\n".format(idx + 1, header[idx], totals[idx]))
         if f != sys.stdout:
             f.close()
     except Exception as e:
         logger.error("Unable to write totals to file '{0}':\n{1}".format(filename, e))
         if f and f != sys.stdout:
-           f.close()
+            f.close()
 
 
 def main():
@@ -635,18 +898,18 @@ def main():
     logger.debug("Opts: {0}".format(opts))
 
     # real files - temp!!!
-    #opts.fastq = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/s_1_combined.fq"
-    #opts.sama = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/rna_1_to_berlin-features39.sam"
-    #opts.samb = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/rna_1_to_c1674-features34.sam"
-    #opts.feature = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/fb526-si-features.tsv"
+    # opts.fastq = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/s_1_combined.fq"
+    # opts.sama = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/rna_1_to_berlin-features39.sam"
+    # opts.samb = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/rna_1_to_c1674-features34.sam"
+    # opts.feature = "/bio/ufhpc/om/projects/mcintyre/sam-compare/ase/fb526-si-features.tsv"
     # use ./sam_compare.py -l 54 -f fn -q fn -A fn -B fn for testing
     #
-#    opts.fastq = "/scratch/lfs/hdr/dev/Tms_3.fastq"
-#    opts.sama = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/aln_to_orthos_final_uniq_pipe/Tms_3_to_Tdu_ortho.sam"
-#    opts.samb = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/aln_to_orthos_final_uniq_pipe/Tms_3_to_Tpr_ortho.sam"
-#    opts.feature = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/references/Tdu_common_ortho_clean.tsv"
-#    opts.counts = "countstms3.csv"
-#    opts.totals = "totalstms3.txt"
+    #    opts.fastq = "/scratch/lfs/hdr/dev/Tms_3.fastq"
+    #    opts.sama = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/aln_to_orthos_final_uniq_pipe/Tms_3_to_Tdu_ortho.sam"
+    #    opts.samb = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/aln_to_orthos_final_uniq_pipe/Tms_3_to_Tpr_ortho.sam"
+    #    opts.feature = "/scratch/lfs/malex/projects/mcintyre/sam-compare/test/2014-03-18/perl/trago_example/references/Tdu_common_ortho_clean.tsv"
+    #    opts.counts = "countstms3.csv"
+    #    opts.totals = "totalstms3.txt"
     # cat Tm?_*.fastq > /scratch/lfs/hdr/dev/Tm_?.fastq
     # use ./sam_compare.py -l 100 -f fn -q fn -A fn -B fn -n -g stdout -d  (for testing)
 
@@ -668,7 +931,9 @@ def main():
     else:
         logger.info("Extracting IDs from fastq file...")
         fqids = get_fastq_ids(opts.fastq, basefilename)
-        logger.debug("Time to get FASTQ file ids: {0:n} seconds".format(time.time() - tstart))
+        logger.debug(
+            "Time to get FASTQ file ids: {0:n} seconds".format(time.time() - tstart)
+        )
 
     # make sure we got a request to skip checking ids or we got them
     if opts.nofqids or fqids:
@@ -676,12 +941,16 @@ def main():
         logger.info("Processing SAMA file...")
         tstart = time.time()
         sama_reads = process_sam_file("A", opts.sama, fqids, opts.length)
-        logger.debug("Time to process SAMA file: {0:n} seconds".format(time.time() - tstart))
+        logger.debug(
+            "Time to process SAMA file: {0:n} seconds".format(time.time() - tstart)
+        )
         if sama_reads:
             logger.info("Processing SAMB file...")
             tstart = time.time()
             samb_reads = process_sam_file("B", opts.samb, fqids, opts.length)
-            logger.debug("Time to process SAMB file: {0:n} seconds".format(time.time() - tstart))
+            logger.debug(
+                "Time to process SAMB file: {0:n} seconds".format(time.time() - tstart)
+            )
             if samb_reads:
                 fqids = {}
                 gc.collect()
@@ -689,27 +958,53 @@ def main():
                 logger.info("Loading feature data...")
                 tstart = time.time()
                 features = get_features(opts.feature)
-                logger.debug("Time to process feature data: {0:n} seconds, {1:n} records".format(time.time() - tstart, len(features)))
+                logger.debug(
+                    "Time to process feature data: {0:n} seconds, {1:n} records".format(
+                        time.time() - tstart, len(features)
+                    )
+                )
                 if features:
                     logger.info("Calculating read counts...")
                     tstart = time.time()
-                    totals, counts = process_read_counts(features, sama_reads, samb_reads)
-                    logger.debug("Time to calculate read counts: {0:n} seconds".format(time.time() - tstart))
+                    totals, counts = process_read_counts(
+                        features, sama_reads, samb_reads
+                    )
+                    logger.debug(
+                        "Time to calculate read counts: {0:n} seconds".format(
+                            time.time() - tstart
+                        )
+                    )
 
                     if totals and counts:
                         # write counts file
                         logger.info("Writing counts file...")
                         tstart = time.time()
-                        filename = opts.counts if opts.counts else "counts_{0}.csv".format(basefilename)
+                        filename = (
+                            opts.counts
+                            if opts.counts
+                            else "counts_{0}.csv".format(basefilename)
+                        )
                         write_counts(filename, counts)
-                        logger.debug("Time to write counts file: {0:n} seconds".format(time.time() - tstart))
+                        logger.debug(
+                            "Time to write counts file: {0:n} seconds".format(
+                                time.time() - tstart
+                            )
+                        )
 
                         # write totals file
                         logger.info("Writing totals file...")
                         tstart = time.time()
-                        filename = opts.totals if opts.totals else "totals_{0}.csv".format(basefilename)
+                        filename = (
+                            opts.totals
+                            if opts.totals
+                            else "totals_{0}.csv".format(basefilename)
+                        )
                         write_totals(filename, totals)
-                        logger.debug("Time to write totals file: {0:n} seconds".format(time.time() - tstart))
+                        logger.debug(
+                            "Time to write totals file: {0:n} seconds".format(
+                                time.time() - tstart
+                            )
+                        )
 
                         # all is good
                         retcode = 0
@@ -719,8 +1014,11 @@ def main():
                     logger.error("No feature data available for processing")
 
     # it took this long...
-    logger.info("All done. Total running time: {0:n} seconds".format(time.time() - tinitial))
+    logger.info(
+        "All done. Total running time: {0:n} seconds".format(time.time() - tinitial)
+    )
     sys.exit(retcode)
 
-if __name__=='__main__':
+
+if __name__ == "__main__":
     main()
