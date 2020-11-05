@@ -14,9 +14,9 @@
     --collection_filenames="${",".join(map(str, $collection))}"
     --begin=$begin
     --end=$end
-    --sim=$sim
-    --out=`pwd`
-    --designdir=$output_designFile
+    $sim
+    --outdir=`pwd`
+    --outdesign=$output_designFile
 ]]></command>
     <inputs>
         <param name="design" type="data" format="tabular" label="Design File" help="Select the Alignment Design File. The design file must be sorted by biological replicate (sampleID) "/>
@@ -24,10 +24,7 @@
         <param name="collection" type="data_collection" collection_type="list" label="ASE Count Tables" help="Select collection containing ASE count tables"/>
         <param name="begin" type="text" label="Start" help="Enter start point in design file [OPTIONAL]"/>
         <param name="end" type="text" label="End" help="Enter end point in design file [OPTIONAL]"/>
-        <param name="sim" size="30" type="select" value="" display="radio" label="Dataset Type" help="Select whether the dataset contains real data or simulated reads">
-            <option value="False" selected="false">Real data</option>
-            <option value="True" selected="true">Simulated data</option>
-        </param>
+        <param name="sim" type="boolean" checked="false" truevalue="--sim" label="Simulated Dataset" help="Select if the dataset contains simulated reads"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Combined and Summed ASE Table">
@@ -111,11 +108,11 @@ Enter point for script to start at in design file. Use if only a certain subset 
 
 **End [OPTIONAL]**
 
-Enter point script should end at in design file. 
+Enter point script should end at in design file.
 
-**Dataset Type [REQUIRED]**
+**Simulated Dataset**
 
-Select whether input dataset is either real or simulated. Simulated reads refers to those that are computer-generated, whereas real data refers to reads that are pulled from an existing species genome. 
+Select if the input dataset is simulated. Simulated reads refers to those that are computer-generated, whereas real data refers to reads that are pulled from an existing species genome.
 
 ------------------------------------------------------------------------------------------------------
 
