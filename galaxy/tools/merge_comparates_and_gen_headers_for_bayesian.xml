@@ -7,7 +7,7 @@
     <command><![CDATA[
     mkdir outputs;
     cd outputs;
-    python '$__tool_directory__/merge_comparates_and_gen_headers_for_bayesian_02amm.py'
+    python '$__tool_directory__/merge_comparates_generate_bayesian_headers.py
     --output=`pwd`
     --collection_identifiers="$collection.keys()"
     --collection_filenames="${",".join(map(str, $collection))}"
