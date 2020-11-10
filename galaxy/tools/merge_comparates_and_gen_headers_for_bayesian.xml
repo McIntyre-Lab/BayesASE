@@ -7,7 +7,7 @@
     <command><![CDATA[
     mkdir outputs;
     cd outputs;
-    python '$__tool_directory__/merge_comparates_generate_bayesian_headers.py
+    python '$__tool_directory__/merge_comparates_and_gen_headers_for_bayesian_03amm.py'
     --output=`pwd`
     --collection_identifiers="$collection.keys()"
     --collection_filenames="${",".join(map(str, $collection))}"
@@ -24,7 +24,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/merge_priors_testdata/comparate_df_two_conditions_BASE.tsv" ftype="tsv"/>
+            <param name="design" value="BASE_testdata/merge_priors_testdata/df_comparate.tsv" ftype="tsv"/>
             <param name="collection" value="BASE_testdata/merge_priors_testdata/merge_priors_to_comparate" ftype="data_collection"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">

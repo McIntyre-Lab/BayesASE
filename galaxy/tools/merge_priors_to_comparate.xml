@@ -27,8 +27,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/summarize_counts_testdata/prior_df.tsv" ftype="tsv"/>
-            <param name="collection1" value="/BASE_testdata/summarize_counts_testdata/filtered_ASE_counts_tables_BASE" ftype="data_collection"/>
+            <param name="design" value="BASE_testdata/summarize_counts_testdata/priors_design_file.tsv" ftype="tsv"/>
+            <param name="collection1" value="/BASE_testdata/summarize_counts_testdata/summarized_and_filtered_ASE_counts_tables_BASE" ftype="data_collection"/>
             <param name="collection2" value="BASE_testdata/calculated_priors_BASE_testdata" ftype="data_collection"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
