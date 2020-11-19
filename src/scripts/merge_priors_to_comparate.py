@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
+"""Merge filtered/summarized files with qsim values by user-specified comparison"""
 
 import argparse
 import sys
 import pandas as pd
-import re
 
-# Merge filtered/summarized files with qsim values by user-specified comparison
+DEBUG = False
 
 
 def getOptions():
@@ -14,7 +14,7 @@ def getOptions():
 
     )
     parser.add_argument(
-        "-design",
+        "-d",
         "--design",
         dest="design",
         action="store",
@@ -22,7 +22,7 @@ def getOptions():
         help="Design file",
     )
     parser.add_argument(
-        "-collection1_identifiers",
+        "-i1",
         "--collection1_identifiers",
         dest="collection1_identifiers",
         action="store",
@@ -30,7 +30,7 @@ def getOptions():
         help="ASE count table collection identifiers",
     )
     parser.add_argument(
-        "-collection1_filenames",
+        "-f1",
         "--collection1_filenames",
         dest="collection1_filenames",
         action="store",
@@ -38,7 +38,7 @@ def getOptions():
         help="ASE count table collection filenames",
     )
     parser.add_argument(
-        "-collection2_identifiers",
+        "-i2",
         "--collection2_identifiers",
         dest="collection2_identifiers",
         action="store",
@@ -46,7 +46,7 @@ def getOptions():
         help="Prior count table collection identifiers",
     )
     parser.add_argument(
-        "-collection2_filenames",
+        "-f2",
         "--collection2_filenames",
         dest="collection2_filenames",
         action="store",
@@ -54,12 +54,15 @@ def getOptions():
         help="ASE count table collection filenames",
     )
     parser.add_argument(
-        "-out",
+        "-o",
         "--out",
         dest="out",
         action="store",
         required=True,
         help="Output directory for complete merged comparate files ready for Bayesian",
+    )
+    parser.add_argument(
+        "--debug", action="store_true", default=False, help=argparse.SUPPRESS,
     )
     args = parser.parse_args()
     return args
@@ -67,21 +70,16 @@ def getOptions():
 
 def main():
     args = getOptions()
-    pattern = re.compile(r"(?<=\').*(?=\')")
-
-    identifiers_ASE = [
-        pattern.search(i).group() for i in args.collection1_identifiers.split(",")
-    ]
+    global DEBUG
+    if args.debug:
+        DEBUG = True
+    identifiers_ASE = [i.strip() for i in args.collection1_identifiers.split(",")]
     filenames_ASE = [i.strip() for i in args.collection1_filenames.split(",")]
     input_dict_ASE = dict(zip(identifiers_ASE, filenames_ASE))
-
-    identifiers_priors = [
-        pattern.search(i).group() for i in args.collection2_identifiers.split(",")
-    ]
+    identifiers_priors = [i.strip() for i in args.collection2_identifiers.split(",")]
     filenames_priors = [i.strip() for i in args.collection2_filenames.split(",")]
     input_dict_priors = dict(zip(identifiers_priors, filenames_priors))
 
-    # Read in design file as dataframe
     df_design = pd.read_csv(args.design, sep="\t")
 
     # Add a column for prior file name
@@ -89,43 +87,41 @@ def main():
     sample = df_design["comparate"]
     p_file = sample + "_prior"
     df_design["prior_file"] = p_file
-    #    print(df_design)
+    if DEBUG:
+        print(f"DEBUG: df_design:\n{df_design}")
 
-    dict_new = {}
+    sample_dict = {}
 
     comparate_list = df_design["comparate"].tolist()
     prior_list = df_design["prior_file"].tolist()
-
-    #    print(prior_list)
+    if DEBUG:
+        print(f"DEBUG: comparate_list:\n{comparate_list}")
+        print(f"DEBUG: prior_list:\n{prior_list}")
 
     # Create dictionaries per design file row to store the row's comparate files
     for index, sample in df_design.iterrows():
-        dict_new[index] = list(sample)
+        sample_dict[index] = list(sample)
 
+    if DEBUG:
+        print(f"DEBUG: sample_dict:\n{sample_dict}")
     # If there are comparison columns (column # > 1)
-    for key in dict_new:
-
+    for key in sample_dict:
         comparate = comparate_list[key]
-
-        data_fileName = "ase_counts_filtered_" + comparate
         data_df = pd.read_csv(
-            input_dict_ASE[data_fileName], index_col=None, header=0, sep="\t"
+            input_dict_ASE[comparate], index_col=None, header=0, sep="\t"
         )
 
         prior_fileName = comparate + "_prior"
-        # print(prior_fileName)
+        if DEBUG:
+            print(f"DEBUG: prior_filename:\n{prior_fileName}")
         prior_df = pd.read_csv(
             input_dict_priors[prior_fileName], index_col=None, header=0, sep="\t"
         )
-
-        # print(data_df['FEATURE_ID'])
-        # print(prior_df['FEATURE_ID'])
 
         # Make sure that the feature_id columns of the prior file and the comparate data file
         # are exactly the same
 
         diff_features = data_df["FEATURE_ID"].equals(prior_df["FEATURE_ID"])
-        #        print(diff_features)
         # If feature_id columns are the same, merge priors into data file
         if diff_features is True:
 
