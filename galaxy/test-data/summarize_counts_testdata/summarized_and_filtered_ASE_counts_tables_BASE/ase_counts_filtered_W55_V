@@ -1,4 +1,3 @@
-Summarize_ASE_counts_test_data	
 FEATURE_ID	g1	g2	W55_V_flag_analyze	W55_V_num_reps	counts_W55_V_g1_total_rep1	counts_W55_V_g2_total_rep1	counts_W55_V_both_total_rep1	W55_V_flag_apn_rep1	W55_V_APN_total_reads_rep1	W55_V_APN_both_rep1	counts_W55_V_g1_total_rep2	counts_W55_V_g2_total_rep2	counts_W55_V_both_total_rep2	W55_V_flag_apn_rep2	W55_V_APN_total_reads_rep2	W55_V_APN_both_rep2
 l(1)G0196	W1118	W55	1	2	163	220	1467	1	8.669335155716098	6.874548472127306	154	189	1370	1	8.027335741481988	6.419994142341112
 CG8920	W1118	W55	1	2	26	37	336	1	5.638745767702045	4.748417488591197	21	35	312	1	5.200647725599882	4.409244810834684
