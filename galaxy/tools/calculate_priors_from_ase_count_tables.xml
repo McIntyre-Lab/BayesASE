@@ -4,8 +4,8 @@
       <import>../macros.xml</import>
     </macros>
     <expand macro="requirements" />
-    <command><![CDATA[                                                                                                                                                                                   
-    mkdir outputs;                                                                                                                                                                               
+    <command><![CDATA[
+    mkdir outputs;
     cd outputs;
     python '$__tool_directory__/calculate_priors_ase_count_tables.py'
     --output=`pwd`
@@ -25,7 +25,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="reformat_df_BASE_test_data.tsv" ftype="tsv"/>
+            <param name="design" value="sample_design_file.tabular" ftype="tsv"/>
             <param name="collection">
               <collection type="list">
                 <element name="FEATURE_ID" value="BASE_testdata/summarize_counts_testdata/filtered_ASE_counts_tables_BASE"/>
@@ -40,9 +40,9 @@
               </output_collection>
         </test>
     </tests>
-    <help><![CDATA[  
+    <help><![CDATA[
 **Tool Description**
-    
+
 The Calculate Priors tool calculates prior probability estimates for each of the comparates. Prior Probability is a part of Bayesian statistical inference, and is useful for ruling out whether alleles aligning better to one parent is due to allelic imbalance, or if it is really due to mapping biases or technical errors in the data. This important for future analysis with the Bayesian module, which determines the extent of the difference in allelic expression amongst the parental genomes for the features of interest, and must be yielded without influence from possible points of bias.
 
 The output file contains computations for three variables, prior_[comparate name]_g1 and prior_[comparate name]_g2, which represent the probability that the feature will align to either parental genome, and prior_[comparate name]_both, which are the chances the feature will align to equally well to both genomes. 
