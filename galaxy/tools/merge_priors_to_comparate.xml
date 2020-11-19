@@ -67,9 +67,9 @@ Comparate conditions refers to the conditions to be tested for allelic specific 
 Example of input design file::
 
     +-------+------+---------+
-    |   G1  |  G2  |comparate| 
+    |   G1  |  G2  |comparate|
     +-------+------+---------+
-    | W1118 |  W55 | W55_M   |
+    | W1118 | W55  | W55_M   |
     +-------+------+---------+
     | W1118 | W55  | W55_M   |
     +-------+------+---------+
@@ -91,20 +91,20 @@ A collection containing calculated prior estimates for each of the comparates is
 
 
 An example prior file (W55_M_prior)::
-	
+
 	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1	prior_W55_M_g2
 	l(1)G0196	0.802196053		0.114417568	0.083386378
 	CG10932		0.866028708		0.034449761	0.099521531
 	CG8920		0.821591949		0.1084172	0.069990851
 	Mapmodulin	0.904654394		0.076762765	0.018582841
-	
+
 **Outputs**
 
 	(1) One CSV file containing the output from both the Calculate Priors tool and the Summarize ASE Counts tables tool merged together into one file for a given comparate. 
-	 
+
 Example output. The comparate is W55_M::
 
-	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1             prior_W55_M_g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2     	W55_M_APN_both_rep2	
+	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1             prior_W55_M_g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2     	W55_M_APN_both_rep2
 	l(1)G0196	0.802196053469128	0.114417568427753         0.0833863781031191	1    	        	2			691				519				5020 	        		1   				29.073464805232			23.4243873865079		1075				812				7481				1			43.7266913990042		34.9168212437762
 	CG8920  	0.866028708133971	0.0344497607655502        0.0995215311004785	1			2			29				 62				 647    			1				10.3878993081113		9.10716914470779		38				126				920				1			15.2470189901369		12.9534815250994
 	CG10932 	0.821591948764867	0.108417200365965         0.0699908508691674	1			2			163				122		                1112		    		1				89.9299663299663		71.5858585858586		237				134				1881				1 			144.974410774411		121.086195286195
