@@ -3,11 +3,10 @@
 import argparse
 import os
 import pandas as pd
-import re
 import sys
 
 # Configuration
-default_data_columns=[
+default_data_columns = [
     "FEATURE_ID",
     "BOTH_EXACT",
     "BOTH_INEXACT_EQUAL",
@@ -99,14 +98,13 @@ def headers_check(single_file, file_identifier):
 
 def sum_counts(input_dict, df_design, out_dir, feature_lengths=False):
     df_grouped = df_design.groupby("sampleID").agg(lambda x: x.tolist())
-    sampleID_count = len(df_grouped.index)
-    grouped_fastqs = df_grouped[ "fqName"]
+    grouped_fastqs = df_grouped["fqName"]
     errors = []
     for sampleID, filelist in grouped_fastqs.iteritems():
         ddict = {}
         dfsum = pd.DataFrame(index=range(0), columns=default_data_columns)
         dfsum.set_index("FEATURE_ID", inplace=True)
-        for ind,fqName in enumerate(filelist):
+        for ind, fqName in enumerate(filelist):
             if fqName not in input_dict:
                 errors.append(f"Error: Cannot find {fqName} file in the input collection!")
                 continue
@@ -172,7 +170,7 @@ def main():
     os.mkdir(args.outdir, mode=0o775)
     if args.begin and args.end:
         df_design = df_design[args.begin-2:args.end-1]
-    if args.sim: # Simulated counts
+    if args.sim:  # Simulated counts
         # Sum counts tables and write them out to csv files
         sum_counts(input_dict, df_design, args.outdir, False)
         # Reformat input design file and output outdesign file
@@ -180,7 +178,7 @@ def main():
         df_drop = df_design.drop(["fqName", "readLength", "fqExtension", "techRep"], axis=1)
         df_unique = df_drop.drop_duplicates()
         df_unique.to_csv(os.path.join(args.outdir, args.outdesign), index=False, sep="\t")
-    else: # Measured counts
+    else:  # Measured counts
         df_bed = pd.read_table(args.bed, names=["col", "start", "end", "FEATURE_ID"])
         df_bed.set_index(["FEATURE_ID"], inplace=True)
         lengths = df_bed.end - df_bed.start
