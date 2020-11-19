@@ -1,38 +1,31 @@
 #!/usr/bin/env python3
+"""
+Prep sam compare data for Bayesian Machine
+Logic:
+*  group df by sample,
+*  only keep samples with more than 2 reps
+*  summarize columns
+*  filtering
+*  calculate:
+*  total_reads_counted
+*  both total
+*  g1_total
+*  g2 total
+*  ase total
+*  for each rep, if APN > input then
+*    flag_APN = 1 (flag_APN = 0 if APN < input, flag_APN = -1 if APN < 0)
+*  if flag_APN = 1 for at least 1 of the reps the
+*    flag_analyze = 1
+*   merge reps together
+"""
 
 import argparse
-import re
 import os
 import pandas as pd
 import numpy as np
 from functools import reduce
 
 DEBUG = False
-
-# Prep sam compare data for Bayesian Machine
-# imputs:
-# design file containing sampleID,comparison_1 and comparison_2
-# ase count tables from sam compare after matrix addition of tech reps and apn estimation
-# user specified APN threshold for flagging feature as 'expressed' in reach rep
-# output:
-# table containing
-
-# logic:
-#  group df by sample,
-#  only keep samples with more than 2 reps
-#  summarize columns
-#  filtering
-# calculate:
-# total_reads_counted
-# both total
-# g1_total
-# g2 total
-# ase total
-# for each rep, if APN > input then
-#   flag_APN = 1 (flag_APN = 0 if APN < input, flag_APN = -1 if APN < 0)
-# if flag_APN = 1 for at least 1 of the reps the
-#   flag_analyze = 1
-#  merge reps together
 
 
 def getOptions():
@@ -121,60 +114,45 @@ def getOptions():
 def main():
     """Main Function"""
     args = getOptions()
-
-    # Tells Galaxy to import files as a collection
-    pattern = re.compile(r"(?<=\').*(?=\')")
-    identifiers = [
-        pattern.search(i).group() for i in args.collection_identifiers.split(",")
-    ]
-    filenames = [i.strip() for i in args.collection_filenames.split(",")]
-    input_dict = dict(zip(identifiers, filenames))
-
     global DEBUG
     if args.debug:
         DEBUG = True
 
+    identifiers = [i.strip() for i in args.collection_identifiers.split(",")]
+    filenames = [i.strip() for i in args.collection_filenames.split(",")]
+    input_dict = dict(zip(identifiers, filenames))
+
     # Read in design file as dataframe (as a TSV file)
-    #    df_design = pd.read_csv(args.design, sep='/t', header=0)
     df_design = pd.read_table(args.design, header=0)
 
-    # Sample column is now output with name "Comparate" from Combine Counts
-    # set what columns to use for counting reps per sample
+    # Set columns to use for counting reps per sample
     parent1 = args.parent1
     parent2 = args.parent2
     sampleCol = args.sampleCol
     sampleIDCol = args.sampleIDCol
 
-    # groupby G2 and comparison
-    df_design["numReps"] = df_design.groupby([parent2, sampleCol]).comparate.transform(
-        "count"
-    )
-    #    print(df_design[:5])
+    df_design["numReps"] = df_design.groupby([parent2, sampleCol])[sampleCol].transform("count")
+    if DEBUG:
+        print("DEBUG: design df:\n{}".format(df_design))
 
-    # counter variables for each comparate
+    # Cumulative counter variables for each comparate
     df_design["seqCnt"] = df_design.groupby([parent2, sampleCol]).cumcount() + 1
-    #    print(df_design['seqCnt'])
 
-    # initialize dictionary to store count tables
     df_dict = {}
     df_grouped = df_design.loc[df_design.seqCnt > 0]
-
-    compcount = -1
+    if DEBUG:
+        print("DEBUG: design grouped:\n{}".format(df_grouped))
 
     for index, comparate in df_grouped.iterrows():
-        # count_good variable stores rep number for each line-comparison
-        compcount = compcount + 1
+        if DEBUG:
+            print("DEBUG: comparate:\n{}".format(comparate))
+        # count_good is the number for each line comparison
         g1 = comparate[parent1]
         g2 = comparate[parent2]
         count_good = comparate["seqCnt"]
         sample_id = comparate[sampleIDCol]
-        #        print('sample_id ' + sample_id)
         sample_id2 = sample_id.rsplit("_", 1)[0]
-        #        print('sample_id2 ' + sample_id2)
-
         numReps = comparate["numReps"]
-        #        print('rep number is ' + str(numReps))
-
         repCnt = sample_id2 + "_num_reps"
         g1_total = (
             "counts_" + sample_id2 + "_" + "g1_total" + "_" + "rep" + str(count_good)
@@ -191,32 +169,17 @@ def main():
         )
         APN_both = sample_id2 + "_" + "APN_both" + "_" + "rep" + str(count_good)
 
-        # create key to store count table in dictionary
-        countKey = sample_id
-
-        # print('countKey ' + countKey)
-
-        # read in count table
-        # Change the input file name based on output from combine_cnts
-        # So Galaxy can correctly call and recognize input file name
-
-        # inFile = 'ase_sum_counts_' + sample_id + '.csv'
         inFile = sample_id
-
-        # Galaxy must recognize the collection
-        # samC = os.path.join(args.samCompDir, inFile)
         samC = input_dict[inFile]
-        count_missing_sample_file = 0
+        if DEBUG:
+            print("DEBUG: samC file:\n{}".format(samC))
         try:
             samFile = pd.read_table(samC, header=0)
         except OSError:
-            # print(f"Missing:\n {samC}")
-            count_missing_sample_file += 1
+            print("ERROR: Missing file:\n{}".format(samC))
             continue
-
-        # summarize
-        # print('samC file is ' + samC)
         samFile[both_total] = samFile["BOTH_EXACT"] + samFile["BOTH_INEXACT_EQUAL"]
+
         samFile[g2_total] = (
             samFile["SAM_A_ONLY_EXACT"]
             + samFile["SAM_A_ONLY_SINGLE_INEXACT"]
@@ -257,19 +220,16 @@ def main():
         sam_subset = sam_subset.assign(g2=g2)
         sam_subset[repCnt] = numReps
 
-        df_dict[countKey] = sam_subset
+        df_dict[sample_id] = sam_subset
 
         comp_list = [
             value for key, value in df_dict.items() if key.startswith(sample_id2)
         ]
 
-        # need these column headers to merge on
-        # print("sample_id2 is " + sample_id2)
-
+        # Need these column headers to merge on
         comp_reps = sample_id2 + "_num_reps"
-        # print("comp_reps is " + comp_reps)
 
-        # merge c1 dataframes and c2 dataframes separately
+        # Merge c1 and c2 dataframes separately
         comp_merged = reduce(
             lambda x, y: pd.merge(
                 x, y, on=["FEATURE_ID", "g1", "g2", comp_reps], how="outer"
@@ -277,7 +237,7 @@ def main():
             comp_list,
         )
 
-        # create flag_analyze for each comparate, pull out all flag_apn using pattern match
+        # Create flag_analyze for each comparate, pull out all flag_apn using pattern match
         # sum flag_apn for each comparate, if flag_sum  > 0
         # set new column comparison_flag_analyze  = 1
 
@@ -290,15 +250,11 @@ def main():
         )
         del comp_merged["flag_sum"]
 
-        # order column headers for output
-        headers = list(comp_merged.columns.values)
+        # Order column headers for output
         comp_reps_headers = []
-        # print("headers is")
-        # print(headers)
-        for each in headers:
+        for each in list(comp_merged.columns.values):
             if sample_id2 in each and "rep" in each and "num" not in each:
                 comp_reps_headers.append(each)
-        # print(comp_reps_headers)
         ordered_headers = [
             "FEATURE_ID",
             "g1",
@@ -314,13 +270,6 @@ def main():
 
         comp_merged = comp_merged[ordered_headers]
         comp_merged.to_csv(outfile, index=False, sep="\t")
-
-
-#        print("outfile is " + outfile)
-#        print("new design file is " + df_design)
-
-#    df_drop = df_design.drop(['seqCnt', 'numReps'], axis=1)
-#    df_drop.to_csv(args.design, index=False)
 
 
 if __name__ == "__main__":
