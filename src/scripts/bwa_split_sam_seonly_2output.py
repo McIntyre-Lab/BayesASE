@@ -3,7 +3,6 @@
 import os
 import re
 import argparse
-from Bio.SeqIO.QualityIO import FastqGeneralIterator
 
 
 def getOptions():
@@ -27,7 +26,7 @@ def getOptions():
         dest="summname",
         action="store",
         required=False,
-        help="Name in the summary file",
+        help="Name of the summary file",
     )
 
     output = parser.add_argument_group(description="Output")
@@ -38,37 +37,10 @@ def getOptions():
         "--summ", dest="summ", action="store", required=True, help="summary file"
     )
     args = parser.parse_args()
-
     return args
 
 
-def readFastQ(fastq_path):
-    """
-    Reads fastq file and returns a dictionary with the header as a key
-    """
-    with open(fastq_path, "r") as FASTQ:
-        fastq_generator = FastqGeneralIterator(FASTQ)
-        readDict = {
-            re.sub("/[1-2]", "", header).split(" ")[0]: (seq, qual)
-            for header, seq, qual in fastq_generator
-        }
-
-    return readDict
-
-
-def writeOutput(headList, readDict, out_path):
-    """
-    Reads a list of headers and a dictionary to output a fastq file format
-    with the reads of those headers.
-    """
-    with open(out_path, "w") as OUTFILE:
-        for head in headList:
-            OUTFILE.write(
-                "\n".join(["@" + head, readDict[head][0], "+", readDict[head][1], ""])
-            )
-
-
-def SplitSAMSE(sam, summname):
+def split_samse(sam, summname, uniq, summ):
     """Split all reads in PE SAM files"""
     flags_uniq = ["0", "16"]
     flags_chimeric = ["2048", "2064"]
@@ -86,12 +58,9 @@ def SplitSAMSE(sam, summname):
     unmappedread = []
     ambiguous = []
 
-    bname = os.path.basename(sam)
-    name = os.path.splitext(bname)[0]
-
     SAM = open(sam, "r")
-    UNIQ = open(args.uniq, "w")
-    SUMMARY = open(args.summ, "w")
+    UNIQ = open(uniq, "w")
+    SUMMARY = open(summ, "w")
 
     for line in SAM:
         if line.startswith("@"):
@@ -123,7 +92,7 @@ def SplitSAMSE(sam, summname):
                 counter_total += 1
                 counter_oppositestrand += 1
         else:
-            print("Warning: " + elements[1] + " key is not recognized")
+            print("Warning: {} key is not recognized".format(elements[1]))
 
     count_names = [
         "name",
@@ -135,6 +104,7 @@ def SplitSAMSE(sam, summname):
         "count_chimeric_read",
         "count_notprimary",
     ]
+
     count_values = [
         summname,
         counter_total,
@@ -154,8 +124,6 @@ def SplitSAMSE(sam, summname):
     UNIQ.close()
     SUMMARY.close()
 
-    return (unmappedread, ambiguous)
-
 
 def main():
     """Main function for command-line execution."""
@@ -167,7 +135,7 @@ def main():
         summname = name
     else:
         summname = args.summname
-    unmapped, ambiguous = SplitSAMSE(args.sam, summname)
+    split_samse(args.sam, summname, args.uniq, args.summ)
 
 
 if __name__ == "__main__":
