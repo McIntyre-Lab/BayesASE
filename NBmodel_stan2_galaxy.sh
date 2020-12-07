@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 
 #    <tests>
 #        <test>
@@ -22,9 +22,13 @@
 
 # collection dir:  galaxy/test-data/nbmodel
 
-TESTDIR="testout/nbmodel"
-rm -rf ${TESTDIR}
-mkdir -p ${TESTDIR}
+### works with full path to TESTDIR but not relative --> AMM thinks can (1) adding library(here) to R code will fix or (2) can modify python code to get current path and 
+	## send into R code
+TESTDIR="/home/ammorse/TB14/github/BayesASE/testout/nbmodel"
+#TESTDIR="testout/nbmodel"
+#rm -rf ${TESTDIR}
+#mkdir -p ${TESTDIR}
+
 python3 src/scripts/nbmodel_stan2.py \
     --design galaxy/test-data/bayesian_input/comparate_design_file.tsv \
     --collection_identifiers bayesian_input_W55_M_V \
@@ -33,7 +37,7 @@ python3 src/scripts/nbmodel_stan2.py \
     --workdir src/scripts/ \
     --subpath src/scripts/nbmodel_stan2_flex_prior.R \
     -o ${TESTDIR} \
-    -routput ${TESTDIR} \
+    -routput ${TESTDIR}/ \
     -cond 2 \
     -iterations 100000 \
     -warmup 10000

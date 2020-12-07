@@ -18,6 +18,7 @@ rm(list=ls())
 #setwd("/ufrc/mcintyre/share/cegs2_MvsF_exp/scripts/ase_cegs_scripts/extended_model_scripts/")
 
 library("rstan")
+library("here")
 rstan_options(auto_write = FALSE)
 #install.packages("rstan")
 gam.mles.data = function(x){
@@ -57,12 +58,14 @@ prior_empBayes_forbeta=function(xs,ys,zs){
 
   # Import NB Functions
 args = commandArgs(trailingOnly=TRUE)
+
+
 #AMM commmented out following line in 04fm version
 #args<-c("/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/bayesian_input_W55_M_V.csv","/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/test_W55_out.csv",2,".")
 #args<-c("/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/adj_head_bayesian_input_W55_M.csv","/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/test_W55_out.csv",1,".")
 nconditions<-as.numeric(args[3])
-cat(args[1],"\n")
-cat(args[2],"\n")
+cat(args[1],"input file","\n")
+cat(args[2],"output file","\n")
 cat("Number of conditions:",nconditions,"\n")
 
 ### Set working directory based on argument 4

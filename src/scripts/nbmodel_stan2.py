@@ -143,11 +143,11 @@ def main():
         #row_list = [i for i in row_list if i]
         #print(row_list)
 
-        print("printing input_dict")
-        print(input_dict)
+        #print("printing input_dict")
+        #print(input_dict)
 
         infileName = "bayesian_input_" + comparison
-        print(infileName)
+        #print(infileName)
 
 ##        infile=pd.read_csv(os.path.join(input_dict[infileName]),sep='\t')
         infile = pd.read_csv(
