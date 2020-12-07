@@ -7,18 +7,97 @@ import argparse
 
 
 def getOptions():
-    parser = argparse.ArgumentParser(description= "Run bayesian model")
-    parser.add_argument('-collection_identifiers','--collection_identifiers',dest='collection_identifiers', action='store', required=True, help='Input original names [Required]')
-    parser.add_argument('-collection_filenames','--collection_filenames',dest='collection_filenames', action='store', required=True, help='Input galaxy names [Required]')
-    parser.add_argument("-datafile2","--datafile2",dest="datafile2",action="store",required=True,help="Provide temp path for created datafile with headers for Bayesian")
-    parser.add_argument("-design","--design",dest="design",action="store",required=True,help="Design file containing sampleID names to analyze [TSV]")
-    parser.add_argument("-cond","--cond", dest="cond", action="store", required=False, help="Number of conditions")
-    parser.add_argument("-workdir","--workdir", dest="workdir", action="store", required=True, help="Path to R code")
-    parser.add_argument("-routput","--routput", dest="routput", action="store", required=False, help="Optional R output file")
-    parser.add_argument("-subpath","--subpath", dest="subpath", action="store", required=True, help="Bayesian R script subprocess path")
-    parser.add_argument("-iterations","--iterations", dest="iterations", action="store", required=False, help="Optional number of iterations (default 100000)")
-    parser.add_argument("-warmup","--warmup", dest="warmup", action="store", required=False, help="Optional number of warmup (default 10000)")
-    parser.add_argument("-o","--output",dest="output",action="store", required=True,help="Output path for merged file[TSV]")
+    parser = argparse.ArgumentParser(
+        description= "Run bayesian model"
+    )
+    parser.add_argument(
+        '-collection_identifiers',
+        '--collection_identifiers',
+        dest='collection_identifiers',
+        action='store',
+        required=True,
+        help='Input original names [Required]'
+    )
+    parser.add_argument(
+        '-collection_filenames',
+        '--collection_filenames',
+        dest='collection_filenames',
+        action='store',
+        required=True,
+        help='Input galaxy names [Required]'
+    )
+    parser.add_argument(
+        "-datafile2",
+        "--datafile2",
+        dest="datafile2",
+        action="store",
+        required=True,
+        help="Provide temp path for created datafile with headers for Bayesian"
+    )
+    parser.add_argument(
+        "-design",
+        "--design",
+        dest="design",
+        action="store",
+        required=True,
+        help="Design file containing sampleID names to analyze [TSV]"
+    )
+    parser.add_argument(
+        "-cond",
+        "--cond",
+        dest="cond",
+        action="store",
+        required=False,
+        help="Number of conditions"
+    )
+    parser.add_argument(
+        "-workdir",
+        "--workdir",
+        dest="workdir",
+        action="store",
+        required=True,
+        help="Path to R code"
+    )
+    parser.add_argument(
+        "-routput",
+        "--routput",
+        dest="routput",
+        action="store",
+        required=False,
+        help="Optional R output file"
+    )
+    parser.add_argument(
+        "-subpath",
+        "--subpath",
+        dest="subpath",
+        action="store",
+        required=True,
+        help="Bayesian R script subprocess path"
+    )
+    parser.add_argument(
+        "-iterations",
+        "--iterations",
+        dest="iterations",
+        action="store",
+        required=False,
+        help="Optional number of iterations (default 100000)"
+    )
+    parser.add_argument(
+        "-warmup",
+        "--warmup",
+        dest="warmup",
+        action="store",
+        required=False,
+        help="Optional number of warmup (default 10000)"
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        dest="output",
+        action="store",
+        required=True,
+        help="Output path for merged file[TSV]"
+    )
     args=parser.parse_args()
     return(args)
 
@@ -28,7 +107,6 @@ def main():
     identifiers = [i.strip() for i in args.collection_identifiers.split(",")]
     filenames = [i.strip() for i in args.collection_filenames.split(",")]
     input_dict = dict(zip(identifiers, filenames))
-    
     ##(1) Parsing datafile to extract rows with sampleID specified in design file, set c1 and c2
 
     ##Standardized Paths##
@@ -48,10 +126,10 @@ def main():
         workdir = args.workdir
 
         df.set_index('Comparate_1')
-        print(df)
+        #print(df)
 
-        print('PRINTING data_row')
-        print(row)
+        #print('PRINTING data_row')
+        #print(row)
         comparison=row['compID']
         c1=row['Comparate_1']
         c2=row['Comparate_2']
@@ -63,12 +141,19 @@ def main():
 
         ## remove empty if don't exist
         #row_list = [i for i in row_list if i]
-        print(row_list)
+        #print(row_list)
 
+        print("printing input_dict")
+        print(input_dict)
 
         infileName = "bayesian_input_" + comparison
+        print(infileName)
 
-        infile=pd.read_csv(os.path.join(input_dict[infileName]),sep='\t')
+##        infile=pd.read_csv(os.path.join(input_dict[infileName]),sep='\t')
+        infile = pd.read_csv(
+            input_dict[infileName], index_col=None, header=0, sep="\t"
+        )
+
         infile.set_index('FEATURE_ID')
 
         ## add comparison column (last)
