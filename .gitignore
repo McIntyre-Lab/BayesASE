@@ -2,3 +2,4 @@ BayesASE.egg-info/
 src/build
 src/dist
 script_renames.txt
+__pycache__
