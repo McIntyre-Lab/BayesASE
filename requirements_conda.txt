@@ -307,6 +307,7 @@ dependencies:
   - pip:
     - appdirs==1.4.4
     - attrs==20.3.0
+    - bayesase==21.1.5
     - biothings-client==0.2.1
     - black==20.8b1
     - chardet==3.0.4
@@ -315,6 +316,7 @@ dependencies:
     - dataclasses==0.8
     - idna==2.9
     - importlib-metadata==2.0.0
+    - importlib-resources==4.1.1
     - iniconfig==1.1.1
     - joblib==0.14.1
     - kiwisolver==1.1.0
