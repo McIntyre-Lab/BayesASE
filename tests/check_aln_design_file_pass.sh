@@ -15,7 +15,7 @@ echo "### Starting test: ${TEST}"
 src/scripts/check_aln_design_file.py "$@" \
     --design galaxy/test-data/align_and_counts_test_data/alignment_design_file.tsv \
     --dups BASE_workflow_test_data/alignment_design_file_duplicates.tabular \
-    --output ${TESTDIR}/alignment_design_file_criteria.csv
+    --logfile ${TESTDIR}/alignment_design_file_criteria.csv
 
 date
 echo "### Finished test: ${TEST}"
