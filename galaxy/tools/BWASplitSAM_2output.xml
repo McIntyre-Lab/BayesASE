@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements"/>
     <command><![CDATA[
-    python '$__tool_directory__/BWASplitSAM_SEonly_2output.py3'
+    bwa_split_sam_seonly_2output.py
           --sam=$sam
           --uniq=$uniq
           --summ=$summ
