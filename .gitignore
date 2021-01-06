@@ -4,3 +4,4 @@ src/dist
 script_renames.txt
 __pycache__
 .Rhistory
+testout

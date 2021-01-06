@@ -30,5 +30,5 @@ python3 src/scripts/nbmodel_stan2.py \
     --design galaxy/test-data/bayesian_input/comparate_design_file.tsv \
     --collection_identifiers bayesian_input_W55_M_V \
     --collection_filenames galaxy/test-data/bayesian_input/bayesian_input_W55_M_V.tabular \
-    --outdir ${TESTDIR} \
     --cond 2
+    #--outdir ${TESTDIR} \

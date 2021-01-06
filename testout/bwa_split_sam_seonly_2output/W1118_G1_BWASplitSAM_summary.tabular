@@ -1,2 +1,0 @@
-name	count_total_reads	count_mapped_read_opposite_strand	count_unmapped_read	count_mapped_read	count_ambiguous_read	count_chimeric_read	count_notprimary
-bam_to_sam_BASE_test_data	1816	852	1	855	0	108	0
