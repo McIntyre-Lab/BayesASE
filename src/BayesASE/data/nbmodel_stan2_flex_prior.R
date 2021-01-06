@@ -66,7 +66,7 @@ cat("Stan script: ", stanScript, "\n")
 inputFile <- args[2]
 cat("Input File", inputFile,"\n")
 outputFile <- args[3]
-cat(outputFile, "output file","\n")
+cat("Output File", outputFile, "\n")
 nconditions<-as.numeric(args[4])
 cat("Number of conditions:",nconditions,"\n")
 workdir<-args[5]
