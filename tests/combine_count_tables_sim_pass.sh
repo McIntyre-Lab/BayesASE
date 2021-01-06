@@ -1,7 +1,11 @@
 #!/bin/bash
+date;hostname;pwd
 
-TESTDIR="testout/combine_count_tables_sim"
+TEST="combine_count_tables_sim"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
+mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
 src/scripts/combine_count_tables.py "$@" \
     --sim \
@@ -11,3 +15,6 @@ src/scripts/combine_count_tables.py "$@" \
     --collection_filenames galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1989589.fastq,galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1990512_1.fastq,galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1991135.fastq,galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1991140_1.fastq,galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1991611_1.fastq,galaxy/test-data/summarize_counts_testdata/ASE_counts_tables/SRR1991617_1.fastq \
     --outdir=${TESTDIR} \
     --outdesign design
+
+date
+echo "### Finished test: ${TEST}"

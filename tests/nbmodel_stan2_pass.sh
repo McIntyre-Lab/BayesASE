@@ -1,5 +1,5 @@
  #!/bin/bash
-
+date;hostname;pwd
 #    <tests>
 #        <test>
 #            <param name="design" ftype="data" value="BASE_testdata/run_bayesian_testdata/comparate_df_two_conditions_BASE.tsv"/>
@@ -22,13 +22,18 @@
 # collection dir:  galaxy/test-data/nbmodel
 
 ### works with full path to TESTDIR but not relative --> AMM thinks can (1) adding library(here) to R code will fix or (2) can modify python code to get current path and send into R code
-TESTDIR="testout/nbmodel"
+TEST="nbmodel_stan2"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
-python3 src/scripts/nbmodel_stan2.py \
+src/scripts/nbmodel_stan2.py "$@" \
     --design galaxy/test-data/bayesian_input/comparate_design_file.tsv \
     --collection_identifiers bayesian_input_W55_M_V \
     --collection_filenames galaxy/test-data/bayesian_input/bayesian_input_W55_M_V.tabular \
+    --outdir ${TESTDIR} \
     --cond 2
-    #--outdir ${TESTDIR} \
+
+date
+echo "### Finished test: ${TEST}"

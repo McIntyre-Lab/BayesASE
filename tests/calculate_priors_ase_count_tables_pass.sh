@@ -15,11 +15,11 @@ date;hostname;pwd
 #         </element>
 #       </output_collection>
 # </test>
-
-TESTDIR="testout/calculate_priors_ase_count_tables"
-
+TEST="calculate_priors_ase_count_tables"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
 src/scripts/calculate_priors_ase_count_tables.py "$@" \
     --design galaxy/test-data/summarize_counts_testdata/sample_design_file.tabular \
@@ -28,3 +28,4 @@ src/scripts/calculate_priors_ase_count_tables.py "$@" \
     --output ${TESTDIR}
 
 date
+echo "### Finished test: ${TEST}"
