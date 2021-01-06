@@ -167,7 +167,7 @@ def main():
     filenames = [i.strip() for i in args.collection_filenames.split(",")]
     input_dict = dict(zip(identifiers, filenames))
     df_design = pd.read_table(args.design)
-    os.mkdir(args.outdir, mode=0o775)
+    os.makedirs(args.outdir, mode=0o775, exist_ok=True)
     if args.begin and args.end:
         df_design = df_design[args.begin-2:args.end-1]
     if args.sim:  # Simulated counts
