@@ -3,8 +3,7 @@
     <macros>
         <import>../macros.xml</import>
     </macros>
-    <requirements>
-    </requirements>
+    <expand macro="requirements"/>
     <command>
 <![CDATA[
         awk -v OFS='   ' '$4 !="."' '$BEDINT' > '$BED3';

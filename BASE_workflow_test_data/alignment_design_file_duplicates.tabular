@@ -1,0 +1,3 @@
+G1,G2,sampleID,fqName,fqExtension,readLength,techRep
+W1118,W55,W55_V_2,W55_V_2_3,.fastq,96,2
+W1118,W55,W55_V_2,W55_V_2_3,.fastq,96,3
