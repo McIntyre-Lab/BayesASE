@@ -1,7 +1,7 @@
 <tool id="NBmodel_stan2_galaxy" name="Run the Bayesian model: " version="0.1.0">
     <description>nbmodel_stan2_flex_prior.R</description>
     <macros>
-      <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <stdio>

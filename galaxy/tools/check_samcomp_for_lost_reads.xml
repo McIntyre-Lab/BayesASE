@@ -1,7 +1,7 @@
 <tool id="check_samcomp_for_lost_reads" name="Check Sam Compare Output" version="0.1.0">
     <description>ensure no reads were lost after workflow has finished</description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

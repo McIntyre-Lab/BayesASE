@@ -1,7 +1,7 @@
 <tool id="check_sam_present" name="Check for 2 SAM files - " version="0.1.0">
     <description>verify 2 SAM files are present for every 1 FASTQ file.</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command><![CDATA[

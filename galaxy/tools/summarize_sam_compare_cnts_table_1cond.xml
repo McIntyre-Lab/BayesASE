@@ -2,9 +2,9 @@
 name="Summarize and Filter ASE Count Tables" version="0.1.0">
     <description>based on user-defined APN threshold and read coverage</description>
     <macros>
-      <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <expand macro="requirements" />
+    <expand macro="requirements"/>
     <command><![CDATA[
     mkdir outputs;
     cd outputs;

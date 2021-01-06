@@ -1,7 +1,7 @@
 <tool id="merge_priors_to_comparate" name="Merge priors to comparate" version="0.1.0">
     <description>merges filtered/summarized ASE Counts tables to file with calculated prior values for a single comparate </description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

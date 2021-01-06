@@ -1,10 +1,9 @@
 <tool id="base_sam2bed" name="SAM to BED"  version="0.1.0">
     <description>converts a SAM file to a BED file for use in BASE</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <requirements>
-    </requirements>
+    <expand macro="requirements"/>
     <command><![CDATA[ 
         awk 
             -v readLen=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'` 

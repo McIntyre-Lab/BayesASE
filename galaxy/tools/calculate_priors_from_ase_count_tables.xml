@@ -1,9 +1,9 @@
 <tool id="calculate_priors_from_ase_count_tables" name="Calculate Priors Probability Estimates" version="0.1.0">
     <description>using ASE count table format</description>
     <macros>
-      <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <expand macro="requirements" />
+    <expand macro="requirements"/>
     <command><![CDATA[
     mkdir outputs;
     cd outputs;

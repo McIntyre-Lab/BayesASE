@@ -1,7 +1,7 @@
 <tool id="check_for_lost_reads" name="Check for lost reads" version="0.1.0">
     <description>verify starting FASTQ read number equals ending read number after alignments and parsing</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command><![CDATA[

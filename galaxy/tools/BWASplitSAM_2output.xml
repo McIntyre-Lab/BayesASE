@@ -1,7 +1,7 @@
 <tool id="base_BWASplitSam_2output" name="BWASplitSAM" version="0.1.0" python_template_version="3.5">
     <description> creates a SAM file of uniquely mapping reads from BWA-MEM alignment</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command><![CDATA[

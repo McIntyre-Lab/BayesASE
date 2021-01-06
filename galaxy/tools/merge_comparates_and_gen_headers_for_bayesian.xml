@@ -1,7 +1,7 @@
 <tool id="merge_comparates_and_gen_headers_for_bayesian" name="Merge Two or More Comparate Datasets and Generate Headers" version="0.1.0">
     <description>in preparation for Bayesian Analysis for AI</description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

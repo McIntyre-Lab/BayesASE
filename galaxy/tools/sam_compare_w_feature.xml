@@ -1,9 +1,9 @@
 <tool id="sam_compare_w_feature" name="Compare SAM files and create ASE Counts Tables" version="0.1.0">
     <description> containing read counts by how they mapped to each parental genome </description>
     <macros>
-      <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <expand macro="requirements" />
+    <expand macro="requirements"/>
     <command><![CDATA[
     python '$__tool_directory__/sam_compare_w_feature.py'
     --fastq=$fastq

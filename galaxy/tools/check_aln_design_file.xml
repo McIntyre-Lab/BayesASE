@@ -1,7 +1,7 @@
 <tool id="base_check_alignment_design_file" name="Check Alignment Design File" version="0.1.0">
     <description>for correct formatting and duplicate FASTQ names </description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

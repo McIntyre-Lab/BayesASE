@@ -1,7 +1,7 @@
 <tool id="combine_cnt_tables" name="Combine ASE Count Tables:" version="0.1.0">
     <description>sum technical replicates</description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

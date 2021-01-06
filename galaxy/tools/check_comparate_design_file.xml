@@ -1,7 +1,7 @@
 <tool id="base_check_comparate_design_file" name="Check Comparate Design File" version="0.1.0">
     <description>for correct formatting and header names </description>
     <macros>
-      <import>../macros.xml</import>
+      <import>macros.xml</import>
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[

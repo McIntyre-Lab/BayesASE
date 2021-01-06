@@ -1,10 +1,9 @@
 <tool id="base_reformat_bedfile" name="Reformat user-provided BED file"  version="0.1.0">
     <description>for use in BASE Align and Count workflow</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <requirements>
-    </requirements>
+    <expand macro="requirements"/>
     <command>
 <![CDATA[ 
         awk 

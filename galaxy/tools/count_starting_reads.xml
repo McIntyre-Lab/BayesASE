@@ -1,10 +1,9 @@
 <tool id="base_count_starting_reads_per_fq" name="Count_reads_per_fq file for BASE"  version="0.1.0">
     <description>with awk</description>
     <macros>
-        <import>../macros.xml</import>
+        <import>macros.xml</import>
     </macros>
-    <requirements>
-    </requirements>
+    <expand macro="requirements"/>
     <environment_variables>
         <environment_variable name="FQLINEFN">$(wc -l '$READ')
     <command>
