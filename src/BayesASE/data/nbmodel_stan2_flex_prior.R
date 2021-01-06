@@ -108,7 +108,6 @@ firstheaders=paste(c("comparison","FEATURE_ID",
 alpha_post_names<-paste(paste("alpha",seq(1,nconditions),"_postmean",sep=""),collapse=",")
 cat("alpha names are:",alpha_post_names,"\n")
 headers_out=paste(firstheaders,fornames,alpha_post_names,"flaganalyze",sep=",")
-cat("DEBUG 0: ", outputFile, "\n")
 cat(headers_out,file=outputFile,append=FALSE,sep="\n")
 
 # Make Connection to input

@@ -60,8 +60,8 @@ def getOptions():
         "-o",
         "--outdir",
         action="store",
-        required=True,
-        help="Output directory",
+        required=False,
+        help="Output directory (default: current working direcotry)",
     )
     parser.add_argument(
         "-r",
@@ -89,7 +89,10 @@ def main():
 
     # (1) Parsing datafile to extract rows with sampleID specified in design file, set c1 and c2
     # Standardized Paths##
-    outdir = os.path.abspath(args.outdir)
+    if args.outdir:
+        outdir = os.path.abspath(args.outdir)
+    else:
+        outdir = os.path.abspath(os.curdir)
 
     # Read in design file as dataframe
     df = pd.read_csv(args.design, sep="\t")
@@ -99,12 +102,6 @@ def main():
 
         # Make variable for number of conditions
         compnum = args.cond
-
-        # Make variable for working directory (stan and wrapper in same place)
-        if args.outdir:
-            workdir = os.path.abspath(args.outdir)
-        else:
-            workdir = os.curdir
 
         df.set_index("Comparate_1")
 
@@ -124,7 +121,7 @@ def main():
         # add comparison column (last)
         infile["comparison"] = comparison
 
-        datafile2 = args.outdir + "/" + comparison + "_temp"
+        datafile2 = os.path.abspath(outdir + "/" + comparison + "_temp")
 
         infile.to_csv(datafile2, na_rep="NA", index=False)
 
@@ -151,7 +148,7 @@ def main():
                 datafile2,
                 routput,
                 str(compnum),
-                workdir,
+                outdir,
                 str(args.iterations),
                 str(args.warmup),
             ]
