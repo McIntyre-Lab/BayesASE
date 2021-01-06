@@ -1,5 +1,5 @@
 <tool id="base_sam2bed" name="SAM to BED"  version="0.1.0">
-    <description>converts a SAM file to a BED file for use in BASE</description>
+    <description>converts a SAM file to a BED file for use in BayesASE</description>
     <macros>
         <import>macros.xml</import>
     </macros>
@@ -14,8 +14,8 @@
 ]]>
     </command>
     <inputs>
-        <param name="fastq" format="fastq" type="data" label="Select FASTQ files" help= "These will be used to calculate average read length" />
-        <param name="SAMFILE" format="sam" type="data" label="SAM files to convert" help="Input SAM files to be converted to BED files"  />
+        <param name="fastq" format="fastq" type="data" label="Select FASTQ files" help= "FASTQ files will be used to calculate average read length." />
+        <param name="SAMFILE" format="sam" type="data" label="SAM files to convert" help="Input SAM files to be converted into BED files."  />
     </inputs>
     <outputs>
         <data name="AWKTMP" format="bed" label="${tool.name} on ${on_string}: SAM2BED" />
@@ -28,33 +28,32 @@
         </test>
     </tests>
     <help><![CDATA[
-    **Tool Description**
-    The SAM2BED tools converts a SAM file to a 3-column BED file.  
+**Tool Description**
 
-	The tool calculates the average read length from the input FQ file and creates a resulting BED file where  “Start” pertains to the read starting position in the input SAM file, and “End” pertains to the starting position + the calculated average read length. The resulting BED file is used as input into BedTools Intersect Interval to identify reads overlapping with regions pertaining to features of interest.
+The SAM to BED tool converts a SAM file containing uniquely mapping reads from the BWASplitSAM step into a 3-column BED file containing the start and end positions of every uniquely mapping read. This BED file is required for entry into step 6, BEDTools Intersect Intervals, to identify uniquely mapping reads that overalp with genic features of interest. 
 
-    -----------------------------------------------------------------------------------------------
+The tool calculates the average read length from the input FASTQ file and creates a resulting BED file where “chrom” is the chrom field from the SAM file, “start” is the POS field from the SAM file and “end” is the POS field plus the average read length.
 
-    **Inputs**
+**Inputs**
 
-        -Two input datasets are required:
+    Two input datasets are required:
 
-    **FASTQ File**
-        -The original input FQ file containing F1 reads. The tool will use this file to calculate read length.
+**FASTQ File**
+    -The original input FASTQ file containing F1 reads. The tool will use this file to calculate the average read length.
 
-    **Unique SAM File**
-        -The SAM file containing uniquely mapping reads.  This file can be created by the **BWASplitSAM** tool.
+**Unique SAM File**
+    -The SAM file containing uniquely mapping reads.  This file can be created by the **BWASplitSAM** tool.
 
-    ------------------------------------------------------------------------------------------------
 
-    **Outputs**
+**Output**
 
-    The tool outputs a 3-column BED file containing the following fields for each uniquely mapping read in the SAM file:
-        Chrom    chromosome 
-        Start    the 5 prime start position of a read
-        End      the 5 prime start position + the read length
+The tool outputs a 3-column BED file containing the following fields for each uniquely mapping read in the SAM file:
+    (1) Chrom: chromosome 
+    (2) Start: the 5 prime start position of a read
+    (3) End: the 5 prime start position + the read length
+
  
-    ]]></help>
+]]></help>
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,
             author = {Brecca Miller, Alison M. Morse, Elyse Borgert, Zihao Liu, Kelsey Sinclair, Gavin Gamble, Fei Zou, Jeremy Newman, Luis Leon Novello, Fabio Marroni, Lauren M. McIntyre},
