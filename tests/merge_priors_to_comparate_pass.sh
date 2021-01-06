@@ -1,6 +1,5 @@
 #!/bin/bash
 date;hostname;pwd
-
 # <test>
 #     <param name="design" value="BASE_testdata/summarize_counts_testdata/priors_design_file.tsv" ftype="tsv"/>
 #     <param name="collection1" value="/BASE_testdata/summarize_counts_testdata/summarized_and_filtered_ASE_counts_tables_BASE" ftype="data_collection"/>
@@ -14,9 +13,11 @@ date;hostname;pwd
 #      </output_collection>_
 # </test>
 
-TESTDIR="testout/merge_priors_to_comparate"
+TEST="merge_priors_to_comparate"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
 src/scripts/merge_priors_to_comparate.py "$@" \
 	--design galaxy/test-data/summarize_counts_testdata/priors_design_file.tsv \
@@ -27,3 +28,4 @@ src/scripts/merge_priors_to_comparate.py "$@" \
 	--out ${TESTDIR}
 
 date
+echo "### Finished test: ${TEST}"

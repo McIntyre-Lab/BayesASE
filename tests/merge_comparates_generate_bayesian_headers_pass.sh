@@ -13,9 +13,11 @@ date;hostname;pwd
 #     </output_collection>
 #</test>
 
-TESTDIR="testout/merge_comparates_generate_bayesian_headers"
+TEST="merge_comparates_generate_bayesian_headers"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
 src/scripts/merge_comparates_generate_bayesian_headers.py "$@" \
     --design ./galaxy/test-data/merge_priors_testdata/df_comparate.tsv \
@@ -24,3 +26,4 @@ src/scripts/merge_comparates_generate_bayesian_headers.py "$@" \
     --output ${TESTDIR}
 
 date
+echo "### Finished test: ${TEST}"

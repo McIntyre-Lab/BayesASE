@@ -1,5 +1,5 @@
 #!/bin/bash
-
+date;hostname;pwd
 #         <test>
 #            <param name="design" value="BASE_testdata/summarize_counts_testdata/summarization_df_BASE.tabular" ftype="tabular"/>
 #            <param name="collection" value="BASE_testdata/summarize_counts_testdata/combined_ASE_counts_tables_BASE" ftype="data_collection"/>
@@ -19,11 +19,14 @@
 
 # Collection dir: galaxy/test-data/summarize_counts_testdata/combined_ASE_counts_tables_BASE
 # W55_M_1  W55_M_1.fastq  W55_M_2  W55_M_2.fastq  W55_V_1  W55_V_1.fastq  W55_V_2  W55_V_2.fastq
-TESTDIR="testout/summarize_sam_compare_cnts_table_1cond"
 
+TEST="summarize_sam_compare_cnts_table_1cond"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
-src/scripts/summarize_sam_compare_cnts_table_1cond.py \
+echo "### Starting test: ${TEST}"
+
+src/scripts/summarize_sam_compare_cnts_table_1cond.py "$@" \
     --design galaxy/test-data/summarize_counts_testdata/summarization_df_BASE.tabular \
     --collection_identifiers W55_M_1,W55_M_2,W55_V_1,W55_V_2 \
     --collection_filenames galaxy/test-data/summarize_counts_testdata/combined_ASE_counts_tables_BASE/W55_M_1.fastq,galaxy/test-data/summarize_counts_testdata/combined_ASE_counts_tables_BASE/W55_M_2.fastq,galaxy/test-data/summarize_counts_testdata/combined_ASE_counts_tables_BASE/W55_V_1.fastq,galaxy/test-data/summarize_counts_testdata/combined_ASE_counts_tables_BASE/W55_V_2.fastq \
@@ -33,3 +36,6 @@ src/scripts/summarize_sam_compare_cnts_table_1cond.py \
     --sampleIDCol "sampleID" \
     --apn 1 \
     --out ${TESTDIR}
+
+date
+echo "### Finished test: ${TEST}"

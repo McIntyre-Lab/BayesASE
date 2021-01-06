@@ -6,14 +6,16 @@ date;hostname;pwd
 #    <output name="dups"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_duplicates.tabular" />
 #    <output name="logfile"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_criteria.csv" />
 #</test>
-
-TESTDIR="testout/check_aln_design_file"
-
+TEST="check_aln_design_file"
+TESTDIR="testout/${TEST}"
 rm -rf ${TESTDIR}
 mkdir -p ${TESTDIR}
+echo "### Starting test: ${TEST}"
 
-src/scripts/check_aln_design_file.py.py "$@" \
-	--design galaxy/test-data/align_and_counts_test_data/alignment_design_file.tsv \
-    --dups 
-    --output
+src/scripts/check_aln_design_file.py "$@" \
+    --design galaxy/test-data/align_and_counts_test_data/alignment_design_file.tsv \
+    --dups BASE_workflow_test_data/alignment_design_file_duplicates.tabular \
+    --logfile ${TESTDIR}/alignment_design_file_criteria.csv
+
 date
+echo "### Finished test: ${TEST}"
