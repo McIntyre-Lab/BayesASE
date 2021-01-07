@@ -10,7 +10,7 @@
 ]]>
     </command>
     <inputs>
-        <param name="BED3" type="data" format="tabular" label="BED file generated from the Remove reads that do not overlap tool" />
+        <param name="BED3" type="data" format="tabular" label="BED file generated from the Remove Reads That Do Not Overlap tool" />
         <param name="SAMFILE" type="data" format="sam" label="Input SAM file containing Uniquely Mapped Reads"
  help=" SAM file to convert chromosome names to feature IDs in RNAME field" />
     </inputs>
@@ -27,9 +27,8 @@
     <help><![CDATA[
     **Tool Description**
     
-This tool converts the BED file containing reads overlapping with genic features into a SAM file format.
-The input into this tool is generated from the *Remove reads that do not overlap with a feature for BASE* tool.
-The resulting SAM file contains uniquely mapping reads that overlap with genic features of interest.  
+This tool reformats the SAM file containing uniquely mapping reads using the multi-column BED file created by the *Remove reads that do not overlap with a feature for BASE* tool.
+The resulting SAM file contains the name of genic features in the 'chrom' field.  
 
 
 ----------------------------------------------------------------------------------------------
@@ -40,7 +39,7 @@ The resulting SAM file contains uniquely mapping reads that overlap with genic f
 
 **BED File**
      The tool requires a BED file of reads overlapping genic features of interest.
-     The *Remove reads that do not overlap with a feature for BASE* tool creates this BED file. 
+     The *Remove reads that do not overlap with a feature for BayesASE* tool creates this BED file. 
 
 Example input BED file 
 
