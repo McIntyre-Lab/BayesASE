@@ -28,7 +28,7 @@
             <param name="design" value="sample_design_file.tabular" ftype="tsv"/>
             <param name="collection">
               <collection type="list">
-                <element name="FEATURE_ID" value="BASE_testdata/summarize_counts_testdata/filtered_ASE_counts_tables_BASE"/>
+                <element name="FEATURE_ID" value="filtered_ASE_counts_tables_BASE"/>
               </collection>
              </param>
              <output_collection name="split_output" type="list">
