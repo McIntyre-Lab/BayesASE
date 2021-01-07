@@ -7,7 +7,7 @@
     <command><![CDATA[
     mkdir outputs;
     cd outputs;
-    python '$__tool_directory__/combine_cnt_tables_13amm.py'
+    combine_count_tables.py
     --design=$design
     --bed=$bed
     --collection_identifiers="$collection.keys()"
@@ -20,11 +20,11 @@
 ]]></command>
     <inputs>
         <param name="design" type="data" format="tabular" label="Design File" help="Select the Alignment Design File. The design file must be sorted by biological replicate (sampleID) "/>
-        <param name="bed" type="data" format="tabular" label="Bed File" help="Select the input BED file. Do not use the reformatted BED file created in the Align and Count workflow"/>
+        <param name="bed" type="data" format="tabular" label="Bed File" help="Select the input BED file. Do NOT use the reformatted BED file created in the Align and Count workflow"/>
         <param name="collection" type="data_collection" collection_type="list" label="ASE Count Tables" help="Select collection containing ASE count tables"/>
-        <param name="begin" type="text" label="Start" help="Enter start point in design file [OPTIONAL]"/>
-        <param name="end" type="text" label="End" help="Enter end point in design file [OPTIONAL]"/>
-        <param name="sim" type="boolean" checked="false" truevalue="--sim" label="Simulated Dataset" help="Select if the dataset contains simulated reads"/>
+        <param name="begin" type="text" label="Start" help="Enter start point in design file, see below for description [OPTIONAL]"/>
+        <param name="end" type="text" label="End" help="Enter end point in design file, see below for description [OPTIONAL]"/>
+        <param name="sim" type="boolean" checked="false" truevalue="--sim" label="Simulated Dataset" help="Select if the dataset is generated from simulated reads"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Combined and Summed ASE Table">
@@ -50,14 +50,14 @@
     <help><![CDATA[
 **Tool Description** 
 
-The Combine Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File and calculates the average coverage per nucleotide (APN) values for each feature.
+The Combine ASE Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File.
+Technical replicates within the same biological replicate are combined for each comparate and the average per nucleotide (APN) value is calculated for each feature.
+
+The tool outputs a single ASE counts file for each sample replicated with APN values.
+The tool also outputs a Sample Design File that is required for the Summarization and Filter ASE Counts Tables tool that follows.
 
 APN_total= ([total alignment count] x [readLength]) /(genic feature length)
 APN_both= ([reads mapping equally to both parental genomes] x (readlength)/ (genic feature length)
-
-The generated output is a TSV file containing the summed ASE Count Tables between the technical replicates of a given biological replicate. 
-
-This tool also generates a "Sample Design File" which contains infomation on the biological replicates that each technical replicates was summed under by Sample ID. This design file is used in downstream tools to create files needed for the Run Bayesian workflow.
 
 
 -------------------------------------------------------------------------------------------
@@ -70,9 +70,7 @@ This tool also generates a "Sample Design File" which contains infomation on the
 
 **TIP**: Check if the design file is in the correct format by using the *Check Align Design file* tool
 
-The Alignment Design File is required as input.  The Design File must contain the FASTQ files that the input ASE Counts tables were derived from, as well as the biological replicate number of each (noted in the Sample ID column), and the technical replicate number (noted in the designated techRep column).
-
-The Alignment Design File should be in the following format, and contain the appropriate headers in the same order.
+The Alignment Design File is required as input and must have the following format:
 
 Example design file::
 
@@ -81,7 +79,7 @@ Example design file::
 	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150
 	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150
 
-In the example design file above, one summed ASE Counts table would be output, comprised of the three technical replicates belonging to biological replicate 1 (E1).
+In the example design file above, one summed ASE Counts table would be generated from the three technical replicates belonging to biological replicate 1 (E1).
 
 **NOTE:** If using simulated reads, include the technical replicate column, but label the technical replicates with the same number
 
@@ -95,7 +93,7 @@ Example design file for simulated data ::
 
 **BED File [REQUIRED]**
 
-The user-supplied BED file used to identify overlapping genic features is required. Do **not** use the reformatted BED file created in the Align and Count workflow where feature ID is in the first column and chromosome name is in the last. Chromosome name must be in the first column.
+The user-supplied BED file containing locations of genic features. Do **not** use the reformatted BED file created in the Align and Count workflow where feature ID is in the first column and chromosome name is in the last. Chromosome name must be in the first column.
 
 **ASE Count Tables [REQUIRED]**
 
@@ -104,15 +102,15 @@ A collection of ASE Count Tables generated by the Sam Compare with Feature Tool.
 
 **Start [OPTIONAL]**
 
-Enter point for script to start at in design file. Use if only a certain subset of fq files in the design file is wanted in data analysis.
+Enter the row number in the Alignment Design File at which to start. Use if only a certain subset of FASTQ files in the design file is wanted in data analysis.
 
 **End [OPTIONAL]**
 
-Enter point script should end at in design file.
+Enter the row number in the Alignment Design File at which to end.
 
 **Simulated Dataset**
 
-Select if the input dataset is simulated. Simulated reads refers to those that are computer-generated, whereas real data refers to reads that are pulled from an existing species genome.
+Select if the input dataset is simulated. 
 
 ------------------------------------------------------------------------------------------------------
 
@@ -120,7 +118,7 @@ Select if the input dataset is simulated. Simulated reads refers to those that a
 
 The tool generates two output files: 
 
-(1) A combined ASE Count Table where technical replicates have been summed. 
+(1) A TSV file for each sample replicate containing the summed ASE Counts and the APN values for the uniquely mapping reads per feature.
 
 Example of a Combined ASE Count Table::
 
@@ -134,7 +132,8 @@ Example of a Combined ASE Count Table::
     +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+ 
 
 
-(2) A Sample Design File containing the biological replicates that were summed in the generated ASE Counts Table collection. G1 and G2 refer to the names of the parental genomes.
+(2) A Sample Design File containing the names of the biological replicates that were summed in the generated ASE Counts Table collection. 
+G1 and G2 refer to the names of the parental genomes.
 
 
 Example Sample Design File:

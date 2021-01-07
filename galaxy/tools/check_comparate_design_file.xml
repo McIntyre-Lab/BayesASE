@@ -5,7 +5,7 @@
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[
-    python '$__tool_directory__/check_comparate_design_file.py'
+    check_comparate_design_file.py
     --design=$design
     --compNum=$compNum
     --out=$out
@@ -22,9 +22,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" ftype="data" value="BASE/BASE_testdata/merge_priors_testdata/pre_bayesian_df_BASE.tsv"/>
-            <param name="compNum" ftype="text" value="2"/>
-            <output name="BASE/BASE_testdata/merge_priors_testdata/Pre_Bayesian_design_criteria.tabular"/>
+            <param name="design" ftype="data" value="comparate_df_one_condition.tsv"/>
+            <param name="compNum" ftype="text" value="1"/>
+            <output name="comparate_design_criteria.tabular"/>
         </test>
     </tests>
     <help><![CDATA[
@@ -35,32 +35,16 @@ This tool checks to make sure the design file is formatted correctly and has all
 **The design file should contain the following columns, in order:**
 
 
-    (1) C1_G1: The name of the maternal genome (G1) for comparate 1 
-    (2) C1_G2: The name of the paternal genome (G2) for comparate 1
-    (3) C2_G1: The name of the maternal genome (G1) for comparate 2
-    (4) C2_G2: The name of the paternal genome (G2) for comparate 2
-    (5) Comparate_1: The genome and first condition to be compared (ex. W55_M where M is for mated)
-    (6) Comparate_2: The genome and second condition to be compared (ex. W55_V where V is for virgin)
-    (7) CompID: An ID that contains conditions that user wants to compare (ex. W55_M_V)
-
-compID needs a unique identifier to assist naming output files of individual analysis procedures (ex: if male and female time10 samples compared, compID could be “M_F_time10”). 
-
-All cell values must be underscore delimited 
+    (5) Comparate_1: first comparate. For example, 'W55_M' which is a combination of genotype W55 and condition mated.
+    (6) Comparate_2: second comparate.  For example 'W55_V' which is a combination of genotype W55 and condition virgin
+    (7) CompID: A unique identifier that describes the comparison. For example, 'W55_M_V', for the comparison of W55 mated to W55 virgin.
 
 
+ 
 An example design file for one comparate::
 
-	C1_G1	C1_G2	Comparate_1	compID			
-	W1118	W55	W55_Mated       mel_W55_Mated	  
-
-
-An example design file for two comparates::
-
-    +-------+-------+-------+-------+-------------+-------------+--------+
-    | C1_G1 | C1_G2 | C2_G1 | C2_G2 | Comparate_1 | Comparate_2 | compID |
-    +=======+=======+=======+=======+=============+=============+========+
-    | W1118 | W55   | W1118 | W55   | W55_M       | W55_V       | W55_M_V| 
-    +-------+-------+-------+-------+-------------+-------------+--------+
+	Comparate_1   Comparate_2	 compID			
+	W55_M	      W55_V	         W55_M_V
 
 
 **Outputs**
