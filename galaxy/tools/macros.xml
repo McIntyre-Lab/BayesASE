@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <macros>
-    <token name="@WRAPPER_VERSION@">v2</token>
+    <token name="@WRAPPER_VERSION@">21.1.7</token>
     <xml name="requirements">
         <requirements>
-            <requirement type="package" version="@WRAPPER_VERSION@">gaitGm</requirement>
+            <requirement type="package" version="@WRAPPER_VERSION@">bayesase</requirement>
             <yield/>
         </requirements>
     </xml> <xml name="citations">
