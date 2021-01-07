@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/TB14/TB14/gait_gm/galaxy/database/dependencies/_conda/envs/__bayesase@21.1.7/bin/python
 
 import argparse
 import os
@@ -57,14 +57,14 @@ def getOptions():
     )
     parser.add_argument(
         "--begin",
-        type=int,
         action="store",
+        required=False,
         help="Start point in design file [Optional]",
     )
     parser.add_argument(
         "--end",
-        type=int,
         action="store",
+        required=False,
         help="End point in design file [Optional]",
     )
     parser.add_argument(
@@ -100,13 +100,17 @@ def sum_counts(input_dict, df_design, out_dir, feature_lengths=False):
     df_grouped = df_design.groupby("sampleID").agg(lambda x: x.tolist())
     grouped_fastqs = df_grouped["fqName"]
     errors = []
+    #DEBUG
+    print(input_dict.keys())
     for sampleID, filelist in grouped_fastqs.iteritems():
         ddict = {}
         dfsum = pd.DataFrame(index=range(0), columns=default_data_columns)
         dfsum.set_index("FEATURE_ID", inplace=True)
         for ind, fqName in enumerate(filelist):
-            if fqName not in input_dict:
-                errors.append(f"Error: Cannot find {fqName} file in the input collection!")
+            fqFile = f"{fqName}.fastq"
+            print(f"{ind}/{fqFile}")
+            if fqFile not in input_dict:
+                errors.append(f"Error: Cannot find {fqFile} file in the input collection!")
                 continue
             check_result = headers_check(input_dict[fqName], fqName)
             if check_result:
@@ -164,6 +168,7 @@ def count_totals(df_design, ind, ddict, dfsum, fqName, feature_lengths):
 def main():
     args = getOptions()
     identifiers = [i.strip() for i in args.collection_identifiers.split(",")]
+    print(identifiers)
     filenames = [i.strip() for i in args.collection_filenames.split(",")]
     input_dict = dict(zip(identifiers, filenames))
     df_design = pd.read_table(args.design)
