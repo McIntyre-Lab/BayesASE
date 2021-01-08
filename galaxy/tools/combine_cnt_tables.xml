@@ -10,7 +10,7 @@
     combine_count_tables.py
     --design=$design
     --bed=$bed
-    --collection_identifiers="$collection.keys()"
+    --collection_identifiers="${",".join($collection.keys())}"
     --collection_filenames="${",".join(map(str, $collection))}"
     --begin=$begin
     --end=$end
@@ -24,7 +24,7 @@
         <param name="collection" type="data_collection" collection_type="list" label="ASE Count Tables" help="Select collection containing ASE count tables"/>
         <param name="begin" type="text" label="Start" help="Enter start point in design file, see below for description [OPTIONAL]"/>
         <param name="end" type="text" label="End" help="Enter end point in design file, see below for description [OPTIONAL]"/>
-        <param name="sim" type="boolean" checked="false" truevalue="--sim" label="Simulated Dataset" help="Select if the dataset is generated from simulated reads"/>
+        <param name="sim" type="boolean" checked="false" truevalue="--sim" falsevalue="" label="Simulated Dataset" help="Select if the dataset is generated from simulated reads"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Combined and Summed ASE Table">
