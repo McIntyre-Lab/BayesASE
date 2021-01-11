@@ -9,9 +9,9 @@
     cd outputs;
     merge_priors_to_comparate.py
     --design=$design
-    --collection1_identifiers="$collection1.keys()"
+    --collection1_identifiers="${",".join($collection1.keys())}"
     --collection1_filenames="${",".join(map(str, $collection1))}"
-    --collection2_identifiers="$collection2.keys()"
+    --collection2_identifiers="${",".join($collection2.keys())}"
     --collection2_filenames="${",".join(map(str, $collection2))}"
     --out=`pwd`
 ]]></command>
