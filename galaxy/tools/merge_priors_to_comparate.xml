@@ -16,7 +16,7 @@
     --out=`pwd`
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tsv" label="Priors Design file" help="Enter the Priors Design file generated from the Reformat Sample Design file; formatting is shown below"/>
+        <param name="design" type="data" format="tabular,tsv" label="Priors Design file" help="Enter the Priors Design file generated from the Reformat Sample Design file; formatting is shown below"/>
         <param name="collection1" type="data_collection" collection_type="list" label="Summarized and Filtered ASE Count Table Collection" help="Select the collection containing input filtered ASE count tables per comparate"/>
         <param name="collection2" type="data_collection" collection_type="list" label="Calculated Priors Collection" help="Select the collection containing the Prior Probability Estimates for a given comparate"/> 
     </inputs>
