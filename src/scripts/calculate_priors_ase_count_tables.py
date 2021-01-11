@@ -68,10 +68,11 @@ def main():
     for index, sample in df_design.iterrows():
         comparate = sample["comparate"]
         prior_file = comparate + "_prior"
+        input_file_identifier = "ase_counts_filtered_" + comparate
         if DEBUG:
             print(f"DEBUG: sample:\n{sample}")
             print(f"DEBUG: Prior file:\n{prior_file}")
-        ase_df = pd.read_csv(input_dict[comparate], index_col=None, sep="\t")
+        ase_df = pd.read_csv(input_dict[input_file_identifier], index_col=None, sep="\t")
         if DEBUG:
             print(f"DEBUG: ase_df:\n{ase_df}")
         both_list = [name for name in ase_df.columns if "_both_total_rep" in name]
