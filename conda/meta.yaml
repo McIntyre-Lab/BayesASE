@@ -28,6 +28,7 @@ requirements:
     - importlib_resources
     - r-rstan
     - r-here
+    - r-bh
 
 test:
   commands:
