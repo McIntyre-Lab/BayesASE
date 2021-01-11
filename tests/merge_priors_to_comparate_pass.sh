@@ -21,11 +21,12 @@ echo "### Starting test: ${TEST}"
 
 src/scripts/merge_priors_to_comparate.py "$@" \
 	--design galaxy/test-data/summarize_counts_testdata/priors_design_file.tsv \
-	-i1 W55_M,W55_V \
+	-i1 ase_counts_filtered_W55_M,ase_counts_filtered_W55_V \
 	-f1 galaxy/test-data/summarize_counts_testdata/summarized_and_filtered_ASE_counts_tables_BASE/ase_counts_filtered_W55_M,galaxy/test-data/summarize_counts_testdata/summarized_and_filtered_ASE_counts_tables_BASE/ase_counts_filtered_W55_V \
 	-i2 W55_M_prior,W55_V_prior \
 	-f2 galaxy/test-data/merge_priors_testdata/calculated_priors/W55_M_prior,galaxy/test-data/merge_priors_testdata/calculated_priors/W55_V_prior \
 	--out ${TESTDIR}
+
 
 date
 echo "### Finished test: ${TEST}"

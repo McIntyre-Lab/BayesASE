@@ -97,6 +97,7 @@ def main():
     if DEBUG:
         print(f"DEBUG: comparate_list:\n{comparate_list}")
         print(f"DEBUG: prior_list:\n{prior_list}")
+        print(f"DEBUG: input_dict_ASE:\n{input_dict_ASE}")
 
     # Create dictionaries per design file row to store the row's comparate files
     for index, sample in df_design.iterrows():
@@ -107,19 +108,22 @@ def main():
     # If there are comparison columns (column # > 1)
     for key in sample_dict:
         comparate = comparate_list[key]
+        input_comparate_index = "ase_counts_filtered_" + comparate
         data_df = pd.read_csv(
-            input_dict_ASE[comparate], index_col=None, header=0, sep="\t"
+            input_dict_ASE[input_comparate_index], index_col=None, header=0, sep="\t"
         )
 
-        prior_fileName = comparate + "_prior"
+        prior_filename = comparate + "_prior"
         if DEBUG:
-            print(f"DEBUG: prior_filename:\n{prior_fileName}")
+            print(f"DEBUG: prior_filename: {prior_filename}")
         prior_df = pd.read_csv(
-            input_dict_priors[prior_fileName], index_col=None, header=0, sep="\t"
+            input_dict_priors[prior_filename], index_col=None, header=0, sep="\t"
         )
 
         # Make sure that the feature_id columns of the prior file and the comparate data file
         # are exactly the same
+        if DEBUG:
+            print(f"DEBUG: prior_df: {prior_df}")
 
         diff_features = data_df["FEATURE_ID"].equals(prior_df["FEATURE_ID"])
         # If feature_id columns are the same, merge priors into data file
