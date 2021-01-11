@@ -10,7 +10,7 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
     cd outputs;
     summarize_sam_compare_cnts_table_1cond.py
     --design=$design
-    --collection_identifiers="$collection.keys()"
+    --collection_identifiers="${",".join($collection.keys())}"
     --collection_filenames="${",".join(map(str, $collection))}"
     --parent1=$parent1
     --parent2=$parent2
