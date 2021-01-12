@@ -15,7 +15,7 @@
 
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tsv" label="Priors Design File" help="Select the Priors Design file [created by the Reformat Sample Design File Tool]"/>
+        <param name="design" type="data" format="tabular,tsv" label="Priors Design File" help="Select the Priors Design file [created by the Reformat Sample Design File Tool]"/>
         <param name="collection" type="data_collection" collection_type="list" label="Select dataset collection for Prior Calculations" help="Datasets in this collection can be generated from simulated or DNA reads using the Align and Count' and 'Summarize counts' Workflows."/>
     </inputs>
     <outputs>
