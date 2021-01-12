@@ -34,10 +34,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/summarize_counts_testdata/alignment_design_test_file.tsv" ftype="tsv"/>
-            <param name="bed" value="BASE_testData_galaxy.bed" ftype="bed"/>
-            <param name="collection" value="BASE_testdata/summarize_counts_testdata/ASE_counts_tables" ftype="data_collection"/>
-            <output name="output_designFile" file="BASE_testdata/summarize_counts_testdata/sample_design_file.tabular" ftype="tabular"/>
+            <param name="design" value="summarize_counts_testdata/alignment_design_test_file.tsv" ftype="tsv"/>
+            <param name="bed" value="align_and_counts_test_data/BASE_testData_BEDfile.bed" ftype="bed"/>
+            <param name="collection" value="summarize_counts_testdata/ASE_counts_tables" ftype="data_collection"/>
+            <output name="output_designFile" file="summarize_counts_testdata/sample_design_file.tabular" ftype="tabular"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
                 <assert_contents>

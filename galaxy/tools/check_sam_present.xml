@@ -26,11 +26,11 @@
     </outputs>
     <tests>
         <test>
-            <param name="fq" ftype="data" value="W55_M_1_1.fastq"/>
+            <param name="fq" ftype="data" value="align_and_counts_test_data/W55_M_1_1.fastq"/>
             <param name="alnType" ftype="select" value="SE"/>
-            <param name="sam1" ftype="data"      value="W1118_G1_unique_sam_for_BASE.sam"/>
-            <param name="sam2" ftype="data"      value="W55_G2_unique_sam_for_BASE.sam"/>
-            <output name="out"       file="check_SAM_present_BASE_test_data.tabular" />
+            <param name="sam1" ftype="data"      value="align_and_counts_test_data/W1118_G1_unique_sam_for_BASE.sam"/>
+            <param name="sam2" ftype="data"      value="align_and_counts_test_data/W55_G2_unique_sam_for_BASE.sam"/>
+            <output name="out"       file="align_and_counts_test_data/check_SAM_present_BASE_test_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[

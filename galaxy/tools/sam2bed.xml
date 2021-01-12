@@ -22,9 +22,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="fastq" value="W55_M_1_1.fastq" ftype="fastq"/>
-            <param name="SAMFILE" value="W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
-            <output name="AWKTMP" file="W1118_SAM2BED_for_BASE.bed" ftype="bed"/>
+            <param name="fastq" value="align_and_counts_test_data/W55_M_1_1.fastq" ftype="fastq"/>
+            <param name="SAMFILE" value="align_and_counts_test_data/W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
+            <output name="AWKTMP" file="align_and_counts_test_data/W1118_SAM2BED_for_BASE.bed" ftype="bed"/>
         </test>
     </tests>
     <help><![CDATA[

@@ -19,9 +19,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="BED3" value="drop_nonintersecting_reads_for_BASE.tabular" ftype="tabular"/>
-            <param name="SAMFILE" value="W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
-            <output name="NEWSAM" file="W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam" ftype="sam"/>
+            <param name="BED3" value="align_and_counts_test_data/drop_nonintersecting_reads_for_BASE.tabular" ftype="tabular"/>
+            <param name="SAMFILE" value="align_and_counts_test_data/W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
+            <output name="NEWSAM" file="align_and_counts_test_data/W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam" ftype="sam"/>
         </test>
     </tests>
     <help><![CDATA[

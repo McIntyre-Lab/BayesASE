@@ -20,9 +20,9 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" ftype="data"     value="BASE_testdata/check_align_design_testdata/alignment_design_file.tsv"/>
-            <output name="dups"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_duplicates.tabular" />
-            <output name="logfile"  ftype="data" file="BASE_testdata/check_align_design_testdata/alignment_design_file_criteria.csv" />
+            <param name="design" ftype="data"     value="align_and_counts_test_data/alignment_design_file.tsv"/>
+            <output name="dups"  ftype="data" file="align_and_counts_test_data/alignment_design_file_duplicates.tabular" />
+            <output name="logfile"  ftype="data" file="align_and_counts_test_data/alignment_design_file_criteria.csv" />
         </test>
     </tests>
     <help><![CDATA[

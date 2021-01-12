@@ -19,8 +19,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="BEDINT" ftype="data" value="bedtools_intersect_intervals_BASE_test_data.bed"/>
-            <output name="BED3"  ftype="data" file="drop_nonintersecting_reads_for_BASE.tabular" />
+            <param name="BEDINT" ftype="data" value="align_and_counts_test_data/bedtools_intersect_intervals_BASE_test_data.bed"/>
+            <output name="BED3"  ftype="data" file="align_and_counts_test_data/drop_nonintersecting_reads_for_BASE.tabular" />
         </test>
     </tests>
     <help><![CDATA[

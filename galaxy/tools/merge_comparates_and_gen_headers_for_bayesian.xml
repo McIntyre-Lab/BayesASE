@@ -24,8 +24,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="comparate_design_file.tsv" ftype="tabular,tsv"/>
-            <param name="collection" value="merge_priors_to_comparate" ftype="data_collection"/>
+            <param name="design" value="bayesian_input/comparate_design_file.tsv" ftype="tsv"/>
+            <param name="collection" value="merge_priors_testdata/merge_priors_to_comparate" ftype="data_collection"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
                 <assert_contents>
