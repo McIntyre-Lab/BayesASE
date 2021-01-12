@@ -15,7 +15,7 @@
 ]]></command>
     <inputs>
         <param name="collection" type="data_collection" collection_type="list" label="Collection of Comparate Datasets containing Prior Probability Estimates" help="Select the collection containing files to be merged. [Required]"/>
-        <param name="design" type="data" format="tabular" label=" Comparate Design file" help="Select your Comparate Design file.  See below for correct formatting of this design file [Required]"/>
+        <param name="design" type="data" format="tabular,tsv" label=" Comparate Design file" help="Select your Comparate Design file.  See below for correct formatting of this design file [Required]"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Merged Comparates with Headers">
