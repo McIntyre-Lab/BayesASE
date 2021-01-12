@@ -12,7 +12,7 @@
     --dups=$dups
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tabular" label="Alignment Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the help section at the bottom of this page for the format. [Required]"/>
+        <param name="design" type="data" format="tabular,tsv" label="Alignment Design file" help="Design file containing FASTQ file names, sampleIDs, etc. Refer to the help section at the bottom of this page for the format. [Required]"/>
     </inputs>
     <outputs>
         <data format="tabular" name="dups" label="${tool.name} on ${on_string}: FASTQ Duplicates"/>
