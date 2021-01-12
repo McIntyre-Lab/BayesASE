@@ -20,7 +20,7 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
     --out=`pwd`
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tabular" label="Sample Design file" help="Select the Sample Design File - this can be created with the Combine ASE Counts Tables tool."/>
+        <param name="design" type="data" format="tabular,tsv" label="Sample Design file" help="Select the Sample Design File - this can be created with the Combine ASE Counts Tables tool."/>
         <param name="collection" type="data_collection" collection_type="list" label="Collection of Combined ASE Count Tables" help="Select the collection containing ASE Count Tables combined (summed) across technical replicates."/>
         <param name="parent1" type="text" label="Updated genome 1 (G1)" value="G1" help="Enter the name of the column in the design file for genome 1 (e.g. G1)."/>
         <param name="parent2" type="text" label="Updated genome 2 (G2)" value="G2" help="Enter the name of the column in the design file for genome 2 (e.g. G2)."/>
