@@ -21,10 +21,10 @@
     </outputs>
     <tests>
         <test>
-            <param name="alnSum1" ftype="data"      value="W1118_G1_BWASplitSAM_summary.tabular"/>
-            <param name="alnSum2" ftype="data"      value="W55_G2_BWASplitSAM_summary.tabular"/>
-            <param name="fq"      ftype="data"      value="W55_M_1_1.fastq"/>
-            <output name="out"          file="check_for_lost_reads_BASE_test_data.tabular" />
+            <param name="alnSum1" ftype="data"      value="align_and_counts_test_data/W1118_G1_BWASplitSAM_summary.tabular"/>
+            <param name="alnSum2" ftype="data"      value="align_and_counts_test_data/W55_G2_BWASplitSAM_summary.tabular"/>
+            <param name="fq"      ftype="data"      value="align_and_counts_test_data/W55_M_1_1.fastq"/>
+            <output name="out"          file="align_and_counts_test_data/check_for_lost_reads_BASE_test_data.tabular" />
         </test>
     </tests>
     <help><![CDATA[

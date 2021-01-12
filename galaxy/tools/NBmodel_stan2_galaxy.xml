@@ -47,13 +47,13 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" ftype="data" value="BASE_testdata/run_bayesian_testdata/comparate_df_two_conditions_BASE.tsv"/>
+            <param name="design" ftype="data" value="bayesian_input/comparate_design_file.tsv"/>
             <param name="cond" ftype="text" value="2" />
             <param name="iterations" ftype="text" value="100000" />
             <param name="warmup" ftype="text" value="10000" />
             <param name="collection">
               <collection type="list">
-                <element name="collection" value="BASE_testdata/run_bayesian_testdata/bayesian_input_W55_M_V"/>
+                <element name="collection" value="bayesian_input/bayesian_input_W55_M_V"/>
               </collection>
              </param>
              <output_collection name="split_output" type="list">

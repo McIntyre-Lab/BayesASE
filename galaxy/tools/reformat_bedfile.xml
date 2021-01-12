@@ -22,8 +22,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="infile"      value="BASE_testData_BEDfile.bed"/>
-            <output name="outfile"   file="reformat_BED_file_for_BASE.bed"/>
+            <param name="infile"      value="align_and_counts_test_data/BASE_testData_BEDfile.bed"/>
+            <output name="outfile"   file="align_and_counts_test_data/reformat_BED_file_for_BASE.bed"/>
         </test>
     </tests>
     <help><![CDATA[
