@@ -19,7 +19,7 @@
     --outdesign=$output_designFile
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tabular" label="Design File" help="Select the Alignment Design File. The design file must be sorted by biological replicate (sampleID) "/>
+        <param name="design" type="data" format="tabular,tsv" label="Design File" help="Select the Alignment Design File. The design file must be sorted by biological replicate (sampleID) "/>
         <param name="bed" type="data" format="tabular" label="Bed File" help="Select the input BED file. Do NOT use the reformatted BED file created in the Align and Count workflow"/>
         <param name="collection" type="data_collection" collection_type="list" label="ASE Count Tables" help="Select collection containing ASE count tables"/>
         <param name="begin" type="text" label="Start" help="Enter start point in design file, see below for description [OPTIONAL]"/>
