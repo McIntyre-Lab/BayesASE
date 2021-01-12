@@ -84,6 +84,7 @@ def main():
         sample_dict[index] = list(sample)
     if DEBUG:
         print(f"DEBUG: sample_dict:\n{sample_dict}")
+        print(f"DEBUG: comparison_list:\n{comparison_list}")
     # If there are comparison columns (column # > 1)
     for key in sample_dict:
         row_list = sample_dict[key]
@@ -99,7 +100,8 @@ def main():
 
             # Assign filename so it can be called
             # Keep file names that Galaxy assigns so that Galaxy can recognize the collection
-            row_list[i] = input_dict_comp[comp]
+            comp_name = "bayesian_input_" + comp
+            row_list[i] = input_dict_comp[comp_name]
 
             # Change pd.read_csv to pd.read_table to read file into dataframe
             file = pd.read_table(row_list[i], index_col=None, header=0)
