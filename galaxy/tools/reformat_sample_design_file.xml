@@ -10,10 +10,10 @@
 ]]>
     </command>
     <inputs>
-        <param name="DESIGN" format="tabular" type="data" label="Input Sample Design file" help=" See help section for required format. The Sample Design file can be created using the Combine ASE Count Tables tool" />
+        <param name="DESIGN" format="tabular,tsv" type="data" label="Input Sample Design file" help=" See help section for required format. The Sample Design file can be created using the Combine ASE Count Tables tool" />
     </inputs>
     <outputs>
-        <data name="OUTFILE" format="tsv" label="${tool.name} on ${on_string}: Prior Design File"/>
+        <data name="OUTFILE" format="tabular" label="${tool.name} on ${on_string}: Prior Design File"/>
     </outputs>
     <tests>
         <test>
