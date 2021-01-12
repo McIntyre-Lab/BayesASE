@@ -9,8 +9,8 @@
     cd outputs;
     merge_comparates_generate_bayesian_headers.py
     --output=`pwd`
-    --collection_identifiers="$collection.keys()"
-    --collection_filenames="${",".join(map(str, $collection))}"
+    --collection_identifiers="${','.join($collection.keys())}"
+    --collection_filenames="${','.join(map(str, $collection))}"
     --design=$design
 ]]></command>
     <inputs>
