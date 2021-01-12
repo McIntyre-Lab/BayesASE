@@ -34,7 +34,7 @@
 
 ]]></command>  
     <inputs>
-        <param name="design" type="data" format="tabular" label="Design File" help="Select your Comparate Design File."/>
+        <param name="design" type="data" format="tabular,tsv" label="Design File" help="Select your Comparate Design File."/>
         <param name="collection" type="data" multiple="true" format="tabular" label="Select the dataset or collection of datasets containing the comparates merged with the priors" help="Select the dataset or collection of datasets that contain the merged comparates and new headers."/>
         <param name="cond" type="text" label="conditions" value="2" help="Enter the number of conditions your're comparing (e.g. M v F would be 2)"/>
     <param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
