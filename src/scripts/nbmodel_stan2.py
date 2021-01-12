@@ -9,6 +9,7 @@ try:
 except ImportError:
     import importlib_resources as ires
 
+DEBUG = False
 
 def getOptions():
     parser = argparse.ArgumentParser(description="Run bayesian model")
@@ -77,15 +78,23 @@ def getOptions():
         required=False,
         help="Full path to stan model if not using package version",
     )
+    parser.add_argument(
+        "--debug", action="store_true", default=False, help=argparse.SUPPRESS,
+    )
     args = parser.parse_args()
     return args
 
 
 def main():
     args = getOptions()
+    global DEBUG
+    if args.debug:
+        DEBUG = True
     identifiers = [i.strip() for i in args.collection_identifiers.split(",")]
     filenames = [i.strip() for i in args.collection_filenames.split(",")]
     input_dict = dict(zip(identifiers, filenames))
+    if DEBUG:
+        print(f"DEBUG: input_dict: {input_dict}")
 
     # (1) Parsing datafile to extract rows with sampleID specified in design file, set c1 and c2
     # Standardized Paths##
@@ -112,7 +121,7 @@ def main():
         del row["compID"]
         row = row.to_frame()
 
-        infileName = "bayesian_input_" + comparison
+        infileName = "bayesian_input_" + comparison + ".tabular"
 
         infile = pd.read_csv(input_dict[infileName], index_col=None, header=0, sep="\t")
 
@@ -171,7 +180,7 @@ def main():
 
         df2.columns = headers_out
 
-        outfile = "bayesian_out_" + comparison
+        outfile = "bayesian_out_" + comparison + ".tabular"
         output = os.path.join(outdir, outfile)
 
         df2.to_csv(output, na_rep="NA", index=False, sep="\t")
