@@ -9,8 +9,8 @@
     cd outputs;
     merge_comparates_generate_bayesian_headers.py
     --output=`pwd`
-    --collection_identifiers="$collection.keys()"
-    --collection_filenames="${",".join(map(str, $collection))}"
+    --collection_identifiers="${','.join($collection.keys())}"
+    --collection_filenames="${','.join(map(str, $collection))}"
     --design=$design
 ]]></command>
     <inputs>
@@ -24,7 +24,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="comparate_design_file.tsv" ftype="tsv"/>
+            <param name="design" value="comparate_design_file.tsv" ftype="tabular,tsv"/>
             <param name="collection" value="merge_priors_to_comparate" ftype="data_collection"/>
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
