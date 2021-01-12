@@ -11,28 +11,20 @@ except ImportError:
 
 DEBUG = False
 
+
 def getOptions():
     parser = argparse.ArgumentParser(description="Run bayesian model")
-    parser.add_argument(
-        "-ci",
-        "--collection_identifiers",
-        action="store",
-        required=True,
-        help="Input original names [Required]",
-    )
-    parser.add_argument(
-        "-cf",
-        "--collection_filenames",
-        action="store",
-        required=True,
-        help="Input (galaxy collection names)",
-    )
     parser.add_argument(
         "-d",
         "--design",
         action="store",
-        required=True,
         help="TSV design file with sampleID names to analyze",
+    )
+    parser.add_argument(
+        "-i",
+        "--infile",
+        action="store",
+        help="TSV input file with merged comparates and new headers",
     )
     parser.add_argument(
         "-c",
@@ -42,7 +34,7 @@ def getOptions():
         help="Number of conditions",
     )
     parser.add_argument(
-        "-i",
+        "-t",
         "--iterations",
         action="store",
         type=int,
@@ -59,10 +51,10 @@ def getOptions():
     )
     parser.add_argument(
         "-o",
-        "--outdir",
+        "--outfile",
         action="store",
         required=False,
-        help="Output directory (default: current working direcotry)",
+        help="Output file name/path. Default - bayesian_output_$name.tabular",
     )
     parser.add_argument(
         "-r",
@@ -90,18 +82,12 @@ def main():
     global DEBUG
     if args.debug:
         DEBUG = True
-    identifiers = [i.strip() for i in args.collection_identifiers.split(",")]
-    filenames = [i.strip() for i in args.collection_filenames.split(",")]
-    input_dict = dict(zip(identifiers, filenames))
+    input_file = args.infile
     if DEBUG:
-        print(f"DEBUG: input_dict: {input_dict}")
+        print(f"DEBUG: input_file: {input_file}")
 
     # (1) Parsing datafile to extract rows with sampleID specified in design file, set c1 and c2
     # Standardized Paths##
-    if args.outdir:
-        outdir = os.path.abspath(args.outdir)
-    else:
-        outdir = os.path.abspath(os.curdir)
 
     # Read in design file as dataframe
     df = pd.read_csv(args.design, sep="\t")
@@ -121,21 +107,19 @@ def main():
         del row["compID"]
         row = row.to_frame()
 
-        infileName = "bayesian_input_" + comparison + ".tabular"
-
-        infile = pd.read_csv(input_dict[infileName], index_col=None, header=0, sep="\t")
+        infile = pd.read_csv(input_file, index_col=None, header=0, sep="\t")
 
         infile.set_index("FEATURE_ID")
 
         # add comparison column (last)
         infile["comparison"] = comparison
 
-        datafile2 = os.path.abspath(outdir + "/" + comparison + "_temp")
+        datafile2 = os.path.abspath(comparison + "_temp")
 
         infile.to_csv(datafile2, na_rep="NA", index=False)
 
         rout = comparison + "_r_out"
-        routput = os.path.join(outdir, rout)
+        routput = os.path.join(os.curdir, rout)
 
         # Compiled stan model
         if not args.rscript:
@@ -157,7 +141,7 @@ def main():
                 datafile2,
                 routput,
                 str(compnum),
-                outdir,
+                os.curdir,
                 str(args.iterations),
                 str(args.warmup),
             ]
@@ -180,10 +164,12 @@ def main():
 
         df2.columns = headers_out
 
-        outfile = "bayesian_out_" + comparison + ".tabular"
-        output = os.path.join(outdir, outfile)
+        if not args.outfile:
+            outfile = "bayesian_out_" + comparison + ".tabular"
+        else:
+            outfile = args.outfile
 
-        df2.to_csv(output, na_rep="NA", index=False, sep="\t")
+        df2.to_csv(outfile, na_rep="NA", index=False, sep="\t")
 
 
 if __name__ == "__main__":

@@ -24,45 +24,32 @@
     </stdio>
     <command><![CDATA[
     nbmodel_stan2.py
-    --collection_identifiers="${",".join(map(str, $collection.keys()))}"
-    --collection_filenames="${",".join(map(str, $collection))}"
     --design=$design
-    --outdir=`pwd`
+    --infile=$infile
+    --outfile=$output
     --cond=$cond
     --iterations=$iterations
     --warmup=$warmup
 
-]]></command>  
+]]></command>
     <inputs>
         <param name="design" type="data" format="tabular,tsv" label="Design File" help="Select your Comparate Design File."/>
-        <param name="collection" type="data_collection" collection_type="list" label="Select the dataset or collection of datasets containing the comparates merged with the priors" help="Select the dataset or collection of datasets that contain the merged comparates and new headers."/>
+        <param name="infile" type="data" format="tabular,tsv" label="Input File" help="Select the dataset with the merged comparates and new headers."/>
         <param name="cond" type="text" label="conditions" value="2" help="Enter the number of conditions your're comparing (e.g. M v F would be 2)"/>
-    <param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
-    <param name="warmup" type="text" label="warmup" value="10000" help="Enter the warmup number [default = 10000]"/>
+        <param name="iterations" type="text" label="iterations" value="100000" help="Enter the number of iterations [default = 100000]"/>
+        <param name="warmup" type="text" label="warmup" value="10000" help="Enter the warmup number [default = 10000]"/>
     </inputs>
     <outputs>
-      <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Bayesian Model Output">
-    <discover_datasets pattern="(?P&lt;name&gt;bayesian_out*)" ext="tabular" />
-      </collection>
+        <data name="output" format="tsv" label="${tool.name} on ${on_string}: Bayesian Model Output" />
     </outputs>
     <tests>
         <test>
             <param name="design" ftype="data" value="bayesian_input/comparate_design_file.tsv"/>
+            <param name="infile" ftype="data" value="bayesian_input/bayesian_input_W55_M_V.tabular"/>
             <param name="cond" ftype="text" value="2" />
             <param name="iterations" ftype="text" value="100000" />
             <param name="warmup" ftype="text" value="10000" />
-            <param name="collection">
-              <collection type="list">
-                <element name="collection" value="bayesian_input/bayesian_input_W55_M_V"/>
-              </collection>
-             </param>
-             <output_collection name="split_output" type="list">
-               <element name="comparison">
-                 <assert_contents>
-                   <has_text_matching expression="W55_M_V" />
-                  </assert_contents>
-                </element>
-              </output_collection>
+            <output name="output" file="bayesian_output_W55_M_V.tabular" />
         </test>
     </tests>
     <help><![CDATA[
