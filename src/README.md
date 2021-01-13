@@ -4,19 +4,19 @@ widespread, yet there is no formal statistical methodology that tests whether
 AI differs between conditions. The testing for AI involves several complex
 bioinformatics steps. BayesASE is a complete bioinformatics pipeline that
 incorporates state-of-the-art error reduction techniques and a flexible
-Bayesian approach to estimating AI and formally [comparing levels of AI
+Bayesian approach to estimating AI and formally comparing levels of AI
 between conditions](https://www.g3journal.org/content/8/2/447.long). The
-modular structure of BASE has been packaged as a [python
-package](https://pypi.org/project/BayesASE/), [bioconda
-package](https://anaconda.org/bioconda/bayesase), Galaxy toolkit, made available in Nextflow and as
-a collection of scripts for the SLURM workload manager in the [project repository on
-github](https://github.com/McIntyre-Lab/BayesASE).
+modular structure of BayeASE has been packaged as a python
+package (https://pypi.org/project/BayesASE/), bioconda package 
+(https://anaconda.org/bioconda/bayesase), Galaxy toolkit, made available in 
+Nextflow and as a collection of scripts for the SLURM workload manager in the 
+BayesASE project repository on github (https://github.com/McIntyre-Lab/BayesASE).
 
 The model included with the package can formally test AI within one condition
 for three or more replicates and can statistically compare differences in AI
-across conditions. This includes reciprocal crosses, testrosses, and
+across conditions. This includes reciprocal crosses, test-crosses, and
 comparisons of GxE for the same genotype in replicated experiments. As gene
-expression affects power for detection of AI, and, as expression may vary
+expression affects power for detection of AI, and as expression may vary
 between conditions, the model explicitly takes coverage into account. The
 proposed model has low type I and II error under several scenarios, and is
 robust to large differences in coverage between conditions. The model included

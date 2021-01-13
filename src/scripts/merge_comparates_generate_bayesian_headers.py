@@ -6,7 +6,7 @@ import pandas as pd
 
 # Merge filtered/summarized files with qsim values by user-specified comparison
 
-DEBUG = False
+DEBUG = True
 
 
 def getOptions():
@@ -101,6 +101,7 @@ def main():
             # Assign filename so it can be called
             # Keep file names that Galaxy assigns so that Galaxy can recognize the collection
             comp_name = "bayesian_input_" + comp
+
             row_list[i] = input_dict_comp[comp_name]
 
             # Change pd.read_csv to pd.read_table to read file into dataframe
