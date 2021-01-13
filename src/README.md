@@ -3,7 +3,7 @@ regulatory regions. Detecting cis regulatory differences using AI is
 widespread, yet there is no formal statistical methodology that tests whether
 AI differs between conditions. The testing for AI involves several complex
 bioinformatics steps. BayesASE is a complete bioinformatics pipeline that
-incorporates state-of-the-art error reduction techniques and a flexible
+incorporates state-of-the-art error reduction techniques and a [flexible
 Bayesian approach to estimating AI and formally comparing levels of AI between
 conditions](https://www.g3journal.org/content/8/2/447.long). The modular
 structure of BayeASE has been packaged as a [python
