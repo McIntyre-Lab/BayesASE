@@ -7,7 +7,7 @@
     <command><![CDATA[
     mkdir outputs;
     cd outputs;
-    gen_headers_after_merge_priors_ONE_COMPARATE.py
+    gen_headers_after_merge_priors_one_comparate.py
     --output=`pwd`
     --collection_identifiers="${','.join($collection.keys())}"
     --collection_filenames="${",".join(map(str, $collection))}"
