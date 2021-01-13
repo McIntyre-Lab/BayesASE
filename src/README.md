@@ -18,5 +18,6 @@ statistical evaluation of AI between conditions.  The package is completely modu
 steps needed to map reads in a genotype specific manner can be used as input for other statistical models 
 of AI and other methods for read counting can be used and the model described in Novelo et al. 2018 deployed.   
 This model represents an update to the R code provided with the publication as the MCMC algorithm is now 
-implemented in STAN () and bias is allowed to vary between conditions and more than 2 conditions can be 
+implemented in RSTAN (Stan Development Team (2020). “RStan: the R interface to Stan.” R package version 2.21.2, 
+http://mc-stan.org/.) and bias is allowed to vary between conditions and more than 2 conditions can be 
 compared.  This is a very general implementation.
