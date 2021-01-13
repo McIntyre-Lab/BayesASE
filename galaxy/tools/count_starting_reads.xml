@@ -6,6 +6,7 @@
     <expand macro="requirements"/>
     <environment_variables>
         <environment_variable name="FQLINEFN">$(wc -l '$READ')</environment_variable>
+    </environment_variables>
     <command>
 <![CDATA[ 
         FQLINEFN=$(wc -l '$READ')
