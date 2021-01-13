@@ -7,10 +7,9 @@ incorporates state-of-the-art error reduction techniques and a flexible
 Bayesian approach to estimating AI and formally [comparing levels of AI
 between conditions](https://www.g3journal.org/content/8/2/447.long). The
 modular structure of BASE has been packaged as a [python
-package(https://pypi.org/project/BayesASE/),
-[bioconda package](https://anaconda.org/bioconda/bayesase), Galaxy toolkit,
-made available in Nextflow and as a collection of scripts for the SLURM
-workload manager in the [project repository on
+package](https://pypi.org/project/BayesASE/), [bioconda
+package](https://anaconda.org/bioconda/bayesase), Galaxy toolkit, made available in Nextflow and as
+a collection of scripts for the SLURM workload manager in the [project repository on
 github](https://github.com/McIntyre-Lab/BayesASE).
 
 The model included with the package can formally test AI within one condition
