@@ -24,7 +24,7 @@
         <test>
             <param name="design" ftype="data" value="check_comparate_design_file/df_comparate.tsv"/>
             <param name="compNum" ftype="text" value="1"/>
-            <output name="comparate_design_criteria.tabular"/>
+            <output name="out" />
         </test>
     </tests>
     <help><![CDATA[

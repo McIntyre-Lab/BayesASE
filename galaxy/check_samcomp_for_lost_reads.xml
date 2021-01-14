@@ -44,7 +44,6 @@ Numbers of reads in the ASE Totals file outside this range inicate that the Comp
 
 An example Remove Reads summary file:
 
-
     +---------------+---------------------+---------------------------+
     |   fqNa        |  number_overlapping_rows  | total_number_rows   |
     +===============+===========================+=====================+
@@ -92,14 +91,14 @@ An example of a ASE total file::
         (2) min_uniq_g1_uniq_g2: The minimum number of unique reads of the two BWA files
         (3) sum_uniq_g1_uniq_g2: The sum of the unique reads in the two BWA files
         (4) total_counts_ase_table: The final total count in the ASE totals file (should be between (2) and (3) doubled for the check to be successful)
-    	(5) flag_readnum_in_range: A 0/1 indicator flag that is equal to 1 if the check was successful or 0 if the check was unsuccessful
+        (5) flag_readnum_in_range: A 0/1 indicator flag that is equal to 1 if the check was successful or 0 if the check was unsuccessful
 
 An example of an unsuccessful output file where reads were lost:
 
     +---------------+---------------------+--------------------------------------+----------------------+----------------------+
     |   fqName      |min_uniq_g1_uniq_g2  | sum_uniq_g1_uniq_g2                  |total_counts_ase_table| flag_readnum_in_range|
     +===============+=====================+======================================+======================+======================+
-    |[name_of_fq_]  |  14                 |   28                                 |    8                 |    0                 |
+    | name_of_fq    |  14                 |   28                                 |    8                 |    0                 |
     +---------------+---------------------+--------------------------------------+----------------------+----------------------+
 
     ]]></help>

@@ -175,7 +175,7 @@ Headers:
     |                                     |   value such that the 1−ev central credible interval for θ(n1) does not contain the value        |
     |                                     |   θ(n1) = 1/2, that implies allelic balance in comparate n.                                      |
     +-------------------------------------+--------------------------------------------------------------------------------------------------+
-    |{comparate_}_AI_decision             | • A 0/1 flag where a "1" indicates that the Bayesian evidence was less than 0.05                 |
+    |{comparate}_AI_decision              | • A 0/1 flag where a "1" indicates that the Bayesian evidence was less than 0.05                 |
     +-------------------------------------+--------------------------------------------------------------------------------------------------+
     |alpha_postmean                       | • Alpha value for comparate 1, θ(1,1)!=0.5. Indicator of allelic imbalance.                      |
     |                                     |   α1 = sqrt ((1/ Θi) – 1)                                                                        |

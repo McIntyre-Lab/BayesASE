@@ -21,9 +21,9 @@
     <inputs>
         <param name="design" type="data" format="tabular,tsv" label="Sample Design file" help="Select the Sample Design File - this can be created with the Combine ASE Counts Tables tool."/>
         <param name="collection" type="data_collection" collection_type="list" label="Collection of Combined ASE Count Tables" help="Select the collection containing ASE Count Tables combined (summed) across technical replicates."/>
-        <param name="parent1" type="text" label="Updated genome 1 (G1)" value="G1" help="Enter the name of the column in the design file for genome 1 (e.g. G1)."/>
-        <param name="parent2" type="text" label="Updated genome 2 (G2)" value="G2" help="Enter the name of the column in the design file for genome 2 (e.g. G2)."/>
-        <param name="sampleIDCol" type="text" value="sampleID" label="Sample ID Column" help="Enter the name of the column in the design file containing sampleIDs"/>
+        <param name="parent1" type="text" label="Updated genome 1 (G1)" value="G1" help="Enter the name of the column in the design file for genome 1 (e.g. G1)" />
+        <param name="parent2" type="text" label="Updated genome 2 (G2)" value="G2" help="Enter the name of the column in the design file for genome 2 (e.g. G2)" />
+        <param name="sampleIDCol" type="text" value="sampleID" label="Sample ID Column" help="Enter the name of the column in the design file containing sampleIDs" />
        <param name="sampleCol" type="text" value="comparate" label="Comparate Column" help="Enter the header name of the column in design file containing comparate names"/>
        <param name="apn" type="text" label="APN (Average Reads per Nucleotide) threshold" value="5" help="Enter an APN threshold value for flagging a feature as 'expressed'. The default setting is 5."/>
     </inputs>
@@ -66,19 +66,19 @@ For each feature, if at least 1 replicate in a comparate has an APN value greate
 
 **Sample Design File [REQUIRED]**
 
- The design file must contain the sampleIDs for the summed count table. This sampleID must contain the biological replicate number that the summed ASE Counts table are aggregates of.
+The design file must contain the sampleIDs for the summed count table. This sampleID must contain the biological replicate number that the summed ASE Counts table are aggregates of.
 
 The comparate column contains the names of the comparates and their conditions. It can contain the same information as the sampleID but excludes the biological replicate number.
 
 **TIP**: The Sample Design file can be created using the *Combine Counts Table* tool.
 
-An example Sample Design File::
+An example Sample Design File:
 
-	G1	G2	sampleID	comparate
-	W1118	W55    	W55_M_rep1	W55_M
-	W1118	W55  	W55_M_rep2   	W55_M
-	W1118	W55 	W55_V_rep1   	W55_V
-	W1118	W55 	W55_V_rep2  	W55_V
+    G1	G2	sampleID	comparate
+    W1118	W55    	W55_M_rep1	W55_M
+    W1118	W55  	W55_M_rep2   	W55_M
+    W1118	W55 	W55_V_rep1   	W55_V
+    W1118	W55 	W55_V_rep2  	W55_V
 
 
 **Collection of Summed ASE Counts Tables [REQUIRED]**
@@ -99,10 +99,10 @@ Example input ASE Counts Table:
 **Header names [REQUIRED]**
 Type in the designated names of the following columns in the design file:
 
-        (1) Genome 1 - the name of the column containing updated genome 1 (eg G1)
-        (2) Genome 2 - the name of the column containing updated genome 2 (eg G2)
-        (3) SampleID Column - the name of the column containing the sampleIDs
-        (4) Comparate Column - the name of the column containing comparate information
+    (1) Genome 1 - the name of the column containing updated genome 1 (eg G1)
+    (2) Genome 2 - the name of the column containing updated genome 2 (eg G2)
+    (3) SampleID Column - the name of the column containing the sampleIDs
+    (4) Comparate Column - the name of the column containing comparate information
 
 **APN Threshold [REQUIRED]**
 
@@ -115,11 +115,13 @@ Specify an APN threshold for flagging features as 'expressed'. Features that do 
 
 
 **This tool outputs the following:**
-        (1) For each comparate, a summary TSV file containing the flagged indicators recording whether or not a feature meets the specified APN threshold.
-In the below column header descriptions, {comparate} refers tothe comparate in the Sample Design File (e.g. W55_M).
-The number of columns generated is dependent on the number of replicates.
 
-The first three rows of an example output file::
+(1) For each comparate, a summary TSV file containing the flagged indicators recording whether or
+not a feature meets the specified APN threshold. In the below column header descriptions,
+{comparate} refers tothe comparate in the Sample Design File (e.g. W55_M). The number of columns
+generated is dependent on the number of replicates.
+
+The first three rows of an example output file:
 
 	FEATURE_ID	g1	g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2      	W55_M_APN_both_rep2
 	l(1)G0196	W1118	W55	0    			2			0				0				3				0				0.253164557			0.253164557			0				0				0				0				0				0

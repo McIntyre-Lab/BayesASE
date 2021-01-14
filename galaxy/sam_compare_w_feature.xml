@@ -32,9 +32,9 @@
             <param name="sama"  ftype="data"     value="align_and_counts_test_data/W1118_G1_create_new_SAM_file_with_features_BASE_test_data.sam"/>
             <param name="samb"  ftype="data"     value="align_and_counts_test_data/W55_G2_create_new_SAM_file_with_features_BASE_test_data.sam" />
             <param name="feature" ftype="data"   value="align_and_counts_test_data/reformat_BED_file_for_BASE.bed" />
-            <param name="nofqids" type="boolean"   value="--nofqids" />
-            <output name="counts"    file="align_and_counts_test_data/ASE_counts_table_BASE_test_data.tsv" />
-            <output name="totals"    file="align_and_counts_test_data/ASE_totals_table_BASE_test_data.tsv" />
+            <param name="nofqids" ftype="boolean"   value="--nofqids" />
+            <output name="counts" file="align_and_counts_test_data/ASE_counts_table_BASE_test_data.tsv" />
+            <output name="totals" file="align_and_counts_test_data/ASE_totals_table_BASE_test_data.tsv" />
         </test>
     </tests>
     <help><![CDATA[
