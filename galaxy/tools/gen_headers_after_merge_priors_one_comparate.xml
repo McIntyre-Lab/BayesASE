@@ -14,8 +14,8 @@
     --design=$design
 ]]></command>
     <inputs>
-        <param name="collection" type="data_collection" collection_type="list" label="Collection from Merge Prior to Comparate" help="Select the collection of files with the merged Counts tables and Prior Calculations for the comparate [Required]"/>
-        <param name="design" type="data" format="tabular,tsv" label="Comparate Design file" help="Enter the Comparate Design file; formatting is below [Required]"/>
+        <param name="collection" type="data_collection" collection_type="list" label="Collection from Merge Prior to Comparate" help="Select the collection of files with the ASE Count Tables merged to Prior Calculations for the comparate [Required]"/>
+        <param name="design" type="data" format="tabular,tsv" label="Comparate Design file" help="Enter the Comparate Design file for one condition; formatting is below [Required]"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Generate Headers for One Comparate">
@@ -80,6 +80,8 @@ An example design file:
     | Comparate_1 | compID |
     +=============+========+
     | W55_M       | W55_M  | 
+    +-------------+--------+
+    | W55_V       | W55_V  | 
     +-------------+--------+
 
 **OUTPUTS**
