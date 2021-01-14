@@ -11,8 +11,8 @@
     --out=$out
 ]]></command>
     <inputs>
-        <param name="design" type="data" format="tabular,tsv" label="Select Comparate Design File" help="Design file containing comparates and conditions. Please refer to the BASE User Guide for help [Required]"/>
-        <param name="compNum" size="30" type="select" value="" display="radio" label="Comparate Number" help="Select the number of comparate conditions for the data">
+        <param name="design" type="data" format="tabular,tsv" label="Select Comparate Design File" help="Design file containing comparates and conditions. Please refer to the BASE User Guide for help."/>
+        <param name="compNum" size="30" type="select" value="" display="radio" label="Comparate Number" help="Select the number of comparate conditions for the data.">
             <option value="1">One Comparate</option>
             <option value="2">Two Comparates</option>
         </param>
@@ -22,7 +22,7 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" ftype="data" value="comparate_df_one_condition.tsv"/>
+            <param name="design" ftype="data" value="check_comparate_design_file/df_comparate.tsv"/>
             <param name="compNum" ftype="text" value="1"/>
             <output name="comparate_design_criteria.tabular"/>
         </test>
@@ -41,7 +41,7 @@ This tool checks to make sure the design file is formatted correctly and has all
 
 
  
-An example design file for one comparate::
+An example design file for two comparates::
 
 	Comparate_1   Comparate_2	 compID			
 	W55_M	      W55_V	         W55_M_V
