@@ -13,7 +13,7 @@ long_description: |
   and formally comparing levels of AI between
   conditions (https://www.g3journal.org/content/8/2/447.long).
 
-remote_repository_url: https://github.com/galaxyproject/tools-iuc/tree/master/tools/bayesase
+remote_repository_url: https://github.com/McIntyre-Lab/BayesASE/tree/main/galaxy
 type: unrestricted
 categories:
     - Transcriptomics
