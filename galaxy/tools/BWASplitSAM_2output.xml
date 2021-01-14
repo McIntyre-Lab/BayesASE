@@ -12,7 +12,7 @@
 ]]>
     </command>
     <inputs>
-      <param name="sam" type="data" format="sam" label="Select SAM file or collection of SAM files" help="The SAM file will be subset into only uniquely mapping reads. We note that the SAM file MUST be generated using single-end mode."/>
+      <param name="sam" type="data" format="sam" label="Select SAM file or collection of SAM files" help="Each SAM file will be subset into only uniquely mapping reads. We note that the SAM file MUST be generated using single-end mode."/>
     </inputs>
     <outputs>
       <data name="uniq" format="sam" label="${tool.name} on ${on_string}: Uniquely Mapped Reads SAM"/>
