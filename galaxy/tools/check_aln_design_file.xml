@@ -5,9 +5,8 @@
     </macros>
     <expand macro="requirements" />
     <command><![CDATA[
-    python '$__tool_directory__/check_aln_design_file.py'
+    check_aln_design_file.py
     --design=$design
-    --design_identifier=$design.element_identifier
     --logfile=$logfile
     --dups=$dups
 ]]></command>
@@ -28,7 +27,8 @@
     <help><![CDATA[
 **Tool Description**
 
-This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. Default values are already in place to save user time.
+This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. 
+Default values are already in place to save user time.
 
 **NOTE:** There are two Design Files that must be created and supplied by the user. They are the *Alignment Design File* and the *Comparate Design File*.
 
