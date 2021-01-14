@@ -1,15 +1,15 @@
-<tool id="base_sam2bed" name="SAM to BED"  version="0.1.0">
+<tool id="base_sam2bed" name="SAM to BED"  version="21.1.13">
     <description>converts a SAM file to a BED file for use in BayesASE</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
-    <command><![CDATA[ 
-        awk 
-            -v readLen=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'` 
-            -v OFS='	' 
-            '{print $3,$4,$4+readLen}' 
-            '$SAMFILE' 
+    <command><![CDATA[
+        awk
+            -v readLen=`awk '{if(NR%4==2 && length) {count++; bases += length}} END {print bases/count}' ${fastq} | awk '{printf "%.0f", $1}'`
+            -v OFS='	'
+            '{print $3,$4,$4+readLen}'
+            '$SAMFILE'
         > '$AWKTMP'
 ]]>
     </command>
@@ -30,7 +30,7 @@
     <help><![CDATA[
 **Tool Description**
 
-The SAM to BED tool converts a SAM file containing uniquely mapping reads from the BWASplitSAM step into a 3-column BED file containing the start and end positions of every uniquely mapping read. This BED file is required for entry into step 6, BEDTools Intersect Intervals, to identify uniquely mapping reads that overalp with genic features of interest. 
+The SAM to BED tool converts a SAM file containing uniquely mapping reads from the BWASplitSAM step into a 3-column BED file containing the start and end positions of every uniquely mapping read. This BED file is required for entry into step 6, BEDTools Intersect Intervals, to identify uniquely mapping reads that overalp with genic features of interest.
 
 The tool calculates the average read length from the input FASTQ file and creates a resulting BED file where “chrom” is the chrom field from the SAM file, “start” is the POS field from the SAM file and “end” is the POS field plus the average read length.
 
@@ -48,11 +48,11 @@ The tool calculates the average read length from the input FASTQ file and create
 **Output**
 
 The tool outputs a 3-column BED file containing the following fields for each uniquely mapping read in the SAM file:
-    (1) Chrom: chromosome 
+    (1) Chrom: chromosome
     (2) Start: the 5 prime start position of a read
     (3) End: the 5 prime start position + the read length
 
- 
+
 ]]></help>
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,

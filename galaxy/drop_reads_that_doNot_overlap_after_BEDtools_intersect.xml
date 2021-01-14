@@ -1,4 +1,4 @@
-<tool id="base_remove_nonoverlapping_reads" name="Remove reads"  version="0.1.0">
+<tool id="base_remove_nonoverlapping_reads" name="Remove reads"  version="21.1.13">
     <description>that do not overlap with genic features for BayesASE (using awk)</description>
     <macros>
         <import>macros.xml</import>

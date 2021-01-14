@@ -1,5 +1,4 @@
-<tool id="summarize_sam_compare_cnts_table_1cond" 
-name="Summarize and Filter ASE Count Tables" version="0.1.0">
+<tool id="summarize_sam_compare_cnts_table_1cond" name="Summarize and Filter ASE Count Tables" version="21.1.13">
     <description>based on user-defined APN threshold</description>
     <macros>
         <import>macros.xml</import>
@@ -39,8 +38,8 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
             <param name="collection" value="BASE_testdata/summarize_counts_testdata/combined_ASE_counts_tables_BASE" ftype="data_collection"/>
             <param name="parent1" value="G1" ftype="text"/>
             <param name="parent2" value="G2" ftype="text"/>
-            <param name="sampleIDcol" value="sampleID" ftype="text"/>  
-            <param name="samplecol" value="comparate" ftype="text"/> 
+            <param name="sampleIDcol" value="sampleID" ftype="text"/>
+            <param name="samplecol" value="comparate" ftype="text"/>
             <param name="apn" value="1" ftype="text"/> 
             <output_collection name="split_output" type="list">
               <element name="FEATURE_ID">
@@ -48,14 +47,14 @@ name="Summarize and Filter ASE Count Tables" version="0.1.0">
                   <has_text_matching expression="Summarize_ASE_counts_test_data"/>
                 </assert_contents>
               </element>
-             </output_collection> 
+             </output_collection>
         </test>
     </tests>
     <help><![CDATA[
 **Tool Description**
 
 The Summarize SAM Compare Counts tool filters data based on whether or not they meet the requirements for input into the Bayesian module to test for allelic specific expression.
-Using the Sample Design File, it creates one file with all the biological replicates for a given comparate. 
+Using the Sample Design File, it creates one file with all the biological replicates for a given comparate.
 The data are then filtered, removing features that don't meet a user-defined APN (average number of reads per nucleotide) threshold, which inicates whether or not a feature is expressed by having high read coverage.
 
 The default APN threshold value is 5.  Features that do not meet this cutoff are considered to have insufficient information needed to estimate model parameters.
@@ -67,24 +66,24 @@ For each feature, if at least 1 replicate in a comparate has an APN value greate
 
 **Sample Design File [REQUIRED]**
 
- The design file must contain the sampleIDs for the summed count table. This sampleID must contain the biological replicate number that the summed ASE Counts table are aggregates of. 
+ The design file must contain the sampleIDs for the summed count table. This sampleID must contain the biological replicate number that the summed ASE Counts table are aggregates of.
 
-The comparate column contains the names of the comparates and their conditions. It can contain the same information as the sampleID but excludes the biological replicate number. 
+The comparate column contains the names of the comparates and their conditions. It can contain the same information as the sampleID but excludes the biological replicate number.
 
-**TIP**: The Sample Design file can be created using the *Combine Counts Table* tool. 
+**TIP**: The Sample Design file can be created using the *Combine Counts Table* tool.
 
 An example Sample Design File::
 
-	G1	G2	sampleID	comparate		
-	W1118	W55    	W55_M_rep1	W55_M	
-	W1118	W55  	W55_M_rep2   	W55_M	
-	W1118	W55 	W55_V_rep1   	W55_V	
-	W1118	W55 	W55_V_rep2  	W55_V	
+	G1	G2	sampleID	comparate
+	W1118	W55    	W55_M_rep1	W55_M
+	W1118	W55  	W55_M_rep2   	W55_M
+	W1118	W55 	W55_V_rep1   	W55_V
+	W1118	W55 	W55_V_rep2  	W55_V
 
 
 **Collection of Summed ASE Counts Tables [REQUIRED]**
-       
-Input the collection of summed ASE counts table created by the Combine Counts Tables tool.      
+
+Input the collection of summed ASE counts table created by the Combine Counts Tables tool.
 
 Example input ASE Counts Table:
 
@@ -93,8 +92,8 @@ Example input ASE Counts Table:
     +============+===================+===================+============+==================+================+================+==========================+=========================+=========================+==========================+====================+====================+
     | l(1)G0196  |10.255101044615834 |12.723420872791175 | 721        |1476              |120             |173             |0                         | 2                       |96                       |136                       |0                   |2                   |
     +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
-    | CG8920     |7.0372442219932285 |8.62888267334020   | 207        |293               |31              |62              |0                         | 0                       |8                        |12                        |0                   |0                   | 
-    +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+ 
+    | CG8920     |7.0372442219932285 |8.62888267334020   | 207        |293               |31              |62              |0                         | 0                       |8                        |12                        |0                   |0                   |
+    +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
 
 
 **Header names [REQUIRED]**
@@ -104,22 +103,22 @@ Type in the designated names of the following columns in the design file:
         (2) Genome 2 - the name of the column containing updated genome 2 (eg G2)
         (3) SampleID Column - the name of the column containing the sampleIDs
         (4) Comparate Column - the name of the column containing comparate information
-        
+
 **APN Threshold [REQUIRED]**
 
-Specify an APN threshold for flagging features as 'expressed'. Features that do not meet this threshold are considered to have coverage and will not be included in the Bayesian analysis. 
+Specify an APN threshold for flagging features as 'expressed'. Features that do not meet this threshold are considered to have coverage and will not be included in the Bayesian analysis.
 
-**NOTE**: The default setting is 5. 
+**NOTE**: The default setting is 5.
 
 
 **OUTPUTS**
 
 
 **This tool outputs the following:**
-        (1) For each comparate, a summary TSV file containing the flagged indicators recording whether or not a feature meets the specified APN threshold. 
-In the below column header descriptions, {comparate} refers tothe comparate in the Sample Design File (e.g. W55_M).  
+        (1) For each comparate, a summary TSV file containing the flagged indicators recording whether or not a feature meets the specified APN threshold.
+In the below column header descriptions, {comparate} refers tothe comparate in the Sample Design File (e.g. W55_M).
 The number of columns generated is dependent on the number of replicates.
-        
+
 The first three rows of an example output file::
 
 	FEATURE_ID	g1	g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2      	W55_M_APN_both_rep2
@@ -132,14 +131,14 @@ In the example output above, the features have low read counts and they do not s
 Column header definitions::
 
         ◦ {comparate}_flag_analyze: 0/1 binary indicator flag where a “1” means that at least one replicate for the indicated comparate has an APN greater than the user-specified cutoff value.
-        ◦ {comparate_n}_num_reps:  The amount of replicates for the indicated comparate. 
+        ◦ {comparate_n}_num_reps:  The amount of replicates for the indicated comparate.
         ◦ counts_{comparate}_g1_total_{replicate_number}: Total number of unique reads from a given replicate that mapped to updated parental genome 1
         ◦ counts_{comparate}_g2_total_{replicate_number}: Total number of unique reads from a given replicate that mapped to updated parental genome 2
         ◦ counts_{comparate}_both_total_{replicate_number}: Total number of unique reads from a given replicate that mapped equally well to both updated parental genomes
         ◦ {comparate}_flag_apn_{replicate_number}: 0/1 flag where a “1” indicates that the APN value for a given feature is above the user-defined APN threshold
         ◦ {comparate}_total_reads_APN_{replicate_number}: The calculated APN value for the total number of unique reads that mapped to a given feature
         ◦ {comparate}_both_APN_{replicate_number}: The calculated APN value for the number of unique reads that mapped equally well to both updated parental genomes for a given feature
-   
+
 
   ]]></help>
     <citations>
@@ -149,6 +148,6 @@ Column header definitions::
             journal = {????},
             year = {submitted for publication}
             }</citation>
-        </citations>      
+        </citations>
 </tool>
 

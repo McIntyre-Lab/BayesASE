@@ -1,11 +1,11 @@
-<tool id="base_reformat_design_file" name="Reformat Sample Design File"  version="0.1.0">
+<tool id="base_reformat_design_file" name="Reformat Sample Design File"  version="21.1.13">
     <description>for use in Calculate Priors Module for BayesASE</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command>
-<![CDATA[ 
+<![CDATA[
   awk 'BEGIN{FS="\t"; OFS="\t"} { print $1"\t"$2"\t"$4}' ${DESIGN} | sort -u > ${OUTFILE}
 ]]>
     </command>
@@ -31,16 +31,16 @@ The Reformat Sample Design File tool takes the "Sample Design File” and modifi
 
 **Inputs**
 
-**Sample Design File** 
+**Sample Design File**
 
 The input for this tool is the Sample Design File
 
 The Sample Design File can be created using the *Combine Counts Tables* tool.
 
 **The Sample Design File should contain the following columns, in order:**
-    
+
     (1) G1 - name of updated parental genome 1
-    (2) G2 - name of updated parental genome 2 
+    (2) G2 - name of updated parental genome 2
     (3) sampleID - sample identifier (no spaces in name). Consists of a combination of comparate + replicate number
     (4) comparate- contains comparate information for testing allelic imbalance
 
@@ -52,17 +52,17 @@ The comparate conditions must be written in the following format:
 Example of input Sample design file::
 
     +-------+------+---------+----------+
-    |   G1  |  G2  |sampleID |comparate |  
+    |   G1  |  G2  |sampleID |comparate |
     +-------+------+---------+--------- +
     | W1118 |  W55 | W55_M_1 | W55_M    |
     +-------+------+---------+----------+
-    | W1118 | W55  | W55_M_2 | W55_M    |  
+    | W1118 | W55  | W55_M_2 | W55_M    |
     +-------+------+---------+----------+
     | W1118 | W55  | W55_M_3 | W55_M    |
     +-------+------+---------+----------+
     | W1118 | W55  | W55_V_1 | W55_V    |
     +-------+------+---------+----------+
-   
+
 
 **Outputs**
 
@@ -71,15 +71,15 @@ Example of input Sample design file::
 Example of Priors Design File::
 
     +-------+------+----------+
-    |   G1  |  G2  |comparate |  
+    |   G1  |  G2  |comparate |
     +-------+------+----------+
     | W1118 |  W55 | W55_M    |
     +-------+------+----------+
-    | W1118 | W55  | W55_M    |  
+    | W1118 | W55  | W55_M    |
     +-------+------+----------+
-    | W1118 | W55  | W55_M    | 
+    | W1118 | W55  | W55_M    |
     +-------+------+----------+
-    | W1118 | W55  | W55_V    | 
+    | W1118 | W55  | W55_V    |
     +-------+------+----------+
 
 

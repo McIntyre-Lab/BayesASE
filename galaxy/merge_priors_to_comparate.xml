@@ -1,4 +1,4 @@
-<tool id="merge_priors_to_comparate" name="Merge priors to comparate: " version="0.1.0">
+<tool id="merge_priors_to_comparate" name="Merge priors to comparate" version="21.1.13">
     <description>merges filtered/summarized ASE Counts tables to the Calculated Prior values </description>
     <macros>
       <import>macros.xml</import>
@@ -18,7 +18,7 @@
     <inputs>
         <param name="design" type="data" format="tabular,tsv" label="Priors Design file" help="Enter the Priors Design file generated from the Reformat Sample Design file; formatting is shown below"/>
         <param name="collection1" type="data_collection" collection_type="list" label="Summarized and Filtered ASE Count Table Collection" help="Select the collection containing input filtered ASE count tables per comparate"/>
-        <param name="collection2" type="data_collection" collection_type="list" label="Calculated Priors Collection" help="Select the collection containing the Prior Probability Estimates for a given comparate"/> 
+        <param name="collection2" type="data_collection" collection_type="list" label="Calculated Priors Collection" help="Select the collection containing the Prior Probability Estimates for a given comparate"/>
     </inputs>
     <outputs>
       <collection name="split_output" type="list" label="${tool.name} on ${on_string}: Merge Priors to Comparate">
@@ -36,16 +36,16 @@
                   <has_text_matching expression="Merge_prior_to_comparate_test_data"/>
                 </assert_contents>
               </element>
-             </output_collection> 
+             </output_collection>
         </test>
     </tests>
     <help><![CDATA[
 **Tool Description**
 
 The Merge Priors to Comparate tool merges the files containing calculated prior probability estimates to the summarized and filtered ASE Counts tables for each comparate specified in the Comparate Design File.
-The files are merged on the FEATURE_ID columns.  
+The files are merged on the FEATURE_ID columns.
 Therefore, the FEATURE_ID columns in the Summarized and Filtered ASE Counts Tables must be identical and in the same order as those in the Calculated Priors files.
-The tool outputs one file per comparate. 
+The tool outputs one file per comparate.
 
 **NOTE**:  FEATURE_IDs in the Summarized/Filtered ASE Counts Tables must match those in the Calculated Prior file and be in the same order
 
@@ -98,7 +98,7 @@ An example prior file (W55_M_prior)::
 
 **Outputs**
 
-(1) **A TSV file containing the prior probability estimates and the summarized ASE counts for a given comparate.** 
+(1) **A TSV file containing the prior probability estimates and the summarized ASE counts for a given comparate.**
 
 Example output for comparate W55_M::
 
@@ -108,7 +108,7 @@ Example output for comparate W55_M::
 	CG10932 	0.821591948764867	0.108417200365965         0.0699908508691674	1			2			163				122		                1112		    		1				89.9299663299663		71.5858585858586		237				134				1881				1 			144.974410774411		121.086195286195
 
 
-   
+
     ]]></help>
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,

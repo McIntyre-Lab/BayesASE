@@ -1,4 +1,4 @@
-<tool id="check_samcomp_for_lost_reads" name="Check SAM Compare Output" version="0.1.0">
+<tool id="check_samcomp_for_lost_reads" name="Check SAM Compare Output" version="21.1.13">
     <description> - check read numbers in and out of Compare SAM Files and Create ASE Counts Tables tool</description>
     <macros>
       <import>macros.xml</import>
@@ -31,7 +31,7 @@
     <help><![CDATA[
 **Tool Description**
 
-The Check SAM Compare Output tool checks that the number of reads into and out of the Compare SAM Files and Create ASE Counts Tables Tool are the same.  
+The Check SAM Compare Output tool checks that the number of reads into and out of the Compare SAM Files and Create ASE Counts Tables Tool are the same.
 The total of all reads mapped to each feature should be the sum of all unique reads mapped to that feature from the two initial alignment files.
 This implies that the total must be at least the number of reads mapping to one genome and no more than the sum of reads mapping to both genomes.
 Numbers of reads in the ASE Totals file outside this range inicate that the Compare SAM Files and Create ASE Counts Tables tools should be rerun.
@@ -44,7 +44,7 @@ Numbers of reads in the ASE Totals file outside this range inicate that the Comp
 
 An example Remove Reads summary file:
 
-  
+
     +---------------+---------------------+---------------------------+
     |   fqNa        |  number_overlapping_rows  | total_number_rows   |
     +===============+===========================+=====================+

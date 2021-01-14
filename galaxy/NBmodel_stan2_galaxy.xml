@@ -1,4 +1,4 @@
-<tool id="NBmodel_stan2_galaxy" name="Run the Bayesian model: " version="0.1.0">
+<tool id="NBmodel_stan2_galaxy" name="Run the Bayesian model" version="21.1.13">
     <description>nbmodel_stan2_flex_prior.R</description>
     <macros>
         <import>macros.xml</import>
@@ -54,7 +54,7 @@
     </tests>
     <help><![CDATA[
 
-**Tool Description** 
+**Tool Description**
 
 The Run the Bayesian model tool sets the parameters for the NBModel, generalizes the input and output name requirements and initiates the STAN implementation of the NBModel.
 The statistical model is packaged in the script environmentalmodel2.stan (supported on the STAN platform) and wrapped in the R script (nbmodel_stan2_flex_prior.R).

@@ -1,4 +1,4 @@
-<tool id="base_check_alignment_design_file" name="Check Alignment Design File" version="0.1.0">
+<tool id="base_check_alignment_design_file" name="Check Alignment Design File" version="21.1.13">
     <description>for correct formatting and duplicate FASTQ names </description>
     <macros>
       <import>macros.xml</import>
@@ -27,7 +27,7 @@
     <help><![CDATA[
 **Tool Description**
 
-This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names. 
+This tool checks to make sure the Alignment design file is formatted correctly and has all needed headers. Also verifies that there are no duplicate FastQ file names.
 Default values are already in place to save user time.
 
 **NOTE:** There are two Design Files that must be created and supplied by the user. They are the *Alignment Design File* and the *Comparate Design File*.
@@ -44,7 +44,7 @@ All others (Sample and Priors) are created and used as intermediates by the BASE
 	(6) techRep - name of the column containing the technical replicates for each sampleID, for example, the same library run on different lanes.
 	(7) readLength - the read length in base pairs
 
-The sample identifier must contain the biological replicate number, and the comparate conditions to be tested in the Bayesian Model for Allelic Imbalance. 
+The sample identifier must contain the biological replicate number, and the comparate conditions to be tested in the Bayesian Model for Allelic Imbalance.
 
 An example of a comparate condition is W1118_F, where W1118 is the genome and F refers to female. There must be at least two comparate conditions for Bayesian Analysis.
 
@@ -52,29 +52,29 @@ In the example below, there are two comparate condtions, W55_Mated and W55_Virgi
 
 An example design file::
 
-	G1	G2	sampleID		fqName			fqExtension	techRep	readLength 
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150        
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150        
-	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150        
-	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R1	.fq		1	150        
+	G1	G2	sampleID		fqName			fqExtension	techRep	readLength
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R1	.fq		1	150
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R2	.fq		2	150
+	W1118	W55	mel_W55_Mated_E1	mel_W55_Mated_E1_R3	.fq		3	150
+	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R1	.fq		1	150
 	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R2	.fq		2	150
 	W1118	W55	mel_W55_Virgin_E1	mel_W55_Virgin_E1_R3	.fq		3	150
 
 If using simulated reads, include the technical replicate column, but label the technical replicates with the same number
 
 Example design file for simulated data ::
- 
-	G1	G2      sampleID   fqName	fqExtension	techRep	readLength 
-	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96        
-	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96        
-	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96 
+
+	G1	G2      sampleID   fqName	fqExtension	techRep	readLength
+	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96
+	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96
+	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96
 	W1118	W55      W55_V_2   SRR1989594_1     .fq		1	96
 
 **Outputs**
 
 	(1) a logfile with information about whether the column names are correct and if there are any duplicated FASTQ file names.
 	(2) a text file containing a list of any duplicated FASTQ file names, if present.
-   
+
     ]]></help>
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,

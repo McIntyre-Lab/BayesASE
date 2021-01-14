@@ -1,17 +1,17 @@
-<tool id="base_reformat_bedfile" name="Reformat user-provided BED file"  version="0.1.0">
+<tool id="base_reformat_bedfile" name="Reformat user-provided BED file"  version="21.1.13">
     <description>for use in BayesASE Align and Count workflow</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command>
-<![CDATA[ 
-        awk 
-            -v FS='	' 
-            -v OFS='	' 
-            '{print $4,$2,$3,$1}' 
-            '$infile' 
-        > '$outfile' 
+<![CDATA[
+        awk
+            -v FS='	'
+            -v OFS='	'
+            '{print $4,$2,$3,$1}'
+            '$infile'
+        > '$outfile'
 ]]>
     </command>
     <inputs>
@@ -29,7 +29,7 @@
     <help><![CDATA[
 **Tool Description**
 
-This tool reorders the columns in a user-specified 4-column BED file. The chrom (chromosome name) and name (name of the feature in the BED line) columns are switched such that the column containing the genic features of interest is column 1 and chrom is column 4.  This allows for the downstream SAM alignments to be reformatted such that the RNAME column in the SAM file contains genic featureIDs in place of chromosome name. 
+This tool reorders the columns in a user-specified 4-column BED file. The chrom (chromosome name) and name (name of the feature in the BED line) columns are switched such that the column containing the genic features of interest is column 1 and chrom is column 4.  This allows for the downstream SAM alignments to be reformatted such that the RNAME column in the SAM file contains genic featureIDs in place of chromosome name.
 
 
 **Inputs**
@@ -44,18 +44,18 @@ The input BED file must contain these columns in the following order:
 Example input BED file:
 
     +---------------+---------+---------+----------+
-    |   chrom       |  start  |   end   |  name    |  
+    |   chrom       |  start  |   end   |  name    |
     +---------------+---------+---------+----------+
     |     2R        |  2345   |   2899  | featureA |
     +---------------+---------+---------+----------+
 
 **Outputs**
 
-A 4-column BED file that has the names of the Feature IDs in the first column and chromosome name column last. 
+A 4-column BED file that has the names of the Feature IDs in the first column and chromosome name column last.
 
 
     +---------------+-----------+------------+------------+
-    |   name        |   start   |    end     |    chrom   |  
+    |   name        |   start   |    end     |    chrom   |
     +---------------+-----------+------------+------------+
     |  featureA     |   2345    |   2899     |    2R      |
     +---------------+-----------+------------+------------+

@@ -1,11 +1,11 @@
-<tool id="base_create_new_sam_file" name="Create new SAM file"  version="0.1.0">
+<tool id="base_create_new_sam_file" name="Create new SAM file"  version="21.1.13">
     <description> with features of interest in RNAME field</description>
     <macros>
         <import>macros.xml</import>
     </macros>
     <expand macro="requirements"/>
     <command>
-<![CDATA[ 
+<![CDATA[
         awk -v OFS='	' 'FNR==NR{a[$1,$2]=$7; next} {$3=a[$3,$4]}1' '$BED3' '$SAMFILE' | awk -F'\t'  '$3!=""' > '$NEWSAM'
 ]]>
     </command>
@@ -26,9 +26,9 @@
     </tests>
     <help><![CDATA[
     **Tool Description**
-    
+
 This tool reformats the SAM file containing uniquely mapping reads using the multi-column BED file created by the *Remove reads that do not overlap with a feature for BASE* tool.
-The resulting SAM file contains the name of genic features in the 'chrom' field.  
+The resulting SAM file contains the name of genic features in the 'chrom' field.
 
 
 ----------------------------------------------------------------------------------------------
@@ -39,9 +39,9 @@ The resulting SAM file contains the name of genic features in the 'chrom' field.
 
 **BED File**
      The tool requires a BED file of reads overlapping genic features of interest.
-     The *Remove reads that do not overlap with a feature for BayesASE* tool creates this BED file. 
+     The *Remove reads that do not overlap with a feature for BayesASE* tool creates this BED file.
 
-Example input BED file 
+Example input BED file
 
     +---------------+---------+---------+---------+---------+------------+------------+
     |   Chrom       |  Start  |   End   |   Name  |  Score  | Strand     |ThickStart  |
@@ -52,7 +52,7 @@ Example input BED file
     +---------------+---------+---------+---------+---------+------------+------------+
 
 **Unique SAM File**
-     Input the SAM file containing alignments for all uniquely mapping reads. This file can be created by the **BWASplitSAM** tool. 
+     Input the SAM file containing alignments for all uniquely mapping reads. This file can be created by the **BWASplitSAM** tool.
 
 **Outputs**
      The tool outputs a new SAM file with the genic feature (ThickStart column in BED file) in the RNAME field instead of the chromosome name.

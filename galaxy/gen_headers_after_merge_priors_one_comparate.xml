@@ -1,4 +1,4 @@
-<tool id="base_gen_headers_one_comparate" name="Generate Headers" version="0.1.0">
+<tool id="base_gen_headers_one_comparate" name="Generate Headers" version="21.1.13">
     <description>for one condition to test for Allelic Imbalance</description>
     <macros>
       <import>macros.xml</import>
@@ -38,21 +38,21 @@
     <help><![CDATA[
 **Tool Description**
 
-The *Generate Headers for ONE Comparate* tool takes an output file created for a single user-specified comparate in the *Merge Priors to Comparate tool* and creates the 
+The *Generate Headers for ONE Comparate* tool takes an output file created for a single user-specified comparate in the *Merge Priors to Comparate tool* and creates the
 headers needed for the running the Bayesian model.
 
-**NOTE:** This tool is only for user's wishing to test allelic imbalance for only one condition (ie W55_M). If testing for two or more conditions use the 
-*Merge Two or More Comparate Datasets and Generate Headers* tool. 
+**NOTE:** This tool is only for user's wishing to test allelic imbalance for only one condition (ie W55_M). If testing for two or more conditions use the
+*Merge Two or More Comparate Datasets and Generate Headers* tool.
 
     **Required Inputs**
 
 **Collection of Merged Prior to Comparate Files [REQUIRED]**
 
-The output from the *Merge Prior to Comparate* tool is required.  
+The output from the *Merge Prior to Comparate* tool is required.
 
 Example of a file containing priors merged to comparate data (W55_Mated)::
 
-	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1             prior_W55_M_g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2     	W55_M_APN_both_rep2	
+	FEATURE_ID	prior_W55_M_both	prior_W55_M_g1             prior_W55_M_g2	W55_M_flag_analyze     W55_M_num_reps   	W55_M_g1_total_rep1     	W55_M_g2_total_rep1     	W55_M_both_total_rep1       	W55_M_flag_apn_rep1     	W55_M_APN_total_reads_rep1	W55_M_APN_both_rep1	W55_M_g1_total_rep2     	W55_M_g2_total_rep2     	W55_M_both_total_rep2   	W55_M_flag_apn_rep2     	W55_M_APN_total_reads_rep2     	W55_M_APN_both_rep2
 	l(1)G0196	0.802196053469128	0.114417568427753         0.0833863781031191	1    	        	2			691				519				5020 	        		1   				29.073464805232			23.4243873865079		1075				812				7481				1			43.7266913990042		34.9168212437762
 	CG8920  	0.866028708133971	0.0344497607655502        0.0995215311004785	1			2			29				 62				 647    			1				10.3878993081113		9.10716914470779		38				126				920				1			15.2470189901369		12.9534815250994
 	CG10932 	0.821591948764867	0.108417200365965         0.0699908508691674	1			2			163				122		                1112		    		1				89.9299663299663		71.5858585858586		237				134				1881				1 			144.974410774411		121.086195286195
@@ -61,10 +61,10 @@ Example of a file containing priors merged to comparate data (W55_Mated)::
 
 **Comparate Design File [REQUIRED]**
 
-This tool requires a Comparate design file created by the user that contains the desired comparates. The comparates are the genomes that the user wishes to be 
+This tool requires a Comparate design file created by the user that contains the desired comparates. The comparates are the genomes that the user wishes to be
 tested as a condition to be compared  in Bayesian model for allelic specific expression.
 
-**NOTE**: The Comparate Design File must be created and supplied by the user. It must explicitly list the comparate condition that the user wants to compare. 
+**NOTE**: The Comparate Design File must be created and supplied by the user. It must explicitly list the comparate condition that the user wants to compare.
 
     The design file must contain the following columns, in order::
 
@@ -75,33 +75,33 @@ tested as a condition to be compared  in Bayesian model for allelic specific exp
 
 
 An example design file:
-	
+
     +-------------+--------+
     | Comparate_1 | compID |
     +=============+========+
-    | W55_M       | W55_M  | 
+    | W55_M       | W55_M  |
     +-------------+--------+
-    | W55_V       | W55_V  | 
+    | W55_V       | W55_V  |
     +-------------+--------+
 
 **OUTPUTS**
 
-This tool outputs one file:    
+This tool outputs one file:
 
-(1) A TSV file with the Merged Priors to Comparate output with new headers needed for Bayesian Model tool. 
+(1) A TSV file with the Merged Priors to Comparate output with new headers needed for Bayesian Model tool.
 
 Example of output::
 
 
     +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+
     | Feature_ID  | prior_c1_both   | prior_c1_g1       | prior_c1_g2        | c1_flag_analyze | c1_num_reps | c1_g1_total_rep1 | c1_g2_total_rep1  | c1_both_total_rep1 | c1_flag_apn_rep1 | c1_APN_total_reads_rep1 | c1_APN_both_rep1    | c1_g1_total_rep2 | c1_g2_total_rep2  | c1_both_total_rep2 | c1_flag_apn_rep2  | c1_APN_total_reads_rep2  | c1_APN_both_rep2 |
-    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+ 
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+
     |l(1)G1096    |0.799907266902715| 0.118361153262519 | 0.0817315798347665 |        1        |       2     |        295       |         234       |        2197        |         1        |     12.7234208727912    | 10.2551010446158    |        1885      |        1165       |        12201       |         1         | 71.2019427901982         | 56.9617787757493 |
     +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+
     | CG10932     |0.853881278538813| 0.0597412480974125| 0.0863774733637747 |        1        |       2     |         13       |          39       |         308        |         1        |     5.06815839835124    | 4.33534520830266    |         100      |         134       |         1394       |         1         | 22.9213896658325         | 19.6266745178861 |
     +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+
-    | CG8920      |0.808955223880597| 0.123383084577114 | 0.0676616915422886 |        1        |       2     |         93       |          20       |         500        |         1        |     39.4720538720539    | 32.1912457912458    |         347      |         257       |         2633       |         1         | 208.422222222222         | 169.53063973064  | 
-    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+ 
+    | CG8920      |0.808955223880597| 0.123383084577114 | 0.0676616915422886 |        1        |       2     |         93       |          20       |         500        |         1        |     39.4720538720539    | 32.1912457912458    |         347      |         257       |         2633       |         1         | 208.422222222222         | 169.53063973064  |
+    +-------------+-----------------+-------------------+--------------------+-----------------+-------------+------------------+-------------------+--------------------+------------------+-------------------------+---------------------+------------------+-------------------+--------------------+-------------------+--------------------------+------------------+
 
     ]]></help>
     <citations>

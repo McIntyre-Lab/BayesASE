@@ -1,4 +1,4 @@
-<tool id="base_count_starting_reads_per_fq" name="Count_reads_per_fq file for BASE"  version="0.1.0">
+<tool id="base_count_starting_reads_per_fq" name="Count_reads_per_fq file for BASE"  version="21.1.13">
     <description>with awk</description>
     <macros>
         <import>macros.xml</import>
@@ -8,7 +8,7 @@
         <environment_variable name="FQLINEFN">$(wc -l '$READ')</environment_variable>
     </environment_variables>
     <command>
-<![CDATA[ 
+<![CDATA[
         FQLINEFN=$(wc -l '$READ')
         FQLINE=$(echo $FQLINEFN | cut -d" " -f1)
         NUMREAD=$(( FQLINE / 4 ))

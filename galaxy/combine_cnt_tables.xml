@@ -1,4 +1,4 @@
-<tool id="combine_cnt_tables" name="Combine ASE Count Tables:" version="0.1.0">
+<tool id="combine_cnt_tables" name="Combine ASE Count Tables:" version="21.1.13">
     <description>sum technical replicates</description>
     <macros>
       <import>macros.xml</import>
@@ -44,11 +44,11 @@
                   <has_text_matching expression="Combine_counts_output"/>
                 </assert_contents>
               </element>
-             </output_collection> 
+             </output_collection>
         </test>
     </tests>
     <help><![CDATA[
-**Tool Description** 
+**Tool Description**
 
 The Combine ASE Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File.
 Technical replicates within the same biological replicate are combined for each comparate and the average per nucleotide (APN) value is calculated for each feature.
@@ -64,7 +64,7 @@ APN_both= ([reads mapping equally to both parental genomes] x (readlength)/ (gen
 
 **Inputs**
 
--There are four required inputs for this tool. 
+-There are four required inputs for this tool.
 
 **Alignment Design File [REQUIRED]**
 
@@ -110,13 +110,13 @@ Enter the row number in the Alignment Design File at which to end.
 
 **Simulated Dataset**
 
-Select if the input dataset is simulated. 
+Select if the input dataset is simulated.
 
 ------------------------------------------------------------------------------------------------------
 
 **Output**
 
-The tool generates two output files: 
+The tool generates two output files:
 
 (1) A TSV file for each sample replicate containing the summed ASE Counts and the APN values for the uniquely mapping reads per feature.
 
@@ -128,19 +128,19 @@ Example of a Combined ASE Count Table::
     +============+===================+===================+============+==================+================+================+==========================+=========================+=========================+==========================+====================+====================+
     | l(1)G0196  |10.255101044615834 |12.723420872791175 | 721        |1476              |120             |173             |0                         | 2                       |96                       |136                       |0                   |2                   |
     +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
-    | CG8920     |7.0372442219932285 |8.62888267334020   | 207        |293               |31              |62              |0                         | 0                       |8                        |12                        |0                   |0                   | 
-    +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+ 
+    | CG8920     |7.0372442219932285 |8.62888267334020   | 207        |293               |31              |62              |0                         | 0                       |8                        |12                        |0                   |0                   |
+    +------------+-------------------+-------------------+------------+------------------+----------------+----------------+--------------------------+-------------------------+-------------------------+--------------------------+--------------------+--------------------+
 
 
-(2) A Sample Design File containing the names of the biological replicates that were summed in the generated ASE Counts Table collection. 
+(2) A Sample Design File containing the names of the biological replicates that were summed in the generated ASE Counts Table collection.
 G1 and G2 refer to the names of the parental genomes.
 
 
 Example Sample Design File:
 
   +------+-----+------------------+----------------+
-  | G1   | G2  | sampleID         | comparate      | 
-  +------+-----+------------------+----------------+ 
+  | G1   | G2  | sampleID         | comparate      |
+  +------+-----+------------------+----------------+
   |W1118 | W55 | mel_W55_M_1      | mel_W55_M      |
   +------+-----+------------------+----------------+
   |W1118 | W55 | mel_W55_M_2      | mel_W55_M      |
