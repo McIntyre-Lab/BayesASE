@@ -41,10 +41,9 @@ def main():
     general_error_msg = f"""\tError: Design file format does not align with BASE requirements.
 {' '*6}\tColumn names are either incorrectly labeled, missing, or out of order\n"""
 
-    column_names = {'g1': 'C1_G1', 'g2': 'C1_G2', 'c1': 'C2_G1', 'c2': 'C2_G2',
-                    'comparate_1': 'Comparate_1', 'comparate_2': 'Comparate_2', 'compID': 'compID'}
-    fixed_column_ids = {1: ['g1', 'g2', 'comparate_1', 'compID'],
-                        2: ['g1', 'g2', 'c1', 'c2', 'comparate_1', 'comparate_2', 'compID']}
+    column_names = {'comparate_1': 'Comparate_1', 'comparate_2': 'Comparate_2', 'compID': 'compID'}
+    fixed_column_ids = {1: ['comparate_1', 'compID'],
+                        2: ['comparate_1', 'comparate_2', 'compID']}
     column_id_list = fixed_column_ids[args.compNum]
     fixed_column_names = [column_names[x] for x in column_id_list]
 
