@@ -1,0 +1,19 @@
+name: bayesase
+owner: malex
+description: Bayesian analysis of allele specific expression.
+homepage_url: https://github.com/McIntyre-Lab/BayesASE
+long_description: |
+  It's a flexible and very general implementation of a Bayesian approach to estimating Allelic
+  Imbalance (AI) and formally comparing levels of AI between conditions. Allelic imbalance (AI)
+  indicates the presence of functional variation in cis regulatory regions. Detecting cis
+  regulatory differences using AI is widespread, yet there is no formal statistical methodology
+  that tests whether AI differs between conditions. The testing for AI involves several complex
+  bioinformatics steps. BayesASE is a complete bioinformatics pipeline that incorporates
+  state-of-the-art error reduction techniques and a flexible Bayesian approach to estimating AI
+  and formally comparing levels of AI between
+  conditions (https://www.g3journal.org/content/8/2/447.long).
+
+remote_repository_url: https://github.com/galaxyproject/tools-iuc/tree/master/tools/bayesase
+type: unrestricted
+categories:
+    - Transcriptomics
