@@ -27,7 +27,7 @@
     <help><![CDATA[
     **Tool Description**
 
-This tool reformats the SAM file containing uniquely mapping reads using the multi-column BED file created by the *Remove reads that do not overlap with a feature for BASE* tool.
+This tool reformats the SAM file containing uniquely mapping reads using the multi-column BED file created by the *Remove reads that do not overlap with a feature for BayesASE* tool.
 The resulting SAM file contains the name of genic features in the 'chrom' field.
 
 
@@ -61,7 +61,7 @@ Example input BED file
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,
             author = {Brecca Miller, Alison M. Morse, Elyse Borgert, Zihao Liu, Kelsey Sinclair, Gavin Gamble, Fei Zou, Jeremy Newman, Luis Leon Novello, Fabio Marroni, Lauren M. McIntyre},
-            title = {Testcrosses are an efficient strategy for identifying cis regulatory variation: Bayesian analysis of allele imbalance among conditions (BASE)},
+            title = {Testcrosses are an efficient strategy for identifying cis regulatory variation: Bayesian analysis of allele imbalance among conditions (BayesASE)},
             journal = {G3},
             year = {2021}
             }</citation>

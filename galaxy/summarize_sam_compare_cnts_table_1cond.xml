@@ -34,8 +34,8 @@
     </outputs>
     <tests>
         <test>
-            <param name="design" value="BASE_testdata/summarize_counts_testdata/summarization_df_BASE.tabular" ftype="tabular"/>
-            <param name="collection" value="BASE_testdata/summarize_counts_testdata/combined_ASE_counts_tables_BASE" ftype="data_collection"/>
+            <param name="design" value="summarize_counts_testdata/summarization_df_BASE.tabular" ftype="tabular"/>
+            <param name="collection" value="summarize_counts_testdata/combined_ASE_counts_tables_BASE" ftype="data_collection"/>
             <param name="parent1" value="G1" ftype="text"/>
             <param name="parent2" value="G2" ftype="text"/>
             <param name="sampleIDcol" value="sampleID" ftype="text"/>
@@ -146,7 +146,7 @@ Column header definitions::
     <citations>
             <citation type="bibtex">@ARTICLE{Miller20BASE,
             author = {Brecca Miller, Alison M. Morse, Elyse Borgert, Zihao Liu, Kelsey Sinclair, Gavin Gamble, Fei Zou, Jeremy Newman, Luis Leon Novello, Fabio Marroni, Lauren M. McIntyre},
-            title = {Testcrosses are an efficient strategy for identifying cis regulatory variation: Bayesian analysis of allele imbalance among conditions (BASE)},
+            title = {Testcrosses are an efficient strategy for identifying cis regulatory variation: Bayesian analysis of allele imbalance among conditions (BayesASE)},
             journal = {G3},
             year = {2021}
             }</citation>
