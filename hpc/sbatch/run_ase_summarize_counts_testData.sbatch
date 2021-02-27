@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --mail-user=ammorse@ufl.edu
+#SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=prep
 #SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL

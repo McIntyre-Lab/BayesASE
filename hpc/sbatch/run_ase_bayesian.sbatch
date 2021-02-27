@@ -1,10 +1,10 @@
 #!/bin/sh
-#SBATCH --mail-user=ammorse@ufl.edu
+#SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=stan2_decoupled
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
 #SBATCH --account=mcintyre
-#SBATCH -o /blue/mcintyre/share/BASE_mclab/galaxy/scripts/SLURM_LOGS/stan2_decoupled.%A-%a.out
+#SBATCH -o stan2_decoupled.%A-%a.out
 #SBATCH -t 1:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -19,8 +19,8 @@ module load python/3.6 htslib R/3.6
 ## 2 conditions - M vs V
 
 ## Set / Create Directories and Variables
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
-SCRIPTS=$PROJ/scripts/stan2_scripts
+PROJ=.
+SCRIPTS=$PROJ/hpc/stan2_scripts
 
 ## Create temp output directory for initial datafile with modified headers before entering Bayesian
 ROZ=$PROJ/roz_ammB
@@ -33,7 +33,7 @@ BAYESOUT=$PROJ/bayesian_out
     mkdir -p $BAYESOUT
 
 ## Set design file with G1, G2, c1, c2, and input filename columns
-DESIGN_FILE=$PROJ/design_files/comparate_design_file_02amm.csv
+DESIGN_FILE=$PROJ/BASE_workflow_test_data/comparate_design_file.tsv
 
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
@@ -54,7 +54,7 @@ ITER=100000
 WARMUP=10000
 
 ######  Run python script calling environmental bayesian model (stan2, 2 conditions)
-python3 $SCRIPTS/NBmodel_stan2_slurm_06amm.py \
+python3 $SCRIPTS/NBmodel_stan2_slurm_02amm.py \
     -comparate_1 $COMP_1 \
     -comparate_2 $COMP_2 \
     -compID $COMPID \

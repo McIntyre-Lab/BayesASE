@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --mail-user=ammorse@ufl.edu
+#SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=upd
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
