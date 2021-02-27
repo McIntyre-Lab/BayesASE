@@ -30,29 +30,29 @@ module load htslib
 PROJ=.
 SCRIPTS=$PROJ/hpc/ase_scripts
 REF=$PROJ/galaxy/test-data/updated_genomes_vcfConsensus
-ORIG=$PROJ/combine_fq_files
+ORIG=$PROJ/BASE_workflow_test_data/combine_fq_files_v2
 
-BEDFILE=$PROJ/references/BASE_testData_galaxy_02amm.bed
+BEDFILE=$PROJ/BASE_workflow_test_data/references/BASE_testData_galaxy_02amm.bed
 
 ## Create output directory for alignments to updated genome
-OUTALN=$PROJ/aln_upd_genome
+OUTALN=$PROJ/res/aln_upd_genome
     if [ ! -e $OUTALN ]; then mkdir -p $OUTALN; fi
-PSAM=$PROJ/aln_upd_genome_bwa_parse
+PSAM=$PROJ/res/aln_upd_genome_bwa_parse
     if [ ! -e $PSAM ]; then mkdir -p $PSAM; fi
 
 ## Create output directory for ase counts from sam compare
-SAMC=$PROJ/ase_counts_updated
+SAMC=$PROJ/res/ase_counts_updated
     if [ ! -e $SAMC ]; then mkdir -p $SAMC; fi
 
 ## Create output directory for upd aln summaries and checks
-CHKALN=$PROJ/check_aln
+CHKALN=$PROJ/res/check_aln
     if [ ! -e $CHKALN ]; then mkdir -p $CHKALN; fi
 
 ## Create output directory for Sam Compare check
-CHKSC=$PROJ/check_samcomp
+CHKSC=$PROJ/res/check_samcomp
     if [ ! -e $CHKSC ]; then mkdir -p $CHKSC; fi
 
-DESIGN_FILE=${PROJ}/design_files/df_BASE_galaxy_W55_combinedFq.csv
+DESIGN_FILE=${PROJ}/BASE_workflow_test_data/combine_fq_files_v2/stuff/df_BASE_galaxy_W55_noEmptyFq.tsv
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
 
