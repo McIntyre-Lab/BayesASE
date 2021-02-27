@@ -3,7 +3,7 @@
 #SBATCH --job-name=calP
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE_mclab/galaxy/scripts/SLURM_LOGS/calP_%A.out
+#SBATCH -o calP_%A.out
 #SBATCH -t 06:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -16,8 +16,8 @@ module load python3
 module load htslib
 
 ## Set / Create Directories and Variables
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
-SCRIPTS=$PROJ/scripts/ase_scripts
+PROJ=.
+SCRIPTS=$PROJ/hpc/ase_scripts
 DF=$PROJ/design_files
 
 ## this example calculates from data

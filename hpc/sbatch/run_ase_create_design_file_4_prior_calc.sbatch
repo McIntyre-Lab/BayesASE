@@ -3,7 +3,7 @@
 #SBATCH --job-name=dfPrior
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE/scripts/SLURM_LOGS/dfPrior_%A.out
+#SBATCH -o dfPrior_%A.out
 #SBATCH -t 01:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -14,7 +14,7 @@
 ### create design file for calculating priors from df_ase_samcomp_summed.dsv 
 
 ## Set / Create Directories and Variables
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
+PROJ=.
 DF=$PROJ/design_files
 
 DESIGN=$DF/df_ase_samcomp_summed.csv

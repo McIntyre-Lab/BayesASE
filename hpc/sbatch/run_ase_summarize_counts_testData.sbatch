@@ -4,7 +4,7 @@
 #SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE_mclab/galaxy/scripts/SLURM_LOGS/prep.%A-%a.out
+#SBATCH -o prep.%A-%a.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=20gb
@@ -14,7 +14,7 @@
 
 
 PROJ=.
-SCRIPTS=${PROJ}/scripts/ase_scripts
+SCRIPTS=${PROJ}/hpc/ase_scripts
 DF=${PROJ}/design_files
 SAMC=${PROJ}/ase_counts_updated
 

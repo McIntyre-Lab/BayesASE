@@ -4,7 +4,7 @@
 #SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE_mclab/galaxy/scripts/SLURM_LOGS/merge.%j.out
+#SBATCH -o merge.%j.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=10gb
@@ -15,8 +15,8 @@
 ## merge comparates together
 
 
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
-SCRIPTS=${PROJ}/scripts/ase_scripts
+PROJ=.
+SCRIPTS=${PROJ}/hpc/ase_scripts
 DF=${PROJ}/design_files
 
 ## user must provide following design file for merging comparates:
@@ -40,7 +40,7 @@ BAYESIN=${PROJ}/bayesian_in
         --design ${DESIGN}
 
 
-    python3 ${SCRIPTS}/merge_comparates_and_gen_headers_for_bayesian_03amm.py \
+    python3 ${SCRIPTS}/merge_comparates_and_gen_headers_for_bayesian_02amm.py \
     --output ${BAYESIN} \
     --comp ${BAYESIN} \
     --design ${DESIGN2}

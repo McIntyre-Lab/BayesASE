@@ -3,7 +3,7 @@
 #SBATCH --job-name=upd
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE/scripts/SLURM_LOGS/upd_%A.out
+#SBATCH -o upd_%A.out
 #SBATCH -t 06:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -14,13 +14,17 @@
 ### update genomes
 
 # Load modules
-htslib/1.8 bcftools/1.10.2.1 vcftools/0.1.16 bwa/0.7.17 samtools/1.10
+module load htslib/1.8 
+module load bcftools/1.10.2.1 
+module load vcftools/0.1.16 
+module load bwa/0.7.17 
+module load samtools/1.10
 
 ## set directories
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
+PROJ=.
 ROZ=${PROJ}/rozUPD
 VCF=${PROJ}/vcf_by_genotype
-UREF=${PROJ}/updated_genomes_vcfConsensus
+UREF=${PROJ}/galaxy/test-data/updated_genomes_vcfConsensus
 INPUT=${PROJ}/test_input
 
 FASTA=${PROJ}/test_input/dmel_r551_chromosome_2R_X.fasta
