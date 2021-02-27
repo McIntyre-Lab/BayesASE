@@ -33,3 +33,19 @@ the MCMC algorithm is now implemented in RSTAN (Stan Development Team (2020).
 2.21.2](http://mc-stan.org/) and bias is allowed to vary between conditions
 and more than 2 conditions can be compared. This is a very general
 implementation.
+
+## Quick demo
+If you would like to try if you have all the needed software, you can run this few lines of code.
+
+We suggest that at first you clone our repo in one folder of your choice. This will ensure you have all the needed test input files and scripts in the correct place. 
+
+Clone repo:
+    
+    git clone https://github.com/McIntyre-Lab/BayesASE
+
+Run two demo steps in the specified order.
+
+    sbatch hpc/sbatch/run_ase_align_and_count_testData.sbatch
+
+    sbatch hpc/sbatch/run_ase_bayesian.sbatch
+
