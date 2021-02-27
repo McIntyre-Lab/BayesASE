@@ -57,11 +57,8 @@ prior_empBayes_forbeta=function(xs,ys,zs){
 
   # Import NB Functions
 args = commandArgs(trailingOnly=TRUE)
-#AMM commmented out following line in 04fm version
-#args<-c("/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/bayesian_input_W55_M_V.csv","/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/test_W55_out.csv",2,".")
-#args<-c("/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/adj_head_bayesian_input_W55_M.csv","/blue/mcintyre/share/BASE_mclab/galaxy/bayesian_in/test_W55_out.csv",1,".")
 nconditions<-as.numeric(args[3])
-cat(args[1],"\n")
+cat("input file is",args[1],"\n")
 cat(args[2],"\n")
 cat("Number of conditions:",nconditions,"\n")
 
@@ -302,7 +299,7 @@ while(length(newline) != 0 ){
 	
 #set.seed(123)	
 	fit1 <- stan(
-	  file =  "environmentalmodel2.stan",# Stan program
+	  file =  "hpc/stan2_scripts/environmentalmodel2.stan",# Stan program
 	  data = datastan,    # named list of data
 	  chains = 1,             # number of Markov chains
 	  warmup = nburnin,          # number of warmup iterations per chain

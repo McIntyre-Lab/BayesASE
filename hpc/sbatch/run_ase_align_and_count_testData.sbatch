@@ -1,11 +1,11 @@
 #!/bin/sh
-#SBATCH --mail-user=ammorse@ufl.edu
+#SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=aln_upd
 #SBATCH --account=mcintyre
 #SBATCH --qos=mcintyre-b
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o aln_upd.%A-%a.out
+#SBATCH -o logs/aln_upd.%A-%a.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=50gb
@@ -32,7 +32,7 @@ SCRIPTS=$PROJ/hpc/ase_scripts
 REF=$PROJ/galaxy/test-data/updated_genomes_vcfConsensus
 ORIG=$PROJ/BASE_workflow_test_data/combine_fq_files_v2
 
-BEDFILE=$PROJ/BASE_workflow_test_data/references/BASE_testData_galaxy_02amm.bed
+BEDFILE=$PROJ/galaxy/test-data/combine_counts_tables_test_data/reformatted_BASE_testdata_bedfile.bed
 
 ## Create output directory for alignments to updated genome
 OUTALN=$PROJ/res/aln_upd_genome
@@ -52,7 +52,7 @@ CHKALN=$PROJ/res/check_aln
 CHKSC=$PROJ/res/check_samcomp
     if [ ! -e $CHKSC ]; then mkdir -p $CHKSC; fi
 
-DESIGN_FILE=${PROJ}/BASE_workflow_test_data/combine_fq_files_v2/stuff/df_BASE_galaxy_W55_noEmptyFq.tsv
+DESIGN_FILE=${PROJ}/BASE_workflow_test_data/combine_fq_files_v2/stuff/df_BASE_galaxy_W55_noEmptyFq.csv
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
 
@@ -66,7 +66,6 @@ EXT=${ARRAY[4]}
 ROZ=$PROJ/roz_${FQ}
     mkdir -p ${ROZ}
 
-
 ## set READ and calculate ave readlength
 READ=${ORIG}/${FQ}${EXT}
 echo " read is $READ 
@@ -78,8 +77,7 @@ AVE_RL=$(awk '{if(NR%4==2 && length) {count++; bases += length} } END {print bas
 ## use awk to reorder columms in bed file
 SBED=$ROZ/snp_feature_first.bed
 
-echo "
-    Reformatting $BEDFILE"
+echo "Reformatting $BEDFILE"
 awk -v OFS='\t' '{print $4,$2,$3,$1}' $BEDFILE > $SBED
 
 
@@ -100,8 +98,8 @@ do
     then
         BREF=$REF/${G2}_snp_upd_genome_BWA
 
-        echo -e "Aligning ${FQ} to ${G2}"
-        bwa mem -t 8 -M $BREF $READ > $OUTALN/${G2}_${FQ}_upd.sam
+        echo "Aligning G2 to reference $BREF"
+		bwa mem -t 8 -M $BREF $READ > $OUTALN/${G2}_${FQ}_upd.sam
 
         echo -e "Start BWASplitSam on: $OUTALN/${G2}_${FQ}_upd.sam"
         $SCRIPTS/BWASplitSAM_07mai.py -s $OUTALN/${G2}_${FQ}_upd.sam --outdir $ROZ -fq1 $READ
@@ -113,7 +111,7 @@ do
     then
         BREF=$REF/${G1}_snp_upd_genome_BWA
 
-        echo -e "Aligning ${FQ} to ${G1}"
+        echo "Aligning G1 to reference $BREF"
         bwa mem -t 8 -M $BREF $READ > $OUTALN/${G1}_${FQ}_upd.sam
 
         echo -e "Start BWASplitSam on: $OUTALN/${G1}_${FQ}_upd.sam"
