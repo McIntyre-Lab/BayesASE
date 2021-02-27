@@ -5,7 +5,7 @@
 #SBATCH --qos=mcintyre-b
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o /blue/mcintyre/share/BASE_mclab/galaxy/scripts/SLURM_LOGS/aln_upd.%A-%a.out
+#SBATCH -o aln_upd.%A-%a.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=50gb
@@ -26,8 +26,8 @@ module load htslib
 
 
 ## Set / Create Directories and Variables
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
-SCRIPTS=$PROJ/scripts/ase_scripts
+PROJ=.
+SCRIPTS=$PROJ/hpc/ase_scripts
 REF=$PROJ/updated_genomes_vcfConsensus
 ORIG=$PROJ/combine_fq_files
 

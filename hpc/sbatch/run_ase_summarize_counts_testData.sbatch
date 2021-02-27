@@ -13,7 +13,7 @@
 ## summarize data
 
 
-PROJ=/blue/mcintyre/share/BASE_mclab/galaxy
+PROJ=.
 SCRIPTS=${PROJ}/scripts/ase_scripts
 DF=${PROJ}/design_files
 SAMC=${PROJ}/ase_counts_updated
