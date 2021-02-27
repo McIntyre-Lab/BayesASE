@@ -26,9 +26,10 @@ module load htslib
 
 
 ## Set / Create Directories and Variables
+#Everything is relative to current directory
 PROJ=.
 SCRIPTS=$PROJ/hpc/ase_scripts
-REF=$PROJ/updated_genomes_vcfConsensus
+REF=$PROJ/galaxy/test-data/updated_genomes_vcfConsensus
 ORIG=$PROJ/combine_fq_files
 
 BEDFILE=$PROJ/references/BASE_testData_galaxy_02amm.bed
