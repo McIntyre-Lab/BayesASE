@@ -3,7 +3,7 @@
 #SBATCH --job-name=stan2_decoupled
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH --account=mcintyre
+#SBATCH --account=groupname
 #SBATCH -o example_out/logs/stan2_decoupled.%A-%a.out
 #SBATCH -t 1:00:00
 #SBATCH --ntasks-per-node=1

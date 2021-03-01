@@ -1,7 +1,6 @@
 #!/bin/sh
 #SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=prep
-#SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
 #SBATCH -o example_out/logs/prep.%A-%a.out

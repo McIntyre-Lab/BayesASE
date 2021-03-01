@@ -1,8 +1,6 @@
 #!/bin/sh
 #SBATCH --mail-user=yourname@your.email
 #SBATCH --job-name=aln_upd
-#SBATCH --account=mcintyre
-#SBATCH --qos=mcintyre-b
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
 #SBATCH -o example_out/logs/aln_upd.%A-%a.out
