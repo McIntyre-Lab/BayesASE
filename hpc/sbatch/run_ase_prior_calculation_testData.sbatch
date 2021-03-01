@@ -3,7 +3,7 @@
 #SBATCH --job-name=calP
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o calP_%A.out
+#SBATCH -o example_out/logs/calP_%A.out
 #SBATCH -t 06:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
@@ -16,17 +16,15 @@ module load python3
 module load htslib
 
 ## Set / Create Directories and Variables
-PROJ=.
-SCRIPTS=$PROJ/hpc/ase_scripts
-DF=$PROJ/design_files
+SCRIPTS=hpc/ase_scripts
 
 ## this example calculates from data
-FILT=$PROJ/ase_counts_summarized
+FILT=example_out/ase_counts_summarized
 
-OUTPUT=$PROJ/priors_fromData
-    if [ ! -e $PRIOR ]; then mkdir -p $PRIOR; fi
+OUTPUT=example_out/priors_fromData
+mkdir -p $OUTPUT
 
-DESIGN=$DF/df_priors.csv
+DESIGN=example_out/df_priors.csv
 
 ##### (1) calculate priors from ASE counts - data
 

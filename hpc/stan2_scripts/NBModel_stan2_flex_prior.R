@@ -14,8 +14,6 @@
 #Line 2(virgin)           q21*(1/delta)beta_igamma  q22*betai*delta*gamma        tau[(1-q11)/delta+(1-q12)*delta]betai*gamma
 #It is required that q11+q12+q13=1  (notice that q13 is in the model implicitely)
 rm(list=ls())
-#setwd("C:/Users/luis Leon Novelo/Google Drive/projects/RNAextended/fabioRprograms")
-#setwd("/ufrc/mcintyre/share/cegs2_MvsF_exp/scripts/ase_cegs_scripts/extended_model_scripts/")
 
 library("rstan")
 rstan_options(auto_write = FALSE)
@@ -365,7 +363,6 @@ while(length(newline) != 0 ){
 	cat("alpha is:",round(apply(alpha,2,mean),4),"\n")    
 	}else{
 	  #If all the counts are zero I fill it with NaN
-	  #browser()
 	  out=paste(
 	  paste(rev(mydata)[1],mydata["FEATURE_ID"],
       paste(seqI,sep=",",collapse=","),      #seqI is a vector containing the number of replicates for each condition

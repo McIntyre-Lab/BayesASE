@@ -4,7 +4,7 @@
 #SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o prep.%A-%a.out
+#SBATCH -o example_out/logs/prep.%A-%a.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=20gb
@@ -13,18 +13,16 @@
 ## summarize data
 
 
-PROJ=.
-SCRIPTS=${PROJ}/hpc/ase_scripts
-DF=${PROJ}/design_files
-SAMC=${PROJ}/ase_counts_updated
+SCRIPTS=hpc/ase_scripts
+SAMC=example_out/ase_counts_updated
 
-SSUM=${PROJ}/ase_counts_summed_techReps
+SSUM=example_out/ase_counts_summed_techReps
     mkdir -p $SSUM
-FILT=${PROJ}/ase_counts_summarized
+FILT=example_out/ase_counts_summarized
     mkdir -p $FILT
 
-BEDFILE=${PROJ}/references/BASE_testData_galaxy_02amm.bed
-DESIGN=${PROJ}/design_files/df_BASE_galaxy_W55_combinedFq.csv
+BEDFILE=example_out/snp_feature_first.bed
+DESIGN=example_in/df_BASE_galaxy_W55_combinedFq.csv
 
 
     # Load modules
@@ -40,12 +38,12 @@ DESIGN=${PROJ}/design_files/df_BASE_galaxy_W55_combinedFq.csv
         -sim ${SIM} \
         --bed ${BEDFILE} \
         --path ${SAMC} \
-        --designdir ${DF} \
+        --designdir example_in \
         --out ${SSUM}
 
 
     ## design2 is created in above script
-    DESIGN2=${DF}/df_ase_samcomp_summed.csv
+    DESIGN2=example_in/df_ase_samcomp_summed.csv
 
     mkdir -p ${FILT}
 

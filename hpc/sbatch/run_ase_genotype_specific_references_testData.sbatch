@@ -3,12 +3,12 @@
 #SBATCH --job-name=upd
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o upd_%A.out
+#SBATCH -o example_out/logs/upd_%A.out
 #SBATCH -t 06:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --nodes=1
 #SBATCH --mem=6gb
-#SBATCH --array=2
+#SBATCH --array=2-3
 
 
 ### update genomes
@@ -21,16 +21,17 @@ module load bwa/0.7.17
 module load samtools/1.10
 
 ## set directories
-PROJ=.
-ROZ=${PROJ}/rozUPD
-VCF=${PROJ}/vcf_by_genotype
-UREF=${PROJ}/galaxy/test-data/updated_genomes_vcfConsensus
-INPUT=${PROJ}/test_input
+## All directories are relative to the main BayesASE folder
+VCFIN=example_in/vcf_by_genotype
+VCFOUT=example_out/vcf_by_genotype
+UREF=example_out/reference/updated_genomes_vcfConsensus
+mkdir -p $VCFOUT
+mkdir -p $UREF
 
-FASTA=${PROJ}/test_input/dmel_r551_chromosome_2R_X.fasta
+FASTA=example_in/reference/dmel_r551_chromosome_2R_X.fasta
 
 
-DESIGN_FILE=${PROJ}/test_input/df_list_G2_VCF_split.csv
+DESIGN_FILE=example_in/df_list_G2_VCF_split.csv
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
 
@@ -42,19 +43,19 @@ G2=${ARRAY[0]}
 
 
     ## remove and replace if gz file already exists (so we can overwrite)
-    if [[ -f ${VCF}/${G2}_snp_testGenes.vcf.gz ]] ; then
-        rm ${VCF}/${G2}_snp_testGenes.vcf.gz
+    if [[ -f ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf.gz ]] ; then
+        rm ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf.gz
     fi
 
     # sort split VCF files
-    bcftools sort -O v ${VCF}/${G2}_snp_testGenes.vcf -o ${VCF}/${G2}_snp_testGenes_sorted.vcf
+    bcftools sort -O v ${VCFIN}/${G2}_snp_testGenes.vcf -o ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf
 
     echo "indexing individual SNP vcf files: ${G2} "
-    bgzip ${VCF}/${G2}_snp_testGenes_sorted.vcf
-    tabix ${VCF}/${G2}_snp_testGenes_sorted.vcf.gz
+    bgzip ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf
+    tabix ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf.gz
 
     echo "updating SNPs: ${G2} "
-    cat ${FASTA} | vcf-consensus ${VCF}/${G2}_snp_testGenes_sorted.vcf.gz > ${UREF}/${G2}_snp_upd_genome.fasta
+    cat ${FASTA} | vcf-consensus ${VCFOUT}/${G2}_snp_testGenes_sorted.vcf.gz > ${UREF}/${G2}_snp_upd_genome.fasta
 
 
     #### (2) Build indexes from the references
@@ -64,3 +65,6 @@ G2=${ARRAY[0]}
 
     echo `date`": building samtools index for ${G2} UPD genome"
     samtools faidx ${UREF}/${G2}_snp_upd_genome.fasta
+
+	
+	

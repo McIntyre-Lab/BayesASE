@@ -4,7 +4,7 @@
 #SBATCH --account=mcintyre
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o merge.%j.out
+#SBATCH -o example_out/logs/merge.%j.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=10gb
@@ -15,17 +15,15 @@
 ## merge comparates together
 
 
-PROJ=.
-SCRIPTS=${PROJ}/hpc/ase_scripts
-DF=${PROJ}/design_files
+SCRIPTS=hpc/ase_scripts
 
 ## user must provide following design file for merging comparates:
-DESIGN2=${DF}/comparate_design_file_02amm.csv
+DESIGN2=example_in/df_merge_comparates_4_bayesian.csv
 
-DESIGN=${DF}/df_priors.csv
-PRIORS=${PROJ}/priors_fromData
-FILT=${PROJ}/ase_counts_summarized
-BAYESIN=${PROJ}/bayesian_in
+DESIGN=example_out/df_priors.csv
+PRIORS=example_out/priors_fromData
+FILT=example_out/ase_counts_summarized
+BAYESIN=example_out/bayesian_in
     mkdir -p $BAYESIN
 
     # Load modules

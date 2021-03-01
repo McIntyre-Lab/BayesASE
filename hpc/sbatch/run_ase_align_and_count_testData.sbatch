@@ -5,7 +5,7 @@
 #SBATCH --qos=mcintyre-b
 #SBATCH --mail-type=FAIL
 #SBATCH --no-requeue
-#SBATCH -o logs/aln_upd.%A-%a.out
+#SBATCH -o example_out/logs/aln_upd.%A-%a.out
 #SBATCH -t 12:00:00
 #SBATCH --ntasks-per-node=8
 #SBATCH --mem=50gb
@@ -27,32 +27,31 @@ module load htslib
 
 ## Set / Create Directories and Variables
 #Everything is relative to current directory
-PROJ=.
-SCRIPTS=$PROJ/hpc/ase_scripts
-REF=$PROJ/galaxy/test-data/updated_genomes_vcfConsensus
-ORIG=$PROJ/BASE_workflow_test_data/combine_fq_files_v2
+SCRIPTS=hpc/ase_scripts
+REF=example_out/reference/updated_genomes_vcfConsensus
+ORIG=example_in/reads
 
-BEDFILE=$PROJ/galaxy/test-data/combine_counts_tables_test_data/reformatted_BASE_testdata_bedfile.bed
+BEDFILE=example_in/reformatted_BASE_testdata_bedfile.bed
 
 ## Create output directory for alignments to updated genome
-OUTALN=$PROJ/res/aln_upd_genome
+OUTALN=example_out/aln_upd_genome
     if [ ! -e $OUTALN ]; then mkdir -p $OUTALN; fi
-PSAM=$PROJ/res/aln_upd_genome_bwa_parse
+PSAM=example_out/aln_upd_genome_bwa_parse
     if [ ! -e $PSAM ]; then mkdir -p $PSAM; fi
 
 ## Create output directory for ase counts from sam compare
-SAMC=$PROJ/res/ase_counts_updated
+SAMC=example_out/ase_counts_updated
     if [ ! -e $SAMC ]; then mkdir -p $SAMC; fi
 
 ## Create output directory for upd aln summaries and checks
-CHKALN=$PROJ/res/check_aln
+CHKALN=example_out/check_aln
     if [ ! -e $CHKALN ]; then mkdir -p $CHKALN; fi
 
 ## Create output directory for Sam Compare check
-CHKSC=$PROJ/res/check_samcomp
+CHKSC=example_out/check_samcomp
     if [ ! -e $CHKSC ]; then mkdir -p $CHKSC; fi
 
-DESIGN_FILE=${PROJ}/BASE_workflow_test_data/combine_fq_files_v2/stuff/df_BASE_galaxy_W55_noEmptyFq.csv
+DESIGN_FILE=example_in/df_BASE_galaxy_W55_noEmptyFq.csv
 DESIGN=$(sed -n "${SLURM_ARRAY_TASK_ID}p" $DESIGN_FILE)
 IFS=',' read -ra ARRAY <<< "$DESIGN"
 
@@ -63,7 +62,7 @@ FQ=${ARRAY[3]}
 EXT=${ARRAY[4]}
 
 ## Create temp dir
-ROZ=$PROJ/roz_${FQ}
+ROZ=roz_${FQ}
     mkdir -p ${ROZ}
 
 ## set READ and calculate ave readlength
@@ -75,7 +74,7 @@ AVE_RL=$(awk '{if(NR%4==2 && length) {count++; bases += length} } END {print bas
 
 ######  Create modified BED file to use in SAM compare - this bed has features 1st with start and end positions in genome
 ## use awk to reorder columms in bed file
-SBED=$ROZ/snp_feature_first.bed
+SBED=example_out/snp_feature_first.bed
 
 echo "Reformatting $BEDFILE"
 awk -v OFS='\t' '{print $4,$2,$3,$1}' $BEDFILE > $SBED
@@ -171,7 +170,7 @@ do
     #Run bedtools intersect with -loj between the reads and the features. 
     #We will have one result for each region 
     # pipe to awk to remove rows where a read does NOT overlap with a feature
-    bedtools intersect -a $AWKTMP -b $BEDFILE -loj > ${BED4}
+    bedtools intersect -a $AWKTMP -b $SBED -loj > ${BED4}
 
     awk -v OFS='\t' '$4 !="."' ${BED4} > $BED3
     
@@ -215,7 +214,7 @@ echo -e "starting sam compare for $FQ "
 python $SCRIPTS/sam_compare_w_feature.py \
     -n \
     -l ${AVE_RL} \
-    -f $SBED \
+    -f $BEDFILE \
     -q $READ1 \
     -A $SAM1 \
     -B $SAM2 \

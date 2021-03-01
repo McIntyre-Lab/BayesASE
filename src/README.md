@@ -41,11 +41,23 @@ We suggest that at first you clone our repo in one folder of your choice. This w
 
 Clone repo:
     
-    git clone https://github.com/McIntyre-Lab/BayesASE
+    git clone https://github.com/McIntyre-Lab/BayesASE.git
 
-Run two demo steps in the specified order.
+The input files needed to run the test data are in the example_in folder. The results will be stored in the example_out folder.
+	
+Run the demo steps in the specified order.
 
-    sbatch hpc/sbatch/run_ase_align_and_count_testData.sbatch
+    sbatch hpc/sbatch/run_ase_genotype_specific_references_testData.sbatch
+	
+	sbatch hpc/sbatch/run_ase_align_and_count_testData.sbatch
+	
+	sbatch hpc/sbatch/run_ase_summarize_counts_testData.sbatch
+
+	sbatch hpc/sbatch/run_ase_create_design_file_4_prior_calc.sbatch
+
+	sbatch hpc/sbatch/run_ase_prior_calculation_testData.sbatch
+	
+	sbatch hpc/sbatch/run_ase_merge_priors_2_comparate_testData.sbatch
 
     sbatch hpc/sbatch/run_ase_bayesian.sbatch
 
