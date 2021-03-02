@@ -39,7 +39,7 @@ implementation.
 
 ## Overview
 
-The workflow is summarized in this figure. Details can be found in the guide for the [Galaxy implementation](docs/BayesASE_Galaxy_User_Guide.pdf).
+The workflow is summarized in this figure. 
 
 ![Workflow](docs/Workflow.png)
 
@@ -53,7 +53,7 @@ Clone repo:
     git clone https://github.com/McIntyre-Lab/BayesASE.git
 
 The input files needed to run the test data are in the example_in folder. The results will be stored in the example_out folder.
-	
+
 Run the demo steps in the specified order.
 
     sbatch hpc/sbatch/run_ase_genotype_specific_references_testData.sbatch
@@ -70,3 +70,4 @@ Run the demo steps in the specified order.
 
     sbatch hpc/sbatch/run_ase_bayesian.sbatch
 
+Additional details can be found in the guide for the [Galaxy implementation](docs/BayesASE_Galaxy_User_Guide.pdf).
