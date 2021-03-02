@@ -1,0 +1,2 @@
+name,count_total_reads,count_mapped_read_oposite_strand,count_unmapped_read,count_mapped_read,count_ambiguous_read,count_chimeric_read
+W1118_W55_M_3_1_upd,3141,1573,1,1564,3,0

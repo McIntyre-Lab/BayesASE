@@ -1,0 +1,2 @@
+fqName,message
+W55_V_3_4,Have 2 SAM files - good!

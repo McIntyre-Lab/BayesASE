@@ -1,0 +1,175 @@
+4
+Number of Sample IDs:
+6
+       G1   G2 sampleID   ...   readLength techRep  sample
+0   W1118  W55  W55_M_1   ...           96       1   W55_M
+1   W1118  W55  W55_M_1   ...           96       2   W55_M
+2   W1118  W55  W55_M_1   ...           96       3   W55_M
+3   W1118  W55  W55_M_1   ...           96       4   W55_M
+4   W1118  W55  W55_M_2   ...           96       1   W55_M
+5   W1118  W55  W55_M_2   ...           96       2   W55_M
+6   W1118  W55  W55_M_2   ...           96       3   W55_M
+7   W1118  W55  W55_M_2   ...           96       4   W55_M
+8   W1118  W55  W55_M_3   ...           96       1   W55_M
+9   W1118  W55  W55_M_3   ...           96       2   W55_M
+10  W1118  W55  W55_M_3   ...           96       3   W55_M
+11  W1118  W55  W55_M_3   ...           96       4   W55_M
+12  W1118  W55  W55_V_1   ...           96       1   W55_V
+13  W1118  W55  W55_V_1   ...           96       2   W55_V
+14  W1118  W55  W55_V_1   ...           96       3   W55_V
+15  W1118  W55  W55_V_1   ...           96       4   W55_V
+16  W1118  W55  W55_V_2   ...           96       1   W55_V
+17  W1118  W55  W55_V_2   ...           96       2   W55_V
+18  W1118  W55  W55_V_2   ...           96       3   W55_V
+19  W1118  W55  W55_V_2   ...           96       4   W55_V
+20  W1118  W55  W55_V_3   ...           96       1   W55_V
+21  W1118  W55  W55_V_3   ...           96       2   W55_V
+22  W1118  W55  W55_V_3   ...           96       3   W55_V
+23  W1118  W55  W55_V_3   ...           96       4   W55_V
+
+[24 rows x 8 columns]
+      G1   G2 sampleID sample  numReps
+0  W1118  W55  W55_M_1  W55_M        3
+1  W1118  W55  W55_M_2  W55_M        3
+2  W1118  W55  W55_M_3  W55_M        3
+3  W1118  W55  W55_V_1  W55_V        3
+4  W1118  W55  W55_V_2  W55_V        3
+0    1
+1    2
+2    3
+3    1
+4    2
+5    3
+Name: seqCnt, dtype: int64
+sample_id W55_M_1
+sample_id2 W55_M
+rep number is 3
+countKey W55_M_1
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_M_1.csv
+sample_id2 is W55_M
+comp_reps is W55_M_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'g1', 'g2', 'W55_M_num_reps', 'W55_M_flag_analyze']
+['counts_W55_M_g1_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_M.csv
+sample_id W55_M_2
+sample_id2 W55_M
+rep number is 3
+countKey W55_M_2
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_M_2.csv
+sample_id2 is W55_M
+comp_reps is W55_M_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'g1', 'g2', 'W55_M_num_reps', 'W55_M_flag_analyze', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2']
+['counts_W55_M_g1_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_M.csv
+sample_id W55_M_3
+sample_id2 W55_M
+rep number is 3
+countKey W55_M_3
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_M_3.csv
+sample_id2 is W55_M
+comp_reps is W55_M_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'g1', 'g2', 'W55_M_num_reps', 'W55_M_flag_analyze', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3', 'counts_W55_M_both_total_rep3', 'W55_M_flag_apn_rep3', 'W55_M_APN_total_reads_rep3', 'W55_M_APN_both_rep3']
+['counts_W55_M_g1_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3', 'counts_W55_M_both_total_rep3']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3', 'counts_W55_M_both_total_rep3', 'W55_M_flag_apn_rep3']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3', 'counts_W55_M_both_total_rep3', 'W55_M_flag_apn_rep3', 'W55_M_APN_total_reads_rep3']
+['counts_W55_M_g1_total_rep1', 'counts_W55_M_g2_total_rep1', 'counts_W55_M_both_total_rep1', 'W55_M_flag_apn_rep1', 'W55_M_APN_total_reads_rep1', 'W55_M_APN_both_rep1', 'counts_W55_M_g1_total_rep2', 'counts_W55_M_g2_total_rep2', 'counts_W55_M_both_total_rep2', 'W55_M_flag_apn_rep2', 'W55_M_APN_total_reads_rep2', 'W55_M_APN_both_rep2', 'counts_W55_M_g1_total_rep3', 'counts_W55_M_g2_total_rep3', 'counts_W55_M_both_total_rep3', 'W55_M_flag_apn_rep3', 'W55_M_APN_total_reads_rep3', 'W55_M_APN_both_rep3']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_M.csv
+sample_id W55_V_1
+sample_id2 W55_V
+rep number is 3
+countKey W55_V_1
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_V_1.csv
+sample_id2 is W55_V
+comp_reps is W55_V_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'g1', 'g2', 'W55_V_num_reps', 'W55_V_flag_analyze']
+['counts_W55_V_g1_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_V.csv
+sample_id W55_V_2
+sample_id2 W55_V
+rep number is 3
+countKey W55_V_2
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_V_2.csv
+sample_id2 is W55_V
+comp_reps is W55_V_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'g1', 'g2', 'W55_V_num_reps', 'W55_V_flag_analyze', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2']
+['counts_W55_V_g1_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_V.csv
+sample_id W55_V_3
+sample_id2 W55_V
+rep number is 3
+countKey W55_V_3
+samC file is example_out/ase_counts_summed_techReps/ase_sum_counts_W55_V_3.csv
+sample_id2 is W55_V
+comp_reps is W55_V_num_reps
+headers is
+['FEATURE_ID', 'counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'g1', 'g2', 'W55_V_num_reps', 'W55_V_flag_analyze', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3', 'counts_W55_V_both_total_rep3', 'W55_V_flag_apn_rep3', 'W55_V_APN_total_reads_rep3', 'W55_V_APN_both_rep3']
+['counts_W55_V_g1_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3', 'counts_W55_V_both_total_rep3']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3', 'counts_W55_V_both_total_rep3', 'W55_V_flag_apn_rep3']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3', 'counts_W55_V_both_total_rep3', 'W55_V_flag_apn_rep3', 'W55_V_APN_total_reads_rep3']
+['counts_W55_V_g1_total_rep1', 'counts_W55_V_g2_total_rep1', 'counts_W55_V_both_total_rep1', 'W55_V_flag_apn_rep1', 'W55_V_APN_total_reads_rep1', 'W55_V_APN_both_rep1', 'counts_W55_V_g1_total_rep2', 'counts_W55_V_g2_total_rep2', 'counts_W55_V_both_total_rep2', 'W55_V_flag_apn_rep2', 'W55_V_APN_total_reads_rep2', 'W55_V_APN_both_rep2', 'counts_W55_V_g1_total_rep3', 'counts_W55_V_g2_total_rep3', 'counts_W55_V_both_total_rep3', 'W55_V_flag_apn_rep3', 'W55_V_APN_total_reads_rep3', 'W55_V_APN_both_rep3']
+outfile is example_out/ase_counts_summarized/ase_counts_filtered_W55_V.csv

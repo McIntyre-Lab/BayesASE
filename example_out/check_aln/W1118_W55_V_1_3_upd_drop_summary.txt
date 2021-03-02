@@ -1,0 +1,2 @@
+fqName,number_overlapping_rows,total_number_rows
+W55_W55_V_1_3,1886,1887

@@ -1,0 +1,44 @@
+Writing to /tmp/bcftools-sort.Uvu89r
+Writing to /tmp/bcftools-sort.lP969r
+Merging 1 temporary files
+Merging 1 temporary files
+Cleaning
+Cleaning
+Done
+Done
+indexing individual SNP vcf files: W55 
+indexing individual SNP vcf files: W1118 
+updating SNPs: W55 
+updating SNPs: W1118 
+Tue Mar 2 10:03:06 EST 2021: building BWA index for W55 UPD genome 
+[bwa_index] Pack FASTA... Tue Mar 2 10:03:06 EST 2021: building BWA index for W1118 UPD genome 
+[bwa_index] Pack FASTA... 0.25 sec
+[bwa_index] Construct BWT for the packed sequence...
+[BWTIncCreate] textLength=87139070, availableWord=18131064
+0.23 sec
+[bwa_index] Construct BWT for the packed sequence...
+[BWTIncCreate] textLength=87139070, availableWord=18131064
+[BWTIncConstructFromPacked] 10 iterations done. 29907390 characters processed.
+[BWTIncConstructFromPacked] 10 iterations done. 29907390 characters processed.
+[BWTIncConstructFromPacked] 20 iterations done. 55249870 characters processed.
+[BWTIncConstructFromPacked] 20 iterations done. 55249870 characters processed.
+[BWTIncConstructFromPacked] 30 iterations done. 77770286 characters processed.
+[BWTIncConstructFromPacked] 30 iterations done. 77770286 characters processed.
+[bwt_gen] Finished constructing BWT in 35 iterations.
+[bwt_gen] Finished constructing BWT in 35 iterations.
+[bwa_index] 16.40 seconds elapse.
+[bwa_index] Update BWT... 0.18 sec
+[bwa_index] Pack forward-only FASTA... [bwa_index] 16.12 seconds elapse.
+[bwa_index] Update BWT... 0.20 sec
+[bwa_index] Construct SA from BWT and Occ... 0.17 sec
+[bwa_index] Pack forward-only FASTA... 0.14 sec
+[bwa_index] Construct SA from BWT and Occ... 8.99 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index -p example_out/reference/updated_genomes_vcfConsensus/W55_snp_upd_genome_BWA -a bwtsw example_out/reference/updated_genomes_vcfConsensus/W55_snp_upd_genome.fasta
+[main] Real time: 27.814 sec; CPU: 26.031 sec
+Tue Mar 2 10:03:33 EST 2021: building samtools index for W55 UPD genome
+8.75 sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa index -p example_out/reference/updated_genomes_vcfConsensus/W1118_snp_upd_genome_BWA -a bwtsw example_out/reference/updated_genomes_vcfConsensus/W1118_snp_upd_genome.fasta
+[main] Real time: 28.515 sec; CPU: 25.417 sec
+Tue Mar 2 10:03:34 EST 2021: building samtools index for W1118 UPD genome
