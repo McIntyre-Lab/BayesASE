@@ -34,6 +34,10 @@ the MCMC algorithm is now implemented in RSTAN (Stan Development Team (2020).
 and more than 2 conditions can be compared. This is a very general
 implementation.
 
+##Overview
+
+Details on the workflow can be found in the detailed guide for the [Galaxy implementation](../docs/BayesASE_Galaxy_User_Guide.pdf)
+
 ## Quick demo
 If you would like to try if you have all the needed software, you can run this few lines of code.
 
