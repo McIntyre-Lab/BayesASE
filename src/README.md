@@ -37,7 +37,7 @@ implementation.
 ##Overview
 
 Details on the workflow can be found in the detailed guide for the [Galaxy implementation](docs/BayesASE_Galaxy_User_Guide.pdf).
-A quick overview of the workflow is presented in this ![figure](docs/Workflow.png)
+A quick overview of the workflow is presented in this figure ![Workflow](docs/Workflow.png)
 
 ## Quick demo
 If you would like to try if you have all the needed software, you can run this few lines of code.
