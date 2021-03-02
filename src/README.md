@@ -9,8 +9,12 @@ conditions](https://www.g3journal.org/content/8/2/447.long). BayeASE is availabl
 * A [python package](https://pypi.org/project/BayesASE/)
 * A [bioconda package](https://anaconda.org/bioconda/bayesase), 
 * A Galaxy toolkit
-* A Nextflow workflow
-* And as a collection of scripts for the SLURM workload manager
+* A Nextflow workflow, and
+* A collection of scripts for the SLURM workload manager
+
+To help the user familiarize with the workflow, we include below a demo with a test data set.
+The demo is focused on bash scripts for the SLURM manager. They can be adapted to other workload managers of be run interactively on Linux machines.
+
 
 The model included with the package can formally test AI within one condition
 for three or more replicates and can statistically compare differences in AI
