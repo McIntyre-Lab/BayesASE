@@ -3,7 +3,7 @@
 /*
 *    Nextflow script
 *    to generate report use:  -with-report file-name
-*    export _JAVA_OPTIONS=-Djava.io.tmpdir=/ufrc/mcintyre/share/BASE_mclab/ROZ_NF
+*    export _JAVA_OPTIONS=-Djava.io.tmpdir=path/to/user/temp_directory
 */
 
 println """\

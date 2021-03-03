@@ -5,7 +5,7 @@
 *	ase counts can be generated using align_and_sam_compare module on DNA reads, simulated reads or RNA reads
 *
 *    to generate report use:  -with-report file-name
-*    export _JAVA_OPTIONS=-Djava.io.tmpdir=/ufrc/mcintyre/share/BASE_mclab/galaxy/ROZ_NF
+*    export _JAVA_OPTIONS=-Djava.io.tmpdir=path/to/user/temp_directory
 */
 
 println """\

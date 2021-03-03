@@ -4,7 +4,7 @@
 *    Nextflow script for running bayesian stan2 decoupled priors model
 *
 *    to generate report use:  -with-report file-name
-*    export _JAVA_OPTIONS=-Djava.io.tmpdir=/blue/mcintyre/share/BASE_mclab/galaxy/ROZ_NF
+*    export _JAVA_OPTIONS=-Djava.io.tmpdir=path/to/user/temp_directory
 */
 
 println """\
@@ -51,9 +51,9 @@ process runBayesian {
         -datafile !{BAYESIN} \
         -datafile2 !{ROZ} \
         -cond !{COMPNUM} \
-        -workdir '/blue/mcintyre/share/BASE_mclab/galaxy/scripts/stan2_scripts' \
+        -workdir 'path/to/BayesASE/hpc/stan2_scripts' \
         -routput !{BAYESOUT} \
-        -subpath '/blue/mcintyre/share/BASE_mclab/galaxy/scripts/stan2_scripts/NBModel_stan2_flex_prior.R' \
+        -subpath 'path/to/BayesASE/hpc/stan2_scripts/NBModel_stan2_flex_prior.R' \
         -iterations !{ITER} \
         -warmup !{WARMUP} \
         -o ${BAYESOUT}

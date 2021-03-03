@@ -21,7 +21,7 @@ module load python/3.6 htslib R/3.6
 SCRIPTS=hpc/stan2_scripts
 
 ## Create temp output directory for initial datafile with modified headers before entering Bayesian
-ROZ=example_out/roz_ammB
+ROZ=example_out/temp_directory
     mkdir -p $ROZ
 
 ## directory for model testing
