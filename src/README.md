@@ -5,13 +5,16 @@ AI differs between conditions. The testing for AI involves several complex
 bioinformatics steps. BayesASE is a complete bioinformatics pipeline that
 incorporates state-of-the-art error reduction techniques and a [flexible
 Bayesian approach to estimating AI and formally comparing levels of AI between
-conditions](https://www.g3journal.org/content/8/2/447.long). The modular
-structure of BayeASE has been packaged as a [python
-package](https://pypi.org/project/BayesASE/), [bioconda package]
-(https://anaconda.org/bioconda/bayesase), Galaxy toolkit, made available in
-Nextflow and as a collection of scripts for the SLURM workload manager in the
-[BayesASE project repository on
-github](https://github.com/McIntyre-Lab/BayesASE).
+conditions](https://www.g3journal.org/content/8/2/447.long). BayeASE is available in five different implementations:
+* A [python package](https://pypi.org/project/BayesASE/)
+* A [bioconda package](https://anaconda.org/bioconda/bayesase), 
+* A Galaxy toolkit
+* A Nextflow workflow, and
+* A collection of scripts for the SLURM workload manager
+
+To help the user familiarize with the workflow, we include below a demo with a test data set.
+The demo is focused on bash scripts for the SLURM manager. They can be adapted to other workload managers of be run interactively on Linux machines.
+
 
 The model included with the package can formally test AI within one condition
 for three or more replicates and can statistically compare differences in AI
@@ -34,6 +37,12 @@ the MCMC algorithm is now implemented in RSTAN (Stan Development Team (2020).
 and more than 2 conditions can be compared. This is a very general
 implementation.
 
+## Overview
+
+The workflow is summarized in this figure. 
+
+![Workflow](docs/Workflow.png)
+
 ## Quick demo
 If you would like to try if you have all the needed software, you can run this few lines of code.
 
@@ -44,7 +53,7 @@ Clone repo:
     git clone https://github.com/McIntyre-Lab/BayesASE.git
 
 The input files needed to run the test data are in the example_in folder. The results will be stored in the example_out folder.
-	
+
 Run the demo steps in the specified order.
 
     sbatch hpc/sbatch/run_ase_genotype_specific_references_testData.sbatch
@@ -61,3 +70,4 @@ Run the demo steps in the specified order.
 
     sbatch hpc/sbatch/run_ase_bayesian.sbatch
 
+Additional details can be found in the guide for the [Galaxy implementation](docs/BayesASE_Galaxy_User_Guide.pdf).

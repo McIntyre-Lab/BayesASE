@@ -1,0 +1,276 @@
+
+The following have been reloaded with a version change:
+  1) hdf5/1.8.9 => hdf5/1.8.16            3) python/2.7.6 => python/2.7.10
+  2) mkl/2020.0.166 => mkl/2018.1.163
+
+
+The following have been reloaded with a version change:
+  1) samtools/1.8 => samtools/1.9
+
+ read is example_in/reads/W55_V_3_2.fastq 
+
+Reformatting example_in/reformatted_BASE_testdata_bedfile.bed
+Aligning G1 to reference example_out/reference/updated_genomes_vcfConsensus/W1118_snp_upd_genome_BWA
+[M::main_mem] read 1668 sequences (159749 bp)...
+[M::mem_process_seqs] Processed 1668 reads in 0.125 CPU sec, 0.023 real sec
+[main] Version: 0.7.7-r441
+[main] CMD: bwa mem -t 8 -M example_out/reference/updated_genomes_vcfConsensus/W1118_snp_upd_genome_BWA example_in/reads/W55_V_3_2.fastq
+[main] Real time: 1.715 sec; CPU: 0.222 sec
+Start BWASplitSam on: example_out/aln_upd_genome/W1118_W55_V_3_2_upd.sam
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Aligning G2 to reference example_out/reference/updated_genomes_vcfConsensus/W55_snp_upd_genome_BWA
+[M::main_mem] read 1668 sequences (159749 bp)...
+[M::mem_process_seqs] Processed 1668 reads in 0.119 CPU sec, 0.018 real sec
+[main] Version: 0.7.7-r441
+[main] CMD: bwa mem -t 8 -M example_out/reference/updated_genomes_vcfConsensus/W55_snp_upd_genome_BWA example_in/reads/W55_V_3_2.fastq
+[main] Real time: 0.253 sec; CPU: 0.211 sec
+Start BWASplitSam on: example_out/aln_upd_genome/W55_W55_V_3_2_upd.sam
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 272 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+Warning: 256 key is not recognized
+
+    checking for 2 sam files
+
+    checking for missing reads in sam files
+initial sam file example_out/aln_upd_genome_bwa_parse/W1118_W55_V_3_2_upd_uniq.sam
+awk outfile example_out/aln_upd_genome_bwa_parse/W1118_W55_V_3_2_upd_uniq_AWK.txt
+bed intersect outfile example_out/aln_upd_genome_bwa_parse/W1118_W55_V_3_2_upd_uniq_int.bed
+new sam file example_out/aln_upd_genome_bwa_parse/W1118_W55_V_3_2_upd_uniq_FEATURE.sam
+initial sam file example_out/aln_upd_genome_bwa_parse/W55_W55_V_3_2_upd_uniq.sam
+awk outfile example_out/aln_upd_genome_bwa_parse/W55_W55_V_3_2_upd_uniq_AWK.txt
+bed intersect outfile example_out/aln_upd_genome_bwa_parse/W55_W55_V_3_2_upd_uniq_int.bed
+new sam file example_out/aln_upd_genome_bwa_parse/W55_W55_V_3_2_upd_uniq_FEATURE.sam
+READ1: 'example_in/reads/W55_V_3_2.fastq
+SAM1: 'example_out/aln_upd_genome_bwa_parse/W1118_W55_V_3_2_upd_uniq_FEATURE.sam'
+SAM2: 'example_out/aln_upd_genome_bwa_parse/W55_W55_V_3_2_upd_uniq_FEATURE.sam'
+BED: 'example_out/snp_feature_first.bed'
+starting sam compare for W55_V_3_2 
+A
+B
+
+    Moving drop read summary files to check_aln dir
+run sam compare check for W55_V_3_2 
+3321
+1658
+                                      Count totals:
+1:  a_single_exact                                0
+2:  a_single_inexact                              5
+3:  a_multi_exact                                 0
+4:  a_multi_inexact                               0
+5:  b_single_exact                                0
+6:  b_single_inexact                              0
+7:  b_multi_exact                                 0
+8:  b_multi_inexact                               0
+9:  both_single_exact_same                        0
+10: both_single_exact_diff                      672
+11: both_single_inexact_same                      0
+12: both_single_inexact_diff                    843
+13: both_inexact_diff_equal                     715
+14: both_inexact_diff_a_better                   79
+15: both_inexact_diff_b_better                   49
+16: both_multi_exact                              0
+17: both_multi_inexact                            0
+18: a_single_exact_b_single_inexact              89
+19: a_single_inexact_b_single_exact              54
+20: a_single_exact_b_multi_exact                  0
+21: a_multi_exact_b_single_exact                  0
+22: a_single_exact_b_multi_inexact                0
+23: a_multi_inexact_b_single_exact                0
+24: a_single_inexact_b_multi_exact                0
+25: a_multi_exact_b_single_inexact                0
+26: a_single_inexact_b_multi_inexact              0
+27: a_multi_inexact_b_single_inexact              0
+28: a_multi_exact_b_multi_inexact                 0
+29: a_multi_inexact_b_multi_exact                 0
+30: total_count                                1663
+1663
