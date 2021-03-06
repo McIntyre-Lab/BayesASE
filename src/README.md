@@ -48,9 +48,9 @@ If you would like to try if you have all the needed software, you can run this f
 
 We suggest that at first you clone our repo in one folder of your choice. This will ensure you have all the needed test input files and scripts in the correct place. 
 
-Clone repo:
-    
-    git clone https://github.com/McIntyre-Lab/BayesASE.git
+Download the repository in your system; this will result in a BayesASE folder containing the whole project. Enter the directory with
+
+	cd BayesASE
 
 The input files needed to run the test data are in the example_in folder. The results will be stored in the example_out folder.
 
