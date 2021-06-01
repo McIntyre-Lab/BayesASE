@@ -29,25 +29,27 @@
     <help><![CDATA[
 **Tool Description**
 
-This tool reorders the columns in a user-specified 4-column BED file. The chrom (chromosome name) and name (name of the feature in the BED line) columns are switched such that the column containing the genic features of interest is column 1 and chrom is column 4.  This allows for the downstream SAM alignments to be reformatted such that the RNAME column in the SAM file contains genic featureIDs in place of chromosome name.
+This tool reorders the columns in a user-specified 4-column BED file that contains genic regions of interest, switching the chromosome name and feature ID columns so that the names of the features of interest is in column 1. This allows for the downstream SAM alignments to be reformatted to be with respect to the genic features of interest rather than chromosomal features.
 
 
 **Inputs**
 
+The input for this script is a 4-column BED file containing the locations of the genic features for the species.
+
 The input BED file must contain these columns in the following order:
 
-(1) *Chrom*: The name of the chromosome the genic features are on
+(1) *Chrom*: The name of the chromosome that the genic features are on
 (2) *Start*: The start position of the feature on the chromosome
 (3) *End*: The end position of the feature on the chromosome
 (4) *Name*: The name/ID of the features of interest
 
 Example input BED file:
 
-    +---------------+---------+---------+----------+
-    |   chrom       |  start  |   end   |  name    |
-    +---------------+---------+---------+----------+
-    |     2R        |  2345   |   2899  | featureA |
-    +---------------+---------+---------+----------+
+    +---------------+---------+------------+----------------+
+    |   chrom       |  start  |   end      |  name          |
+    +---------------+---------+------------+----------------+
+    |     2R        |  2345   |   2899     | featureA       |
+    +---------------+---------+------------+----------------+
 
 **Outputs**
 
