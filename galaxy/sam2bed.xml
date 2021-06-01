@@ -22,15 +22,15 @@
     </outputs>
     <tests>
         <test>
-            <param name="fastq" value="align_and_counts_test_data/W55_M_1_1.fastq" ftype="fastq"/>
-            <param name="SAMFILE" value="align_and_counts_test_data/W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
-            <output name="AWKTMP" file="align_and_counts_test_data/W1118_SAM2BED_for_BASE.bed" ftype="bed"/>
+            <param name="fastq" value="W55_M_1_1.fastq" ftype="fastq"/>
+            <param name="SAMFILE" value="W1118_G1_unique_sam_for_BASE.sam" ftype="sam"/>
+            <output name="AWKTMP" file="W1118_SAM2BED_for_BASE.bed" ftype="bed"/>
         </test>
     </tests>
     <help><![CDATA[
 **Tool Description**
 
-The SAM to BED tool converts a SAM file containing uniquely mapping reads from the BWASplitSAM step into a 3-column BED file containing the start and end positions of every uniquely mapping read. This BED file is required for entry into step 6, BEDTools Intersect Intervals, to identify uniquely mapping reads that overalp with genic features of interest.
+The SAM to BED tool converts a SAM file containing uniquely mapping reads from the BWASplitSAM step into a 3-column BED file containing the start and end positions of every uniquely mapping read. This BED file is required for entry into step 6, BEDTools Intersect Intervals, to identify uniquely mapping reads that overlap with genic features of interest.
 
 The tool calculates the average read length from the input FASTQ file and creates a resulting BED file where “chrom” is the chrom field from the SAM file, “start” is the POS field from the SAM file and “end” is the POS field plus the average read length.
 
