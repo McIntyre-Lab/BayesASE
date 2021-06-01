@@ -32,7 +32,7 @@ Default values are already in place to save user time.
 
 **NOTE:** There are two Design Files that must be created and supplied by the user. They are the *Alignment Design File* and the *Comparate Design File*.
 
-All others (Sample and Priors) are created and used as intermediates by the BASE workflows.
+All others (Sample and Priors) are created and used as intermediates by the BayesASE workflows.
 
 **The design file should contain the following columns, in order:**
 
@@ -65,10 +65,10 @@ If using simulated reads, include the technical replicate column, but label the 
 Example design file for simulated data ::
 
 	G1	G2      sampleID   fqName	fqExtension	techRep	readLength
-	W1118	W55      W55_M_1   SRR1989586_1     .fq		1	96
-	W1118	W55      W55_M_2   SRR1989588_1     .fq		1	96
-	W1118	W55      W55_V_1   SRR1989592_1     .fq		1	96
-	W1118	W55      W55_V_2   SRR1989594_1     .fq		1	96
+	W1118	W55      W55_M_1   SRR1989586     .fq		1	96
+	W1118	W55      W55_M_2   SRR1989588     .fq		1	96
+	W1118	W55      W55_V_1   SRR1989592     .fq		1	96
+	W1118	W55      W55_V_2   SRR1989594     .fq		1	96
 
 **Outputs**
 
