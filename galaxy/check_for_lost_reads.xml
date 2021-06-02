@@ -33,7 +33,7 @@
 
 This tool verifies that no reads have been lost in the SAM file generated after the alignment step by validating that the read number stays consistent. 
 
-The reads counts in the input FASTQ file are accounted for by comparing them to the number of reads present (found in the 'count_total_reads' column) in the BWASplitSAM output summary file.
+The reads counts in the input FASTQ file are compared to the number of reads present in the BWASplitSAM output summary file (found in the 'count_total_reads' column). 
 
 The starting reads counts from the two files are sequestered, and if the value for the ending read count is the same, the column designated flag_start_readNum_eq_readNum_G1/G2 will be flagged with a 1.
 If not, an error is raised, and the flag variable will be 0.  
@@ -51,7 +51,7 @@ Example summary TSV file from BWASplitSAM script:
     +---------------+---------------------+---------------------------------------+---------------------+---------------------+----------------------+---------------------+-----------------+
     |   Name        |  count_total_reads  | count_mapped_read_opposite_strand     | count_unmapped_read |  count_mapped_read  | count_ambiguous_read |count_chimeric_read  | count_notprimary|
     +===============+=====================+=======================================+=====================+=====================+======================+=====================+=================+
-    | dataset_2216  |  14                 |   5                                   |    0                |    9                |0                     |                 0   |    0            |
+    | W118_M_1_1   |  14                 |   5                                   |    0                |    9                |0                     |                 0   |    0            |
     +---------------+---------------------+---------------------------------------+---------------------+---------------------+----------------------+---------------------+-----------------+
 
 
@@ -69,7 +69,7 @@ Sample Output TSV file
     +---------------+---------------------+---------------+------------+------------------------------------+------------------------------------+
     |   fqName      |  start_read_num     |    readNum_G1 | readNum_G2 |  flag_start_readNum_eq_readNum_G1  | flag_start_readNum_eq_readNum_G2   |
     +===============+=====================+===============+============+====================================+====================================+
-    | dataset_2216  |  14                 |   14          |    14      |    1                               |1                                   |
+    | W118_M_1_1    |  14                 |   14          |    14      |    1                               |1                                   |
     +---------------+---------------------+---------------+------------+------------------------------------+------------------------------------+
 
 Columns are::
