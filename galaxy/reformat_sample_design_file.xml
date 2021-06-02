@@ -49,11 +49,11 @@ The comparate conditions must be written in the following format:
 {Genotype}_{condition} (ie W1118_V)
 
 
-Example of input Sample design file::
+Example of input Sample design file:
 
     +-------+------+---------+----------+
     |   G1  |  G2  |sampleID |comparate |
-    +-------+------+---------+--------- +
+    +-------+------+---------+----------+
     | W1118 |  W55 | W55_M_1 | W55_M    |
     +-------+------+---------+----------+
     | W1118 | W55  | W55_M_2 | W55_M    |
@@ -68,7 +68,7 @@ Example of input Sample design file::
 
 (1) A Priors Design File in TSV format with the sampleID column removed and the resulting file uniqued.
 
-Example of Priors Design File::
+Example of Priors Design File:
 
     +-------+------+----------+
     |   G1  |  G2  |comparate |
