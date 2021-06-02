@@ -50,11 +50,13 @@
     <help><![CDATA[
 **Tool Description**
 
-The Combine ASE Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File.
+The Combine Counts Tables tool sums the input ASE Counts tables across the technical replicates specified in the Alignment Design File and calculates the average coverage per nucleotide (APN) values for each feature.
+
 Technical replicates within the same biological replicate are combined for each comparate and the average per nucleotide (APN) value is calculated for each feature.
 
-The tool outputs a single ASE counts file for each sample replicated with APN values.
-The tool also outputs a Sample Design File that is required for the Summarization and Filter ASE Counts Tables tool that follows.
+The generated output is a TSV file containing the summed ASE Count Tables between the technical replicates of a given biological replicate. 
+
+This tool also generates a "Sample Design File" which contains infomation on the biological replicates that each technical replicates was summed under by Sample ID. This design file is used in downstream tools to create files needed for the Run Bayesian workflow. 
 
 APN_total= ([total alignment count] x [readLength]) /(genic feature length)
 APN_both= ([reads mapping equally to both parental genomes] x (readlength)/ (genic feature length)
@@ -69,6 +71,8 @@ APN_both= ([reads mapping equally to both parental genomes] x (readlength)/ (gen
 **Alignment Design File [REQUIRED]**
 
 **TIP**: Check if the design file is in the correct format by using the *Check Align Design file* tool
+
+The Design File must contain the FASTQ files that the input ASE Counts tables were derived from, as well as the biological replicate number of each (noted in the Sample ID column), and the technical replicate number (noted in the designated techRep column). 
 
 The Alignment Design File is required as input and must have the following format:
 
