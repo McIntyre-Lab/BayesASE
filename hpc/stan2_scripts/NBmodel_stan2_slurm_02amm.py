@@ -81,7 +81,7 @@ def main():
     infile=pd.read_csv(os.path.join(args.datafile, infileName))
     infile.set_index('FEATURE_ID')
 
-    pre_headers=list(infile.columns.get_values())
+    pre_headers=list(infile.columns)
     pre_headers_split=pre_headers[:4]
     pre_headers_split2=pre_headers[4:]
 
