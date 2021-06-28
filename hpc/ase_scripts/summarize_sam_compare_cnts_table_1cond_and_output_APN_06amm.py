@@ -65,7 +65,7 @@ def main():
     sampleIDCol = args.sampleIDCol    
 
     # groupby G2 and comparison
-    df_design['numReps'] = df_design.groupby([parent2, sampleCol]).sample.transform('count')
+    df_design['numReps'] = df_design.groupby([parent2, sampleCol])['sample'].transform('count')
     print(df_design[:5])
 
     #counter variables for each comparate 

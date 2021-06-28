@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
+
 
 ## @package sam_compare
 #  This script compares two SAM files (sequence alignment maps) and
@@ -21,7 +21,7 @@ from __future__ import print_function
 # Changed from sending data to stderr to file/stdout option
 
 import sys, os, time, datetime, locale
-import csv, cStringIO, logging, pprint, re, mmap, argparse, subprocess
+import csv, io, logging, pprint, re, mmap, argparse, subprocess
 import shlex, gc, getpass, random
 from Bio import SeqIO
 
@@ -246,11 +246,11 @@ def get_sam_reads(samdata, fqids, read_length, samid):
                         reads[name][1:] = [1, 1, 0]
                 else:
                     # not an exact match, check if we got closer than previous (read_length initially)
-                    if edit_distance < reads[name][3]:
+                    if edit_distance < int(reads[name][3].replace("\\n","")):
                         # we got closer to a match, set new edit distance and reset count
                         reads[name][3] = edit_distance
                         reads[name][1] = 1
-                    elif edit_distance == reads[name][3]:
+                    elif edit_distance == int(reads[name][3].replace("\\n","")):
                         # same edit distance, inc count
                         reads[name][1] += 1
             else:
@@ -565,7 +565,7 @@ def write_counts(filename, counts):
         f = open(filename, 'w') if filename.lower() != "stdout" else sys.stdout
         f.write(",".join(header))
         f.write("\n")
-        for row in counts.itervalues():
+        for row in counts.values():
             rowstr = ""
             for field in fields:
                 if rowstr:

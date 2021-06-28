@@ -132,12 +132,12 @@ def SplitSAMPE (fname,odir,summname):
 
         # Getting & printing "gray" reads
         elif elements[1] in flags_grayones:
-            print >> GRAY,'\t'.join(elements)
+            print('\t'.join(elements), file=GRAY)
             counter_grayones += 1
             total += 1
         # Getting & printing "OPOSITE" reads
         elif elements[1] in flags_opositestrand:
-            print >> OPOSITE,'\t'.join(elements)
+            print('\t'.join(elements), file=OPOSITE)
             counter_opositestrand += 1
             total += 1
 
@@ -146,31 +146,31 @@ def SplitSAMPE (fname,odir,summname):
         elif elements[1] in flags_mapped1:
             regmatch=re.match(".+\tAS:i:([0-9]+)\tXS:i:([0-9]+).*",line)
             if int(regmatch.group(1))-int(regmatch.group(2))==0:
-                print >> AMBIGUOUS,'\t'.join(elements)
+                print('\t'.join(elements), file=AMBIGUOUS)
                 ambiguous1.append(elements[0])
                 counter_ambiguous1 += 1
                 total += 1
             else:
-                print >> MAPPED,'\t'.join(elements)
+                print('\t'.join(elements), file=MAPPED)
                 counter_mapped1 += 1
                 total += 1
 
         elif elements[1] in flags_mapped2:
             regmatch=re.match(".+\tAS:i:([0-9]+)\tXS:i:([0-9]+).*",line)
             if int(regmatch.group(1))-int(regmatch.group(2))==0:
-                print >> AMBIGUOUS,'\t'.join(elements)
+                print('\t'.join(elements), file=AMBIGUOUS)
                 ambiguous2.append(elements[0])
                 counter_ambiguous2 += 1
                 total += 1
             else:
-                print >> MAPPED,'\t'.join(elements)
+                print('\t'.join(elements), file=MAPPED)
                 counter_mapped2 += 1
                 total += 1
 
         # If not in the previous categories then unknown
         else:
-            print "Warning: "+elements[1]+" key is not recognized"
-            print >> UNRECOGNIZED,'\t'.join(elements)
+            print("Warning: "+elements[1]+" key is not recognized")
+            print('\t'.join(elements), file=UNRECOGNIZED)
             
 
     # Print summary
@@ -186,9 +186,9 @@ def SplitSAMPE (fname,odir,summname):
                     counter_bothunmapped2,counter_mapped1,
                     counter_mapped2,counter_ambiguous1,
                     counter_ambiguous2]
-    count_values = map(str,count_values)
-    print >> SUMMARY,','.join(count_names)
-    print >> SUMMARY,','.join(count_values)
+    count_values = list(map(str,count_values))
+    print(','.join(count_names), file=SUMMARY)
+    print(','.join(count_values), file=SUMMARY)
 
 
     # Clossing all files
@@ -253,12 +253,12 @@ def SplitSAMSE (sam,odir,summname):
             counter_unmappedread += 1
         # Getting & printing "OPOSITE" reads
         elif elements[1] in flags_opositestrand:
-            print >> OPOSITE,'\t'.join(elements)
+            print('\t'.join(elements), file=OPOSITE)
             counter_total         += 1
             counter_opositestrand += 1
         # Getting & printing "CHIMERIC" reads
         elif elements[1] in flags_chimeric:
-            print >> CHIMERIC,"\t".join(elements)
+            print("\t".join(elements), file=CHIMERIC)
             counter_total    += 1
             counter_chimeric += 1
         # Getting & printing AMBIGUOUS reads, those who are not ambiguous are 
@@ -266,18 +266,18 @@ def SplitSAMSE (sam,odir,summname):
         elif elements[1] in flags_mapped:
             regmatch=re.match(".+\tAS:i:([0-9]+)\tXS:i:([0-9]+).*",line)
             if int(regmatch.group(1))-int(regmatch.group(2))==0:
-                print >> AMBIGUOUS,'\t'.join(elements)
+                print('\t'.join(elements), file=AMBIGUOUS)
                 ambiguous.append(elements[0])
                 counter_total     += 1
                 counter_ambiguous += 1
             else:
-                print >> MAPPED,'\t'.join(elements)
+                print('\t'.join(elements), file=MAPPED)
                 counter_total  += 1
                 counter_mapped += 1
 
         #If not in the previous categories then unknown
         else:
-            print "Warning: "+elements[1]+" key is not recognized"
+            print("Warning: "+elements[1]+" key is not recognized")
 
 
     #Print summary
@@ -296,9 +296,9 @@ def SplitSAMSE (sam,odir,summname):
                     counter_ambiguous,
                     counter_chimeric]
 
-    count_values = map(str,count_values)
-    print >> SUMMARY  ,','.join(count_names)
-    print >> SUMMARY  ,','.join(count_values)
+    count_values = list(map(str,count_values))
+    print(','.join(count_names), file=SUMMARY)
+    print(','.join(count_values), file=SUMMARY)
 
     #Clossing all files
     SAM.close()
