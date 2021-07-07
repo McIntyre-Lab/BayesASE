@@ -31,10 +31,12 @@
     <help><![CDATA[
 **Tool Description**
 
-The Check SAM Compare Output tool checks that the number of reads into and out of the Compare SAM Files and Create ASE Counts Tables Tool are the same.
-The total of all reads mapped to each feature should be the sum of all unique reads mapped to that feature from the two initial alignment files.
-This implies that the total must be at least the number of reads mapping to one genome and no more than the sum of reads mapping to both genomes.
-Numbers of reads in the ASE Totals file outside this range inicate that the Compare SAM Files and Create ASE Counts Tables tools should be rerun.
+This tool checks to make sure the SAM compare operated correctly and the ASE totals file contains the right number of reads.
+
+This is achieved by counting how many unique reads are in each BWAsplitSAM summary file (calculated by summing the opposite and mapped read numbers in the third and fifth columns). The final count in the ASE totals file should be more than the smaller of these two unique read counts, but less than two times their sum.
+
+This is to account for reads that were removed from the FASTQ file so that only unique reads are processed, therefore, the resulting totals table may not contain the same number of reads present in the starting FASTQ file. 
+
 
 **This tool takes the following input:**
 
@@ -45,9 +47,9 @@ Numbers of reads in the ASE Totals file outside this range inicate that the Comp
 An example Remove Reads summary file:
 
     +---------------+---------------------+---------------------------+
-    |   fqNa        |  number_overlapping_rows  | total_number_rows   |
+    |   fqName      |  number_overlapping_rows  | total_number_rows   |
     +===============+===========================+=====================+
-    | dataset_2215  |   918                     |     919             |
+    | W1118_M_1_1   |   918                     |     919             |
     +---------------+---------------------------+---------------------+
 
 

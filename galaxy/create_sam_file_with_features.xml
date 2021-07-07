@@ -37,21 +37,21 @@ The resulting SAM file contains the name of genic features in the 'chrom' field.
 
     -The tool has two required inputs:
 
-**BED File**
+1) **BED File**
      The tool requires a BED file of reads overlapping genic features of interest.
      The *Remove reads that do not overlap with a feature for BayesASE* tool creates this BED file.
 
-Example input BED file
+    Example input BED file
 
-    +---------------+---------+---------+---------+---------+------------+------------+
-    |   Chrom       |  Start  |   End   |   Name  |  Score  | Strand     |ThickStart  |
-    +===============+=========+=========+=========+=========+============+============+
-    |      X        |  2190   |  2245   |   X     |    1    |    2300    |l(1)G0196   |
-    +---------------+---------+---------+---------+---------+------------+------------+
-    |      2R       |  1502   |  1834   |   2R    |     50  |19000       |Mapmodulin  |
-    +---------------+---------+---------+---------+---------+------------+------------+
+    +---------------+---------+---------+---------+---------+------------+---------------+
+    |   Chrom       |  Start  |   End   |   Name  |  Score  | Strand     |ThickStart     |
+    +===============+=========+=========+=========+=========+============+===============+
+    |      X        |  2190   |  2245   |   X     |    1    |    2300    |l(1)G0196      |
+    +---------------+---------+---------+---------+---------+------------+---------------+
+    |      2R       |  1502   |  1834   |   2R    |     50  |19000       |Mapmodulin     |
+    +---------------+---------+---------+---------+---------+------------+---------------+
 
-**Unique SAM File**
+2) **Unique SAM File**
      Input the SAM file containing alignments for all uniquely mapping reads. This file can be created by the **BWASplitSAM** tool.
 
 **Outputs**

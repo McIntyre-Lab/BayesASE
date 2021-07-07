@@ -60,7 +60,7 @@ The Prior Design File must contain the following columns in the exact order::
     3. comparate- comparate condition
 
 
-Example of a Prior Design File::
+Example of a Prior Design File:
 
     +-------+------+---------+
     |   G1  |  G2  |comparate|
