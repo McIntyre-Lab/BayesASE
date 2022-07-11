@@ -72,9 +72,9 @@ def main():
         prior_df['FEATURE_ID'] = ase_df['FEATURE_ID']
 
         prior_df['prior_' + comparate + '_both'] = ase_df['both_counts'] / ase_df['total_counts']
-        prior_df['prior_' + comparate + '_g1'] = ase_df['g1_counts'] / ase_df['total_counts']
-        prior_df['prior_'+ comparate + '_g2'] = ase_df['g2_counts'] / ase_df['total_counts']
 
+        prior_df['prior_' + comparate + '_g1'] = np.where(prior_df['prior_' + comparate + '_both'] !=  0, ( 1 - prior_df['prior_' + comparate + '_both']), 0.5 )
+        prior_df['prior_' + comparate + '_g2'] = prior_df['prior_' + comparate + '_g1']
 
         ## Results of this division leave NaN in place of 0, so just fill with 0s
         prior_df['prior_' + comparate + '_both'].fillna(0, inplace=True)
